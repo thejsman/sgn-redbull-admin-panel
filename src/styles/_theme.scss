@@ -1,0 +1,67 @@
+// -------------------------------------------Primary Colors Starts--------------------------------------------------//
+
+$primary: #603be1;
+$primary-light: rgba(96, 59, 225, 0.04);
+$bg-primary: #603be1;
+$secondary: #efebff;
+$success: #00c27c;
+$dark: #212121;
+$danger: #ff5151;
+$gradient-dark: rgba(23, 0, 103, 1);
+$light-black: #373f41;
+
+$gradient: linear-gradient(312.31deg, #8866ff -2.56%, #5d38de 42.07%);
+$gradient-light: linear-gradient(135deg, #ae97ff 36.82%, #603be1 100.44%);
+
+.bg-secondary {
+  background-color: $secondary !important;
+}
+.primary-light {
+  background-color: $primary-light !important;
+}
+.text-danger {
+  color: #ff5151 !important;
+}
+.btn-light {
+  color: $primary;
+}
+.light-black {
+  color: #373f41;
+}
+.primary-gradient {
+  background: linear-gradient(312.31deg, #8866ff -2.56%, #5d38de 42.07%);
+  color: #fff !important;
+}
+.gradient {
+  background-color: linear-gradient(135deg, #ae97ff 36.82%, #603be1 100.44%);
+}
+.gradient-dark {
+  color: rgba(23, 0, 103, 1);
+}
+
+// base
+
+body {
+  background-color: #fff;
+  color: #1f3d62;
+}
+
+.card {
+  box-shadow: 0 0 0.875rem 0 rgba(33, 37, 41, 0.05);
+  border: 0;
+}
+
+.btn-primary {
+  background-color: #d92828;
+  border-color: #d92828;
+}
+
+.btn-primary:hover {
+  background-color: #181b28;
+  border-color: #131620;
+}
+
+.btn-primary:focus {
+  background-color: #1f3d62;
+  border-color: #1f3d62;
+}
