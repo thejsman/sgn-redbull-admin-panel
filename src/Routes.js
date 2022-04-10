@@ -7,6 +7,8 @@ import Login from './pages/auth/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import TopicManagement from './pages/templateManagement/TemplateManagement';
 import AddEditTopic from './pages/templateManagement/AddEditTemplate';
+import AddEditFamilyRelationship from './pages/familyRelationship/AddEditFamilyRelationship'
+import FamilyRelationManagement from './pages/familyRelationship/FamilyRelationship'
 
 
 
@@ -32,12 +34,13 @@ const Routes = props => {
         {localStorage.getItem("accessToken") ? <><Header /><Sidebar /></> : ''}
         <Router history={history} >
           <Switch>
-            <PublicRoute exact path='/login'                      {...props} component={Login} />
-            <PrivateRoute exact path='/'                          {...props} component={Dashboard} />
-            <PrivateRoute exact path='/topic-management'          {...props} component={TopicManagement} />
-            <PrivateRoute exact path='/add-topic'                 {...props} component={AddEditTopic} />
-            <PrivateRoute exact path='/edit-topic/:id'            {...props} component={AddEditTopic} />
-           
+            <PublicRoute exact path='/login'                        {...props} component={Login} />
+            <PrivateRoute exact path='/'                            {...props} component={Dashboard} />
+            <PrivateRoute exact path='/topic-management'            {...props} component={TopicManagement} />
+            <PrivateRoute exact path='/add-topic'                   {...props} component={AddEditTopic} />
+            <PrivateRoute exact path='/edit-topic/:id'              {...props} component={AddEditTopic} />
+            <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
+            <PrivateRoute exact path='/family-relationship'         {...props} component={FamilyRelationManagement} />
           </Switch>
         </Router >
       </div >
