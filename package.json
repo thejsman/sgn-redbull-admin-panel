@@ -32,7 +32,8 @@
     "react-toastify": "^7.0.4",
     "rsuite": "^4.10.2",
     "video-react": "^0.14.1",
-    "web-vitals": "^1.1.1"
+    "web-vitals": "^1.1.1",
+    "yarn": "^1.22.18"
   },
   "scripts": {
     "start": "react-scripts start",
