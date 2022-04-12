@@ -5,12 +5,7 @@
 @import "./_theme.scss";
 @import "./countryList.scss";
 
-
 @import "./theme.scss";
-
-
-
-
 
 html,
 body {
@@ -1327,7 +1322,7 @@ img.userimg {
   display: none;
 }
 
-.fa.fa-sort{
+.fa.fa-sort {
   margin-right: 5px;
 }
 
@@ -1336,7 +1331,7 @@ img.userimg {
   min-width: 220px;
 }
 
-.table-responsive>.table-bordered {
+.table-responsive > .table-bordered {
   margin: 0;
 }
 
@@ -1381,18 +1376,8 @@ span.t_width {
   object-fit: cover;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-.slick-prev, .slick-next {
+.slick-prev,
+.slick-next {
   top: 40%;
   transform: rotate(180deg) translateY(-50%);
   position: absolute;
@@ -1418,29 +1403,27 @@ span.t_width {
 }
 
 .slick-next:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 15px;
   height: 15px;
   border-right: 3px solid #fff;
   border-bottom: 3px solid #fff;
-  transform: rotate(
-135deg);
+  transform: rotate(135deg);
   left: 20px;
   top: 35%;
 }
 
 .slick-prev:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 15px;
   height: 15px;
   border-right: 3px solid #fff;
   border-bottom: 3px solid #fff;
-  transform: rotate(
-    -45deg);
-        left: 15px;
-        top: 35%;
+  transform: rotate(-45deg);
+  left: 15px;
+  top: 35%;
 }
 
 button.video-react-big-play-button.video-react-big-play-button-left {
@@ -1474,9 +1457,9 @@ button.video-react-big-play-button.video-react-big-play-button-left {
 }
 
 .table_actions .btn {
-    margin: 0 10px;
-    font-size: 13px;
-    min-width: 80px;
+  margin: 0 10px;
+  font-size: 13px;
+  min-width: 80px;
 }
 
 .cm_s_disebled {
@@ -1562,19 +1545,17 @@ button.video-react-big-play-button.video-react-big-play-button-left {
 }
 
 .react-datepicker-wrapper input {
-    background-color: hsl(0, 0%, 100%);
-    border-color: hsl(0, 0%, 80%);
-    border-radius: 4px;
-    border-style: solid;
-    border-width: 1px;
-    padding: 5px;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 5px;
 }
-
 
 .cm_filters_2 {
   display: block;
 }
-
 
 .mr__0 > div {
   margin-right: 0 !important;
@@ -1599,7 +1580,6 @@ button.video-react-big-play-button.video-react-big-play-button-left {
   color: #603be1;
 }
 
-
 .d_action {
   position: absolute;
   top: 65px;
@@ -1619,7 +1599,7 @@ button.video-react-big-play-button.video-react-big-play-button-left {
 }
 
 .report_reason_wrapper span:after {
-  content: ',';
+  content: ",";
   margin-right: 10px;
 }
 
@@ -1635,7 +1615,6 @@ td.cm_2_line span {
   text-overflow: ellipsis;
 }
 
-
 .dropdown-item a {
   color: #212529;
   text-decoration: none;
@@ -1648,4 +1627,11 @@ td.cm_2_line span {
 
 .limit_select .select__control {
   width: 190px !important;
+}
+.submenu {
+  margin-left: 35px;
+  margin-top: 12px;
+}
+.submenu a {
+  margin-top: 12px;
 }

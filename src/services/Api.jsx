@@ -14,5 +14,9 @@ export default {
   UPDATE_TOPIC: siteSetting.api.url + "notification-update",
   GET_TOPIC_BY_ID: siteSetting.api.url + "notification-get",
   GET_DOMAIN_LIST: siteSetting.api.url + "notification-list",
+  GET_OCCASION_LIST:siteSetting.api.url+"occasion-list",
+  CREATE_OCCASION:siteSetting.api.url+"occasion",
+  GET_OCCASION_LIST:siteSetting.api.url,
+  GET_OCCASION_BY_NAME:siteSetting.api.url+"getOccasionByName"
  
 };

@@ -12,13 +12,12 @@ createTemplate,
 getTemplateByName,
 updateTemplate,
 deleteTemplate, templateList,
-handleLogin
+handleLogin,
+occasionList,
+createOccasion,getOccasionByName
 };
 
 const headersApplicationJson = {
-  "Content-Type": "application/json",
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Credentials': true,
 };
 
 // axios.defaults.headers.common["Authorization"] = `${Api.AUTH}`;
@@ -56,8 +55,40 @@ function handleLogin(params) {
   }
 
   function templateList(params) {
+    debugger;
     return axios.post(
       Api.GET_DOMAIN_LIST,params, {
+        headers: headersApplicationJson,
+      });
+  }
+
+  function occasionList(params) {
+    delete axios.defaults.headers.common["AccessToken"]
+    delete axios.defaults.headers.common["Access-Control-Allow-Origin"]
+    // return axios.get(
+    //   `${Api.GET_OCCASION_LIST}getOccasions?limit=100&startKey=mahavirjayanti`,params, {
+    //     headers: headersApplicationJson,
+    //   });
+      return axios.get(
+        `${Api.GET_OCCASION_LIST}getOccasions?limit=100`,params, {
+          headers: headersApplicationJson,
+        });
+  }
+
+  function createOccasion(params) {
+   delete axios.defaults.headers.common["AccessToken"]
+   delete axios.defaults.headers.common["Access-Control-Allow-Origin"]
+    return axios.patch(
+      Api.CREATE_OCCASION,params,{
+        headers: headersApplicationJson
+      })
+  }
+
+  function getOccasionByName(params) {
+    delete axios.defaults.headers.common["AccessToken"]
+    delete axios.defaults.headers.common["Access-Control-Allow-Origin"]
+    return axios.get(
+      `${Api.GET_OCCASION_BY_NAME}?occasionName=${params.occasionName}`, {
         headers: headersApplicationJson,
       });
   }

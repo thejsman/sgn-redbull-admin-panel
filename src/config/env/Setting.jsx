@@ -6,7 +6,7 @@
 //dev
 export const devSetting = {
   api: {
-    url: "https://h0myxpanyf.execute-api.us-east-1.amazonaws.com/dev/",
+    url: "https://prdc113ea0.execute-api.us-east-1.amazonaws.com/dev/",
     AUTH: "Basic c29ydGVkX0F1dGg6TXpDWTd5S0ZubHl4dTdHdg==",
     mode: "cors",
     s3_url: "https://devcdn.gosorted.com/",
