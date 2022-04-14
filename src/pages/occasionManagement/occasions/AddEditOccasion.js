@@ -150,10 +150,10 @@ const AddEditOccasion = () => {
   }
   useEffect(() => {
     console.log();
-    if (window.location.pathname == "/add-occasion") {
+    if (window.location.pathname == "/occasion/create") {
       setIsAddOccasion(true);
     }
-    if (window.location.pathname !== "/add-occasion") {
+    if (window.location.pathname !== "/occasion/create") {
       handleGetOccasionById(id);
     }
   }, []);

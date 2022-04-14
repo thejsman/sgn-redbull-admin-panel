@@ -41,7 +41,7 @@ const Sidebar = () => {
               exact
               to="/occasion-management/occasion"
               className={
-                location.pathname.includes("/occasion-management")
+                (location.pathname.includes("/occasion-management")   || location.pathname.includes("/occasion"))
                   ? "active"
                   : ""
               }
@@ -53,14 +53,14 @@ const Sidebar = () => {
             <div
               className="submenu"
               style={{
-                display: location.pathname.includes("/occasion-management")
+                display: (location.pathname.includes("/occasion-management")  || location.pathname.includes("/occasion/"))
                   ? "block"
                   : "none",
               }}
             >
               <NavLink to="/occasion-management/occasion" 
               className={
-                location.pathname.includes("/occasion-management/occasion")
+                (location.pathname.includes("/occasion-management/occasion")  || location.pathname.includes("/occasion/"))
                   ? "active"
                   : ""
               }

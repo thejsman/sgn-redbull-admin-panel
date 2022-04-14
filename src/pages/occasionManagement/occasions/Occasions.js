@@ -35,7 +35,7 @@ const Occasions = () => {
   }, []);
 
   const editPages = (_id) => {
-    history.push("/edit-Occasion/" + _id);
+    history.push("/occasion/edit/" + _id);
   };
   const handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
@@ -111,7 +111,7 @@ const Occasions = () => {
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className="twocol sb page_header">
         <h2>Occasion Management</h2>
-        <Link to="/add-occasion" className="btn btn-primary btn-sm">
+        <Link to="/occasion/create" className="btn btn-primary btn-sm">
           Add Occasion
         </Link>
       </div>

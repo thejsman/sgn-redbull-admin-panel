@@ -43,7 +43,7 @@ const Routes = (props) => {
   const history = useHistory();
 
   return (
-    <> 
+    <>
       <div className="site_wrapper">
         {localStorage.getItem("accessToken") ? (
           <>
@@ -57,45 +57,20 @@ const Routes = (props) => {
           <Switch>
             <PublicRoute exact path="/login" {...props} component={Login} />
             <PrivateRoute exact path="/" {...props} component={Dashboard} />
-            <PrivateRoute
-              exact
-              path="/topic-management"
-              {...props}
-              component={TopicManagement}
-            />
-            <PrivateRoute
-              exact
-              path="/occasion-management/occasion"
-              {...props}
-              component={Occasions}
-            />
-            <PrivateRoute
-              exact
-              path="/add-topic"
-              {...props}
-              component={AddEditTopic}
-            />
-            <PrivateRoute
-              exact
-              path="/edit-topic/:id"
-              {...props}
-              component={AddEditTopic}
-            />
-            <PrivateRoute
-              exact
-              path="/add-occasion"
-              {...props}
-              component={AddEditOccasion}
-            />
-            <PrivateRoute
-              exact
-              path="/edit-occasion/:id"
-              {...props}
-              component={AddEditOccasion}
-            />
-             <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
-            
-             <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
+
+            {/* Topic Management Routes */}
+            <PrivateRoute exact path="/topic-management" {...props} component={TopicManagement} />
+            <PrivateRoute exact path="/add-topic" {...props} component={AddEditTopic} />
+            <PrivateRoute exact path="/edit-topic/:id" {...props} component={AddEditTopic} />
+
+            {/* Occasion Management Routes */}
+            <PrivateRoute exact path="/occasion-management/occasion" {...props} component={Occasions} />
+            <PrivateRoute exact path="/occasion/create" {...props} component={AddEditOccasion} />
+            <PrivateRoute exact path="/occasion/edit/:id" {...props} component={AddEditOccasion} />
+
+            {/* Family Relation Routes */}
+            <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
+            <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
             <PrivateRoute exact path='/family-relationship'         {...props} component={FamilyRelationManagement} />
 
           </Switch>

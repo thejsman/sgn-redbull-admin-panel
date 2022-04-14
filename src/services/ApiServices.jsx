@@ -70,7 +70,7 @@ function handleLogin(params) {
     //     headers: headersApplicationJson,
     //   });
       return axios.get(
-        `${Api.GET_OCCASION_LIST}getOccasions?limit=100`,params, {
+        `${Api.GET_OCCASION_LIST}?limit=100`,params, {
           headers: headersApplicationJson,
         });
   }
