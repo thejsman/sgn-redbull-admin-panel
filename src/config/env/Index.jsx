@@ -11,7 +11,8 @@ let defaultSetting = {
     api: {
         url: process.env.REACT_APP_DEV_API_URL,
         AUTH: process.env.REACT_APP_BASIC_AUTH,
-        mode:'cors'
+        mode:'cors',
+        Sagoonlite_Url :"https://dev.sagoonlite.com/"
     },
 
     stripe_key:process.env.REACT_APP_DEV_STRIPE_KEY

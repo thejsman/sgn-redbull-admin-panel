@@ -16,7 +16,14 @@ export default {
   GET_DOMAIN_LIST: siteSetting.api.url + "notification-list",
   GET_OCCASION_LIST:siteSetting.api.url+"occasion-list",
   CREATE_OCCASION:siteSetting.api.url+"occasion",
-  GET_OCCASION_LIST:siteSetting.api.url,
-  GET_OCCASION_BY_NAME:siteSetting.api.url+"getOccasionByName"
+  GET_OCCASION_BY_NAME:siteSetting.api.url+"getOccasionByName",
+
+  //Family Relationship
+  DELETE_FAMILY_RELATIONSHIP: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/delete",
+  CREATE_FAMILY_RELATIONSHIP: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/create",
+  UPDATE_FAMILY_RELATIONSHIP: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/update",
+  GET_FAMILY_RELATIONSHIP_BY_ID: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/getOne",
+  GET_FAMILY_RELATIONSHI_LIST: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/query?relationshipIdentifier=relationship",
+  
  
 };

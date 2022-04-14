@@ -64,7 +64,7 @@ console.log("handleGetTopicByIdhandleGetTopicById",id);
     let baseUrl = 'https://Sagoon-dev.s3.amazonaws.com/'
     let params = {
       accessToken,
-      notificationName: id
+      notificationName: id 
     }
     getTemplateByName(params).then(res => {
      let { status, data } = resHandle(res)

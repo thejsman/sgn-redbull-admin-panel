@@ -43,7 +43,7 @@ const Routes = (props) => {
   const history = useHistory();
 
   return (
-    <>
+    <> 
       <div className="site_wrapper">
         {localStorage.getItem("accessToken") ? (
           <>
@@ -93,6 +93,8 @@ const Routes = (props) => {
               {...props}
               component={AddEditOccasion}
             />
+             <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
+            
              <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
             <PrivateRoute exact path='/family-relationship'         {...props} component={FamilyRelationManagement} />
 

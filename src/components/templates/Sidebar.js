@@ -30,8 +30,8 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-					<NavLink to="/family-relationship"  >
-						<i className="fas fa-sitemap"></i>{" "}
+       		<NavLink to="/family-relationship"  >
+						<i className="fas fa-users"></i>{" "}
 						<span className="menu_text">Relationship management</span>
 					</NavLink>
 				</li>
@@ -46,7 +46,8 @@ const Sidebar = () => {
                   : ""
               }
             >
-              <i className="fas fa-sitemap"></i>{" "}
+              <i className="fas fa-glass-cheers"></i>{" "}
+             
               <span className="menu_text">Occasion management</span>
             </NavLink>
             <div
@@ -57,8 +58,21 @@ const Sidebar = () => {
                   : "none",
               }}
             >
-              <NavLink to="/occasion-management/occasion">Occasions</NavLink>
-              <NavLink to="/occasion-management/templates">Templates</NavLink>
+              <NavLink to="/occasion-management/occasion" 
+              className={
+                location.pathname.includes("/occasion-management/occasion")
+                  ? "active"
+                  : ""
+              }
+              
+              > <i className="fab fa-elementor"></i>{" "}Occasions</NavLink>
+              <NavLink to="/occasion-management/templates"
+              className={
+                location.pathname.includes("/occasion-management/templates")
+                  ? "active"
+                  : ""
+              }
+              ><i className="fas fa-calendar-week"></i>{" "}Templates</NavLink>
             </div>
           </div>
         </li>
