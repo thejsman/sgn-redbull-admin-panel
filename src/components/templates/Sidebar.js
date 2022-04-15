@@ -30,51 +30,57 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
-       		<NavLink to="/family-relationship"  >
-						<i className="fas fa-users"></i>{" "}
-						<span className="menu_text">Relationship management</span>
-					</NavLink>
-				</li>
+          <NavLink to="/family-relationship"  >
+            <i className="fas fa-users"></i>{" "}
+            <span className="menu_text">Relationship management</span>
+          </NavLink>
+        </li>
         <li>
           <div className="">
             <NavLink
               exact
               to="/occasion-management/occasion"
               className={
-                (location.pathname.includes("/occasion-management")   || location.pathname.includes("/occasion"))
+                (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion"))
                   ? "active"
                   : ""
               }
             >
               <i className="fas fa-glass-cheers"></i>{" "}
-             
+
               <span className="menu_text">Occasion management</span>
             </NavLink>
             <div
               className="submenu"
               style={{
-                display: (location.pathname.includes("/occasion-management")  || location.pathname.includes("/occasion/"))
+                display: (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion/"))
                   ? "block"
                   : "none",
               }}
             >
-              <NavLink to="/occasion-management/occasion" 
-              className={
-                (location.pathname.includes("/occasion-management/occasion")  || location.pathname.includes("/occasion/"))
-                  ? "active"
-                  : ""
-              }
-              
+              <NavLink to="/occasion-management/occasion"
+                className={
+                  (location.pathname.includes("/occasion-management/occasion") || location.pathname.includes("/occasion/"))
+                    ? "active"
+                    : ""
+                }
+
               > <i className="fab fa-elementor"></i>{" "}Occasions</NavLink>
               <NavLink to="/occasion-management/templates"
-              className={
-                location.pathname.includes("/occasion-management/templates")
-                  ? "active"
-                  : ""
-              }
+                className={
+                  location.pathname.includes("/occasion-management/templates")
+                    ? "active"
+                    : ""
+                }
               ><i className="fas fa-calendar-week"></i>{" "}Templates</NavLink>
             </div>
           </div>
+        </li>
+        <li>
+          <NavLink to="/occasion-card/create"  >
+            <i className="fas fa-users"></i>{" "}
+            <span className="menu_text">Occasion Card</span>
+          </NavLink>
         </li>
       </ul>
     </div>

@@ -9,8 +9,9 @@ import TopicManagement from "./pages/templateManagement/TemplateManagement";
 import Occasions from "./pages/occasionManagement/occasions/Occasions";
 import AddEditTopic from "./pages/templateManagement/AddEditTemplate";
 import AddEditOccasion from "./pages/occasionManagement/occasions/AddEditOccasion";
-import AddEditFamilyRelationship from './pages/familyRelationship/AddEditFamilyRelationship'
-import FamilyRelationManagement from './pages/familyRelationship/FamilyRelationship'
+import AddEditFamilyRelationship from './pages/familyRelationship/AddEditFamilyRelationship';
+import FamilyRelationManagement from './pages/familyRelationship/FamilyRelationship';
+//import AddEditOccasionCard from './pages/occasionCard/AddEditOccasionCard';
 
 
 const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
@@ -72,6 +73,12 @@ const Routes = (props) => {
             <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
             <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
             <PrivateRoute exact path='/family-relationship'         {...props} component={FamilyRelationManagement} />
+
+            {/* Occasion Card Routes */}
+            {/* <PrivateRoute exact path="/occasion-card/" {...props} component={Occasions} />
+            <PrivateRoute exact path="/occasion-card/create" {...props} component={AddEditOccasionCard} />
+            <PrivateRoute exact path="/occasion-card/edit/:id" {...props} component={AddEditOccasion} /> */}
+
 
           </Switch>
         </Router>

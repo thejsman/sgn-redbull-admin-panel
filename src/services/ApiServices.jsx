@@ -11,10 +11,13 @@ export {
 createTemplate,
 getTemplateByName,
 updateTemplate,
-deleteTemplate, templateList,
+deleteTemplate, 
+templateList,
 handleLogin,
 occasionList,
-createOccasion,getOccasionByName
+createOccasion,
+getOccasionByName,
+deleteOccasion
 };
 
 const headersApplicationJson = {
@@ -55,7 +58,6 @@ function handleLogin(params) {
   }
 
   function templateList(params) {
-    debugger;
     return axios.post(
       Api.GET_DOMAIN_LIST,params, {
         headers: headersApplicationJson,
@@ -65,19 +67,25 @@ function handleLogin(params) {
   function occasionList(params) {
     delete axios.defaults.headers.common["AccessToken"]
     delete axios.defaults.headers.common["Access-Control-Allow-Origin"]
-    // return axios.get(
-    //   `${Api.GET_OCCASION_LIST}getOccasions?limit=100&startKey=mahavirjayanti`,params, {
-    //     headers: headersApplicationJson,
-    //   });
-      return axios.get(
+     return axios.get(
         `${Api.GET_OCCASION_LIST}?limit=100`,params, {
           headers: headersApplicationJson,
         });
   }
 
+  
+  function deleteOccasion(params) {
+    return axios.delete(`${Api.DELETE_OCCASION}`,params, {
+      headers: headersApplicationJson,
+    });
+  }
+
   function createOccasion(params) {
    delete axios.defaults.headers.common["AccessToken"]
    delete axios.defaults.headers.common["Access-Control-Allow-Origin"]
+   debugger;
+   console.log('Api.CREATE_OCCASION',Api.CREATE_OCCASION)
+   let url =Api.CREATE_OCCASION;
     return axios.patch(
       Api.CREATE_OCCASION,params,{
         headers: headersApplicationJson
@@ -88,7 +96,7 @@ function handleLogin(params) {
     delete axios.defaults.headers.common["AccessToken"]
     delete axios.defaults.headers.common["Access-Control-Allow-Origin"]
     return axios.get(
-      `${Api.GET_OCCASION_BY_NAME}?occasionName=${params.occasionName}`, {
+      `${Api.GET_OCCASION_BY_NAME}/${params.occasionName}`, {
         headers: headersApplicationJson,
       });
   }

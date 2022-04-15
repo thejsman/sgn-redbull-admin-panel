@@ -5,7 +5,7 @@ import Pagination from "react-js-pagination";
 
 import Breadcrumb from "../../../components/common/Breadcrumb";
 import {
-  deleteTemplate,
+  deleteOccasion,
   occasionList,
   createOccasion,
 } from "../../../services/ApiServices";
@@ -21,7 +21,7 @@ const Occasions = () => {
 
   const [confirmModal, setConfirmModal] = useState(false);
   const [confirmTopic, setConfirmTopic] = useState("");
-  const [notificationName, setNotificationName] = useState([]);
+  const [occasionName, setOccasionName] = useState([]);
   const [occasionArrayList, setOccasionList] = useState([]);
   const [domainListAry, setDomainListAry] = useState([]);
   const [page, setPage] = useState(1);
@@ -41,6 +41,7 @@ const Occasions = () => {
     console.log(`active page is ${pageNumber}`);
   };
   const getOccasionList = () => {
+    setLoader(true)
     let params = {
       limit: 20,
       LastEvaluatedKey: "null",
@@ -48,22 +49,26 @@ const Occasions = () => {
     occasionList(params).then((res) => {
       let { status, data } = resHandle(res);
       if (status === 200) {
+        setLoader(false)
         setOccasionList(data.occasionList);
       }
     });
   };
 
-  const handleDeleteTemplate = () => {
+  const handleDeleteOccasion = () => {
     let params = {
-      topicId: notificationName,
+      occasionName: occasionName,
     };
     handleClose();
-    deleteTemplate(params).then((res) => {
-    //  getTemplateList();
+    setLoader(true)
+    deleteOccasion(params).then((res) => {
+      //  getTemplateList();
       let { status, data } = resHandle(res);
       if (status === 200) {
-        toast.success(data.message);
-     //   getTemplateList();
+        setLoader(false)
+        toast.success(data.message)
+        getOccasionList();
+        //   getTemplateList();
       } else {
         toast.error(data.message);
       }
@@ -94,7 +99,7 @@ const Occasions = () => {
               No
             </button>
             <button
-              onClick={handleDeleteTemplate}
+              onClick={handleDeleteOccasion}
               className="btn btn-danger btn-sm ml-3 pl-5 pr-5"
             >
               Yes
@@ -123,7 +128,7 @@ const Occasions = () => {
         {loader ? (
           <Loader />
         ) : (
-          <table className="table table-bordered user-table table-hover align-items-center table-fixed" style={{"tableLayout": "fixed"}} >
+          <table className="table table-bordered user-table table-hover align-items-center table-fixed" style={{ "tableLayout": "fixed" }} >
             <thead>
               <tr>
                 <th>Occasion Name</th>
@@ -132,7 +137,7 @@ const Occasions = () => {
                 <th>
                   <span className="t_min_w">Description</span>
                 </th>
-             
+
                 <th>Order</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -160,9 +165,9 @@ const Occasions = () => {
                         {item.occasionDescription}
                       </span>
                     </td>
-                 
+
                     <td>{item.displayOrder}</td>
-                    <td>{item.occasionStatus ? "Activated" : "Deactivated"}</td>
+                    <td>{item.occasionStatus == "true" ? "Activated" : "Deactivated"}</td>
 
                     <td>
                       <div className="action">
@@ -173,7 +178,7 @@ const Occasions = () => {
                         <span
                           onClick={() => (
                             setConfirmModal(true),
-                            setNotificationName(item.occasionName)
+                            setOccasionName(item.occasionName)
                           )}
                         >
                           <i className="fas fa-trash-alt"></i>

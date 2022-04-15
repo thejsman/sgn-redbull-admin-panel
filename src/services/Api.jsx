@@ -19,8 +19,11 @@ export default {
   
   // Occasion Section
   GET_OCCASION_LIST:      siteSetting.api.Sagoonlite_Url +"occasion/occasion",
-  CREATE_OCCASION:        siteSetting.api.Sagoonlite_Url+"occasion",
-  GET_OCCASION_BY_NAME:   siteSetting.api.Sagoonlite_Url+"getOccasionByName",
+  CREATE_OCCASION:        siteSetting.api.Occasion_url+"occasion",
+  GET_OCCASION_BY_NAME:   siteSetting.api.Occasion_url+"occasion",
+  DELETE_OCCASION:        siteSetting.api.Occasion_url+"occasion",
+
+
 
 
   //Family Relationship

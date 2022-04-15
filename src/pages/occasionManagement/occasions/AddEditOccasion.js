@@ -24,7 +24,7 @@ const AddEditOccasion = () => {
   const [occasionTitleErr, setOccasionTitleErr] = useState("");
   const [occasionIcon, setOccasionIcon] = useState("");
   const [occasionIconErr, setOccasionIconErr] = useState("");
-  const [occasionStatus, setOccasionStatus] = useState("");
+  const [occasionStatus, setOccasionStatus] = useState(true);
   const [occasionStatusErr, setOccasionStatusErr] = useState("");
   const [occasionTemplates, setOccasionTemplates] = useState("");
   const [occasionTemplatesErr, setOccasionTemplatesErr] = useState("");
@@ -49,10 +49,7 @@ const AddEditOccasion = () => {
   const handleValidate = () => {
     let validate = true;
     setOccasionOrderErr("");
-    if(!numberRegEx.test(String(occasionOrder).toLowerCase())){
-      setOccasionOrderErr("Occasion order should be numeric");
-      validate = false;
-    } 
+
     if (!occasionName.replace(/\s+/g, "")) {
       setOccasionNameErr("Occasion name is required");
       validate = false;
@@ -65,11 +62,14 @@ const AddEditOccasion = () => {
     } else {
       setOccasionTitleErr("");
     }
-    if (!occasionOrder.replace(/\s+/g, "")) {
+    if (!occasionOrder) {
       setOccasionOrderErr("Occasion order is required");
       validate = false;
+    } else if (!numberRegEx.test(String(occasionOrder).toLowerCase())) {
+      setOccasionOrderErr("Occasion order should be numeric");
+      validate = false;
     } else {
-      
+      setOccasionOrderErr("");
     }
     if (!occasionDesc.replace(/\s+/g, "")) {
       setOccasionDescErr("Occasion describtion is required");
@@ -87,7 +87,6 @@ const AddEditOccasion = () => {
   };
 
   const handleGetOccasionById = (id) => {
-    let baseUrl = "https://Sagoon-dev.s3.amazonaws.com/";
     let params = {
       occasionName: id,
     };
@@ -98,9 +97,10 @@ const AddEditOccasion = () => {
         setOccasionName(data.occasionName);
         setOccasionTitle(data.displayTitle);
         setOccasionIcon(data.occasionIcon);
-        setOccasionStatus(data.status);
+        setOccasionStatus(data.occasionStatus);
         setOccasionOrder(data.displayOrder);
         setOccasionDesc(data.occasionDescription);
+        setBase64(data.occasionIcon);
       } else {
       }
     });
@@ -109,15 +109,19 @@ const AddEditOccasion = () => {
     e.preventDefault();
     if (handleValidate()) {
       let createOccasionObj = {
+        "occasionIdentifier": "occasion",
         occasionName,
         data: {
           displayTitle: occasionTitle,
-          occasionIcon: base64,
-          displayOrder: occasionOrder,
+          displayOrder: parseInt(occasionOrder),
           occasionDescription: occasionDesc,
           occasionStatus: occasionStatus,
         },
       };
+
+      if (editImage) {
+        createOccasionObj.data['occasionIcon'] = base64;
+      }
       console.log("createOccasionObj---", createOccasionObj);
       createOccasion(createOccasionObj).then((res) => {
         let { status, data } = resHandle(res);
@@ -162,11 +166,12 @@ const AddEditOccasion = () => {
     e.preventDefault();
     if (handleValidate()) {
       let createOccasionObj = {
+        "occasionIdentifier": "occasion",
         occasionName,
         data: {
           displayTitle: occasionTitle,
           occasionIcon: base64,
-          displayOrder: occasionOrder,
+          displayOrder: parseInt(occasionOrder),
           occasionDescription: occasionDesc,
           occasionStatus: occasionStatus,
         },
@@ -198,7 +203,7 @@ const AddEditOccasion = () => {
           <div className="col">
             <label>Occasion Name</label>
             <input
-             readOnly={isAddOccasion ? '' :'readonly'}
+              readOnly={isAddOccasion ? '' : 'readonly'}
               type="text"
               className="form-control"
               value={occasionName}
@@ -230,7 +235,7 @@ const AddEditOccasion = () => {
           </div>
         </div>
         <div className="form-group row">
-        <div className="col">
+          <div className="col">
             <label>Order</label>
             <input
               type="text"
@@ -251,7 +256,7 @@ const AddEditOccasion = () => {
             <select
               className="form-control"
               name="cars"
-              value={!occasionStatus ? true : false  }
+              value={occasionStatus}
               onChange={(e) => (
                 setOccasionStatus(e.target.value), setOccasionStatusErr("")
               )}
@@ -264,7 +269,7 @@ const AddEditOccasion = () => {
             )}
           </div>
         </div>
-     
+
         <div className="form-group row">
           <div className="col">
             <label>Description</label>
@@ -283,23 +288,23 @@ const AddEditOccasion = () => {
           </div>
         </div>
         <div className='form-group row'>
-            <div className='col'>
-              <label>Icon</label>
-              <input
-                type='file'
-                className='form-control'
-                value=''
-                onChange={handleFileChange}
-              />
-                {imageErr && (
-                <div className='inlineerror'>{imageErr} </div>
-              )}
-            </div>
-           
-          
+          <div className='col'>
+            <label>Icon</label>
+            <input
+              type='file'
+              className='form-control'
+              value=''
+              onChange={handleFileChange}
+            />
+            {imageErr && (
+              <div className='inlineerror'>{imageErr} </div>
+            )}
           </div>
 
-          {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
+
+        </div>
+
+        {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
 
 
         <div className="button300">
@@ -307,7 +312,7 @@ const AddEditOccasion = () => {
             <button
               type="button"
               className="btn btn-primary rounded-pill"
-               onClick={handleCreateTemplate}
+              onClick={handleCreateTemplate}
             >
               Create
             </button>

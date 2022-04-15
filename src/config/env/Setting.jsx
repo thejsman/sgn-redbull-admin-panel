@@ -11,7 +11,8 @@ export const devSetting = {
     mode: "cors",
     s3_url: "https://devcdn.gosorted.com/",
     url_Prod: "https://devapi.gosorted.com/Sagoon/api/v1/",
-    Sagoonlite_Url : "https://dev.sagoonlite.com/"
+    Sagoonlite_Url : "https://dev.sagoonlite.com/",
+    Occasion_url  :"https://10z7l690ic.execute-api.eu-central-1.amazonaws.com/dev/"
 
   },
 
