@@ -808,6 +808,7 @@ i.fas.fa-edit {
     max-width: 300px;
     padding: 15px 10px;
   }
+ 
 }
 .imgpreview img {
   max-width: 290px;
@@ -1634,4 +1635,21 @@ td.cm_2_line span {
 }
 .submenu a {
   margin-top: 12px;
+}
+
+.tablecollapse  {
+  table-layout: fixed;
+  word-wrap: break-word;
+ 
+}
+
+.tablecollapse tr {
+  cursor: pointer;
+}
+
+.tablecollapse .is-breakable {
+  word-break: break-all;
+  white-space: pre-wrap;
+word-wrap: break-word;
+background-color: #eef1f5;
 }

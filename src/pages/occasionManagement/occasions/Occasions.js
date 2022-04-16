@@ -62,13 +62,11 @@ const Occasions = () => {
     handleClose();
     setLoader(true)
     deleteOccasion(params).then((res) => {
-      //  getTemplateList();
       let { status, data } = resHandle(res);
       if (status === 200) {
         setLoader(false)
         toast.success(data.message)
         getOccasionList();
-        //   getTemplateList();
       } else {
         toast.error(data.message);
       }
@@ -89,7 +87,7 @@ const Occasions = () => {
         </Modal.Header>
         <Modal.Body>
           <p className="text-center">
-            Are you sure you want to delete this Template?
+            Are you sure you want to delete this Occasion?
           </p>
           <div className="d-flex justify-content-center pb-4">
             <button
@@ -158,6 +156,7 @@ const Occasions = () => {
                         src={item.occasionIcon}
                         alt="Avatar"
                         className="user-avatar high"
+                        style={{ width: '50px' }}
                       />
                     </td>
                     <td>

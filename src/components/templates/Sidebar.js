@@ -76,10 +76,16 @@ const Sidebar = () => {
             </div>
           </div>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/occasion-card/create"  >
             <i className="fas fa-users"></i>{" "}
             <span className="menu_text">Occasion Card</span>
+          </NavLink>
+        </li> */}
+        <li>
+          <NavLink to="/rozy"  >
+            <i className="fas fa-crown"></i>{" "}
+            <span className="menu_text">Rozy</span>
           </NavLink>
         </li>
       </ul>

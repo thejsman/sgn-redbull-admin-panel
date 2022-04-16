@@ -40,9 +40,9 @@ const FamilyRelationship = () => {
     let params = {
       limit: 100,
       LastEvaluatedKey: 'null',
-      sOrder:1,
-      eOrder:101,
-      scanOrder:true
+      sOrder: 1,
+      eOrder: 101,
+      scanOrder: true
     }
     familyRelationshipList(params).then(res => {
       let { status, data } = resHandle(res)
@@ -56,7 +56,7 @@ const FamilyRelationship = () => {
   const handleDeleteRelationship = () => {
     let params = {
       relationshipName: relationshipName,
-      displayOrder:displayOrder
+      displayOrder: displayOrder
 
     }
     handleClose()
@@ -162,7 +162,7 @@ const FamilyRelationship = () => {
                         src={item.icon}
                         alt='Avatar'
                         className='user-avatar high'
-                        style={{width:'50px'}}
+                        style={{ width: '50px' }}
                       />
                     </td>
                     <td>

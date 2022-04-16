@@ -24,8 +24,6 @@ export default {
   DELETE_OCCASION:        siteSetting.api.Occasion_url+"occasion",
 
 
-
-
   //Family Relationship
   DELETE_FAMILY_RELATIONSHIP: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/delete",
   CREATE_FAMILY_RELATIONSHIP: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/create",
@@ -33,5 +31,12 @@ export default {
   GET_FAMILY_RELATIONSHIP_BY_ID: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/getOne",
   GET_FAMILY_RELATIONSHI_LIST: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/query?relationshipIdentifier=relationship",
   
+
+  // Rozy Section
+  GET_ROZY_LIST:      siteSetting.api.Sagoonlite_Url +"rozy/listrozy",
+  CREATE_ROZY:        siteSetting.api.Sagoonlite_Url+"rozy/rozy",
+  UPDATE_ROZY:          siteSetting.api.Sagoonlite_Url+"rozy/rozy",
+  GET_ROZY_BY_NAME:   siteSetting.api.Sagoonlite_Url+"rozy/rozy",
+  DELETE_ROZY:        siteSetting.api.Sagoonlite_Url+"rozy/rozy",
  
 };

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import {
-  createTemplate,
   getOccasionByName,
-  updateTemplate,
   createOccasion,
 } from "../../../services/ApiServices";
 import Breadcrumb from "../../../components/common/Breadcrumb";
 import { resHandle } from "../../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
-import siteSetting from "../../../config/env/Index";
-import { NavItem } from "react-bootstrap";
+import { Spinner } from "react-bootstrap"
+import { Loader } from '../../../components/common/loader'
+
 const AddEditOccasion = () => {
   const history = useHistory();
   const { id } = useParams();
@@ -26,8 +25,6 @@ const AddEditOccasion = () => {
   const [occasionIconErr, setOccasionIconErr] = useState("");
   const [occasionStatus, setOccasionStatus] = useState(true);
   const [occasionStatusErr, setOccasionStatusErr] = useState("");
-  const [occasionTemplates, setOccasionTemplates] = useState("");
-  const [occasionTemplatesErr, setOccasionTemplatesErr] = useState("");
   const [occasionOrder, setOccasionOrder] = useState("");
   const [occasionOrderErr, setOccasionOrderErr] = useState("");
   const [occasionDesc, setOccasionDesc] = useState("");
@@ -38,14 +35,16 @@ const AddEditOccasion = () => {
   const [fileName, setFileName] = useState('')
   const [editImage, setEditImage] = useState(false)
   const [imageErr, setImageErr] = useState('')
-  const [editCase, setEditCase] = useState(false)
+  const [isSubmit, setIsSubmit] = useState(false)
+  const [loader, setLoader] = useState(false)
 
   const breadcrumb = [
     { link: "/occasion-management/occasion", linkText: "Occasion Management" },
     { link: "", linkText: "Add Occasion" },
   ];
 
-  const numberRegEx = /\-?\d*\.?\d{1,2}/;
+  const numberRegEx = /^[0-9\b]+$/;
+  const albhaRegEx = /^[a-zA-z]+$/;
   const handleValidate = () => {
     let validate = true;
     setOccasionOrderErr("");
@@ -53,8 +52,11 @@ const AddEditOccasion = () => {
     if (!occasionName.replace(/\s+/g, "")) {
       setOccasionNameErr("Occasion name is required");
       validate = false;
+    } else if (!albhaRegEx.test(occasionName)) {
+      setOccasionNameErr("only alphabets are allowed")
+      validate = false
     } else {
-      setOccasionNameErr("");
+      setOccasionNameErr("")
     }
     if (!occasionTitle.replace(/\s+/g, "")) {
       setOccasionTitleErr("Occasion title is required");
@@ -65,7 +67,7 @@ const AddEditOccasion = () => {
     if (!occasionOrder) {
       setOccasionOrderErr("Occasion order is required");
       validate = false;
-    } else if (!numberRegEx.test(String(occasionOrder).toLowerCase())) {
+    } else if (!numberRegEx.test(occasionOrder)) {
       setOccasionOrderErr("Occasion order should be numeric");
       validate = false;
     } else {
@@ -87,12 +89,14 @@ const AddEditOccasion = () => {
   };
 
   const handleGetOccasionById = (id) => {
+    setLoader(true);
     let params = {
       occasionName: id,
     };
     getOccasionByName(params).then((res) => {
       let { status, data } = resHandle(res);
       console.log(status, data, "datadatadatadatadata");
+      setLoader(false);
       if (status === 200) {
         setOccasionName(data.occasionName);
         setOccasionTitle(data.displayTitle);
@@ -108,9 +112,10 @@ const AddEditOccasion = () => {
   const handleUpdateOccasion = (e) => {
     e.preventDefault();
     if (handleValidate()) {
+      setIsSubmit(true);
       let createOccasionObj = {
         "occasionIdentifier": "occasion",
-        occasionName,
+        occasionName: occasionName.toLowerCase(),
         data: {
           displayTitle: occasionTitle,
           displayOrder: parseInt(occasionOrder),
@@ -125,6 +130,7 @@ const AddEditOccasion = () => {
       console.log("createOccasionObj---", createOccasionObj);
       createOccasion(createOccasionObj).then((res) => {
         let { status, data } = resHandle(res);
+        setIsSubmit(false);
         if (status === 200) {
           toast.success(data.message);
           history.push("/occasion-management/occasion");
@@ -165,9 +171,10 @@ const AddEditOccasion = () => {
   const handleCreateTemplate = (e) => {
     e.preventDefault();
     if (handleValidate()) {
+      setIsSubmit(true);
       let createOccasionObj = {
         "occasionIdentifier": "occasion",
-        occasionName,
+        occasionName: occasionName.toLowerCase(),
         data: {
           displayTitle: occasionTitle,
           occasionIcon: base64,
@@ -179,6 +186,7 @@ const AddEditOccasion = () => {
       console.log("createOccasionObj---", createOccasionObj);
       createOccasion(createOccasionObj).then((res) => {
         let { status, data } = resHandle(res);
+        setIsSubmit(false);
         if (status === 200) {
           toast.success(data.message);
           history.push("/occasion-management/occasion");
@@ -197,136 +205,164 @@ const AddEditOccasion = () => {
       <div className="twocol sb page_header">
         <h2>{isAddOccasion ? "Add Occasion" : "Edit Occasion"} </h2>
       </div>
-
-      <form className="form-controller chosen">
-        <div className="form-group row">
-          <div className="col">
-            <label>Occasion Name</label>
-            <input
-              readOnly={isAddOccasion ? '' : 'readonly'}
-              type="text"
-              className="form-control"
-              value={occasionName}
-              name="topicName"
-              onChange={(e) => (
-                setOccasionName(e.target.value), setOccasionNameErr("")
+      {loader ? (
+        <Loader />
+      ) : (
+        <form className="form-controller chosen">
+          <div className="form-group row">
+            <div className="col">
+              <label>Occasion Name</label>
+              <input
+                readOnly={isAddOccasion ? '' : 'readonly'}
+                type="text"
+                className="form-control"
+                value={occasionName}
+                name="topicName"
+                onChange={(e) => (
+                  setOccasionName(e.target.value), setOccasionNameErr("")
+                )}
+              />
+              {occasionNameErr ? (
+                <div className="inlineerror">{occasionNameErr} </div>
+              ) : (
+                ""
               )}
-            />
-            {occasionNameErr ? (
-              <div className="inlineerror">{occasionNameErr} </div>
+            </div>
+            <div className="col">
+              <label>Occasion Title</label>
+              <input
+                type="text"
+                className="form-control"
+                value={occasionTitle}
+                name="topicName"
+                onChange={(e) => (
+                  setOccasionTitle(e.target.value), setOccasionTitleErr("")
+                )}
+              />
+              {occasionTitleErr && (
+                <div className="inlineerror">{occasionTitleErr} </div>
+              )}
+            </div>
+          </div>
+          <div className="form-group row">
+            <div className="col">
+              <label>Order</label>
+              <input
+                type="text"
+                className="form-control"
+                keyboardType='phone-pad'
+                value={occasionOrder}
+                name="topicName"
+                onChange={(e) => (
+                  setOccasionOrder(e.target.value), setOccasionOrderErr("")
+                )}
+              />
+              {occasionOrderErr && (
+                <div className="inlineerror">{occasionOrderErr} </div>
+              )}
+            </div>
+            <div className="col">
+              <label>Status</label>
+              <select
+                className="form-control"
+                name="cars"
+                value={occasionStatus}
+                onChange={(e) => (
+                  setOccasionStatus(e.target.value), setOccasionStatusErr("")
+                )}
+              >
+                <option value="true">Activate</option>
+                <option value="false">De-Activate</option>
+              </select>
+              {occasionStatusErr && (
+                <div className="inlineerror">{occasionStatusErr} </div>
+              )}
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <div className="col">
+              <label>Description</label>
+              <input
+                type="text"
+                className="form-control"
+                value={occasionDesc}
+                name="topicName"
+                onChange={(e) => (
+                  setOccasionDesc(e.target.value), setOccasionDescErr("")
+                )}
+              />
+              {occasionDescErr && (
+                <div className="inlineerror">{occasionDescErr} </div>
+              )}
+            </div>
+          </div>
+          <div className='form-group row'>
+            <div className='col'>
+              <label>Icon</label>
+              <input
+                type='file'
+                className='form-control'
+                value=''
+                onChange={handleFileChange}
+              />
+              {imageErr && (
+                <div className='inlineerror'>{imageErr} </div>
+              )}
+            </div>
+
+
+          </div>
+
+          {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
+
+
+          <div className="button300">
+            {isAddOccasion ? (
+              <button
+                type="button"
+                className="btn btn-primary rounded-pill"
+                onClick={handleCreateTemplate}
+                disabled={isSubmit ? 'disabled' : ''}
+              >
+                {isSubmit ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                )
+                  : ('')
+                }
+                {isSubmit ? ' Submitting..' : 'Create'}
+
+              </button>
             ) : (
-              ""
+              <button
+                type="button"
+                className="btn btn-primary rounded-pill"
+                onClick={handleUpdateOccasion}
+                disabled={isSubmit ? 'disabled' : ''}
+              >
+                {isSubmit ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                )
+                  : ('')
+                }
+                {isSubmit ? ' Submitting..' : 'Update'}
+              </button>
             )}
           </div>
-          <div className="col">
-            <label>Occasion Title</label>
-            <input
-              type="text"
-              className="form-control"
-              value={occasionTitle}
-              name="topicName"
-              onChange={(e) => (
-                setOccasionTitle(e.target.value), setOccasionTitleErr("")
-              )}
-            />
-            {occasionTitleErr && (
-              <div className="inlineerror">{occasionTitleErr} </div>
-            )}
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="col">
-            <label>Order</label>
-            <input
-              type="text"
-              className="form-control"
-              keyboardType='phone-pad'
-              value={occasionOrder}
-              name="topicName"
-              onChange={(e) => (
-                setOccasionOrder(e.target.value), setOccasionOrderErr("")
-              )}
-            />
-            {occasionOrderErr && (
-              <div className="inlineerror">{occasionOrderErr} </div>
-            )}
-          </div>
-          <div className="col">
-            <label>Status</label>
-            <select
-              className="form-control"
-              name="cars"
-              value={occasionStatus}
-              onChange={(e) => (
-                setOccasionStatus(e.target.value), setOccasionStatusErr("")
-              )}
-            >
-              <option value="true">Activate</option>
-              <option value="false">De-Activate</option>
-            </select>
-            {occasionStatusErr && (
-              <div className="inlineerror">{occasionStatusErr} </div>
-            )}
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <div className="col">
-            <label>Description</label>
-            <input
-              type="text"
-              className="form-control"
-              value={occasionDesc}
-              name="topicName"
-              onChange={(e) => (
-                setOccasionDesc(e.target.value), setOccasionDescErr("")
-              )}
-            />
-            {occasionDescErr && (
-              <div className="inlineerror">{occasionDescErr} </div>
-            )}
-          </div>
-        </div>
-        <div className='form-group row'>
-          <div className='col'>
-            <label>Icon</label>
-            <input
-              type='file'
-              className='form-control'
-              value=''
-              onChange={handleFileChange}
-            />
-            {imageErr && (
-              <div className='inlineerror'>{imageErr} </div>
-            )}
-          </div>
-
-
-        </div>
-
-        {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
-
-
-        <div className="button300">
-          {isAddOccasion ? (
-            <button
-              type="button"
-              className="btn btn-primary rounded-pill"
-              onClick={handleCreateTemplate}
-            >
-              Create
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="btn btn-primary rounded-pill"
-              onClick={handleUpdateOccasion}
-            >
-              Update
-            </button>
-          )}
-        </div>
-      </form>
+        </form>
+      )}
       <ToastContainer />
     </div>
   );

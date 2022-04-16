@@ -11,6 +11,9 @@ import { resHandle } from "../../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
 import siteSetting from "../../../config/env/Index";
 import { NavItem } from "react-bootstrap";
+import { Spinner } from "react-bootstrap"
+import { Loader } from '../../components/common/loader'
+
 const AddEditOccasionCard = () => {
   const history = useHistory();
   const { id } = useParams();
@@ -23,11 +26,8 @@ const AddEditOccasionCard = () => {
   const [occasionTitle, setOccasionTitle] = useState("");
   const [occasionTitleErr, setOccasionTitleErr] = useState("");
   const [occasionIcon, setOccasionIcon] = useState("");
-  const [occasionIconErr, setOccasionIconErr] = useState("");
   const [occasionStatus, setOccasionStatus] = useState("");
   const [occasionStatusErr, setOccasionStatusErr] = useState("");
-  const [occasionTemplates, setOccasionTemplates] = useState("");
-  const [occasionTemplatesErr, setOccasionTemplatesErr] = useState("");
   const [occasionOrder, setOccasionOrder] = useState("");
   const [occasionOrderErr, setOccasionOrderErr] = useState("");
   const [occasionDesc, setOccasionDesc] = useState("");
@@ -38,7 +38,8 @@ const AddEditOccasionCard = () => {
   const [fileName, setFileName] = useState('')
   const [editImage, setEditImage] = useState(false)
   const [imageErr, setImageErr] = useState('')
-  const [editCase, setEditCase] = useState(false)
+  const [loader, setLoader] = useState(false)
+  const [spinner, setSpinner] = useState(false)
 
   const breadcrumb = [
     { link: "/occasion-management/occasion", linkText: "Occasion Management" },
@@ -49,10 +50,10 @@ const AddEditOccasionCard = () => {
   const handleValidate = () => {
     let validate = true;
     setOccasionOrderErr("");
-    if(!numberRegEx.test(String(occasionOrder).toLowerCase())){
+    if (!numberRegEx.test(String(occasionOrder).toLowerCase())) {
       setOccasionOrderErr("Occasion order should be numeric");
       validate = false;
-    } 
+    }
     if (!occasionName.replace(/\s+/g, "")) {
       setOccasionNameErr("Occasion name is required");
       validate = false;
@@ -69,7 +70,7 @@ const AddEditOccasionCard = () => {
       setOccasionOrderErr("Occasion order is required");
       validate = false;
     } else {
-      
+
     }
     if (!occasionDesc.replace(/\s+/g, "")) {
       setOccasionDescErr("Occasion describtion is required");
@@ -198,7 +199,7 @@ const AddEditOccasionCard = () => {
           <div className="col">
             <label>Occasion Name</label>
             <input
-             readOnly={isAddOccasion ? '' :'readonly'}
+              readOnly={isAddOccasion ? '' : 'readonly'}
               type="text"
               className="form-control"
               value={occasionName}
@@ -230,7 +231,7 @@ const AddEditOccasionCard = () => {
           </div>
         </div>
         <div className="form-group row">
-        <div className="col">
+          <div className="col">
             <label>Order</label>
             <input
               type="text"
@@ -251,7 +252,7 @@ const AddEditOccasionCard = () => {
             <select
               className="form-control"
               name="cars"
-              value={!occasionStatus ? true : false  }
+              value={!occasionStatus ? true : false}
               onChange={(e) => (
                 setOccasionStatus(e.target.value), setOccasionStatusErr("")
               )}
@@ -264,7 +265,7 @@ const AddEditOccasionCard = () => {
             )}
           </div>
         </div>
-     
+
         <div className="form-group row">
           <div className="col">
             <label>Description</label>
@@ -283,23 +284,23 @@ const AddEditOccasionCard = () => {
           </div>
         </div>
         <div className='form-group row'>
-            <div className='col'>
-              <label>Icon</label>
-              <input
-                type='file'
-                className='form-control'
-                value=''
-                onChange={handleFileChange}
-              />
-                {imageErr && (
-                <div className='inlineerror'>{imageErr} </div>
-              )}
-            </div>
-           
-          
+          <div className='col'>
+            <label>Icon</label>
+            <input
+              type='file'
+              className='form-control'
+              value=''
+              onChange={handleFileChange}
+            />
+            {imageErr && (
+              <div className='inlineerror'>{imageErr} </div>
+            )}
           </div>
 
-          {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
+
+        </div>
+
+        {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
 
 
         <div className="button300">
@@ -307,7 +308,7 @@ const AddEditOccasionCard = () => {
             <button
               type="button"
               className="btn btn-primary rounded-pill"
-               onClick={handleCreateTemplate}
+              onClick={handleCreateTemplate}
             >
               Create
             </button>
