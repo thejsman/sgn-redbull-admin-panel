@@ -278,7 +278,7 @@ const AddEditFamilyRelationship = () => {
           </div> */}
 
           </div>
-          {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
+          {base64 ? <img className='iconImg' src={base64} alt='icon' /> : ''}
           <div className='button300'>
             {isAddFamilyRelationship ? (
               <button
