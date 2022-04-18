@@ -12,6 +12,7 @@ import AddEditOccasion from "./pages/occasionManagement/occasions/AddEditOccasio
 import AddEditFamilyRelationship from './pages/familyRelationship/AddEditFamilyRelationship';
 import FamilyRelationManagement from './pages/familyRelationship/FamilyRelationship';
 import Rozy from "./pages/rozy/rozy";
+import AddRozy from "./pages/rozy/AddRozy";
 //import AddEditOccasionCard from './pages/occasionCard/AddEditOccasionCard';
 
 
@@ -80,6 +81,8 @@ const Routes = (props) => {
             {/* <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
             <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} /> */}
             <PrivateRoute exact path='/rozy'         {...props} component={Rozy} />
+            <PrivateRoute exact path='/rozy/create'  {...props} component={AddRozy} />
+
 
             {/* Occasion Card Routes */}
             {/* <PrivateRoute exact path="/occasion-card/" {...props} component={Occasions} />

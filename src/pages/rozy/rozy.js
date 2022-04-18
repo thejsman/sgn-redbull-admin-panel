@@ -6,7 +6,7 @@ import Breadcrumb from '../../components/common/Breadcrumb'
 import { resHandle } from '../../components/util/utils'
 import { ToastContainer, toast } from 'react-toastify'
 import { Loader } from '../../components/common/loader'
-import { deleteRozy, rozyList } from '../../services/rozy'
+import { deleteRozy, rozyList } from '../../services/ApiRozy'
 import "bootstrap/dist/css/bootstrap.min.css";
 // To make rows collapsible
 import "bootstrap/js/src/collapse.js";
