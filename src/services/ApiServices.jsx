@@ -39,8 +39,7 @@ function handleLogin(params) {
   }
 
   function getTemplateByName(params) {
-    console.log("params",params.topicId);
-    return axios.post(Api.GET_TOPIC_BY_ID,params, {
+    return axios.get(`${Api.GET_TOPIC_BY_ID}?notificationName=${params.notificationName}`, {
       headers: headersApplicationJson,
     });
   }
@@ -52,14 +51,14 @@ function handleLogin(params) {
   }
 
   function deleteTemplate(params) {
-    return axios.delete(`${Api.DELETE_TOPIC}/${params.topicId}`, {
+    return axios.delete(`${Api.DELETE_TOPIC}?notificationName=${params.notificationName}`, {
       headers: headersApplicationJson,
     });
   }
 
   function templateList(params) {
-    return axios.post(
-      Api.GET_DOMAIN_LIST,params, {
+    return axios.get(
+      `${Api.GET_DOMAIN_LIST}?limit=${params.limit}&LastEvaluatedKey=${params.LastEvaluatedKey}`, {
         headers: headersApplicationJson,
       });
   }

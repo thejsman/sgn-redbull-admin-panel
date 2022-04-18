@@ -11,11 +11,11 @@ export default {
  
 
   // Tpoic Section
-  DELETE_TOPIC: siteSetting.api.url + "notification-delete",
-  CREATE_TOPIC: siteSetting.api.url + "notification-saveTemplate",
-  UPDATE_TOPIC: siteSetting.api.url + "notification-update",
-  GET_TOPIC_BY_ID: siteSetting.api.url + "notification-get",
-  GET_DOMAIN_LIST: siteSetting.api.url + "notification-list",
+  DELETE_TOPIC: siteSetting.api.template_url + "notification-delete",
+  CREATE_TOPIC: siteSetting.api.template_url + "notification-saveTemplate",
+  UPDATE_TOPIC: siteSetting.api.template_url + "notification-update",
+  GET_TOPIC_BY_ID: siteSetting.api.template_url + "notification-single",
+  GET_DOMAIN_LIST: siteSetting.api.template_url + "notification-list",
   
   // Occasion Section
   GET_OCCASION_LIST:      siteSetting.api.Sagoonlite_Url +"occasion/occasion",

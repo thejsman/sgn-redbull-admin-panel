@@ -231,7 +231,7 @@ const AddEditFamilyRelationship = () => {
             <div className="col">
               <label>Order</label>
               <input
-                type="text"
+                type='number'
                 className="form-control"
                 keyboardType='phone-pad'
                 value={order}
