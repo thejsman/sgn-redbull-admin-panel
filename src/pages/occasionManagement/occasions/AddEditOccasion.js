@@ -120,7 +120,7 @@ const AddEditOccasion = () => {
           displayTitle: occasionTitle,
           displayOrder: parseInt(occasionOrder),
           occasionDescription: occasionDesc,
-          occasionStatus: occasionStatus,
+          occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
         },
       };
 
@@ -180,7 +180,7 @@ const AddEditOccasion = () => {
           occasionIcon: base64,
           displayOrder: parseInt(occasionOrder),
           occasionDescription: occasionDesc,
-          occasionStatus: occasionStatus,
+          occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
         },
       };
       console.log("createOccasionObj---", createOccasionObj);

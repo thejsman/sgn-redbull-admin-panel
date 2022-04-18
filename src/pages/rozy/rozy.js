@@ -195,12 +195,12 @@ const Rozy = () => {
                     <tr key={"k" + i} className={"collapse multi-collapse" + i} id={"multiCollapseEx" + i}>
                       <td></td>
                       <td colSpan={3} className="is-breakable">
-                        <div style={{ "word-wrap": "break-word" }}>
-                          {item.content?.map((content, j) => (
-                            <p>{content.key} : {content.value}</p>
-                          )
-                          )}
-                        </div>
+
+                        {item.content?.map((content, j) => (
+                          <p>{content.key} : {content.value}</p>
+                        )
+                        )}
+
                       </td>
 
                     </tr>
@@ -209,7 +209,7 @@ const Rozy = () => {
 
                 ))
               ) : (
-                <tr>
+                <tr key="notfound">
                   <td colSpan='8'>
                     <div className='nodatafound'>
                       <h3>No Data Found</h3>

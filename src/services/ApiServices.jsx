@@ -74,7 +74,7 @@ function handleLogin(params) {
 
   
   function deleteOccasion(params) {
-    return axios.delete(`${Api.DELETE_OCCASION}`,params, {
+    return axios.delete(`${Api.DELETE_OCCASION}/${params.occasionName}`, {
       headers: headersApplicationJson,
     });
   }

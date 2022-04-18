@@ -166,7 +166,7 @@ const Occasions = () => {
                     </td>
 
                     <td>{item.displayOrder}</td>
-                    <td>{item.occasionStatus == "true" ? "Activated" : "Deactivated"}</td>
+                    <td>{item.occasionStatus ? "Activated" : "Deactivated"}</td>
 
                     <td>
                       <div className="action">
