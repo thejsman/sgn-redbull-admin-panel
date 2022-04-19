@@ -25,6 +25,8 @@ const AddEditOccasion = () => {
   const [occasionIconErr, setOccasionIconErr] = useState("");
   const [occasionStatus, setOccasionStatus] = useState(true);
   const [occasionStatusErr, setOccasionStatusErr] = useState("");
+  const [occasionType, setOccasionType] = useState('private');
+  const [occasionTypeErr, setOccasionTypeErr] = useState("");
   const [occasionOrder, setOccasionOrder] = useState("");
   const [occasionOrderErr, setOccasionOrderErr] = useState("");
   const [occasionDesc, setOccasionDesc] = useState("");
@@ -105,6 +107,7 @@ const AddEditOccasion = () => {
         setOccasionOrder(data.displayOrder);
         setOccasionDesc(data.occasionDescription);
         setBase64(data.occasionIcon);
+        setOccasionType(data.occasionType);
       } else {
       }
     });
@@ -120,6 +123,7 @@ const AddEditOccasion = () => {
           displayTitle: occasionTitle,
           displayOrder: parseInt(occasionOrder),
           occasionDescription: occasionDesc,
+          occasionType: occasionType,
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
         },
       };
@@ -180,6 +184,7 @@ const AddEditOccasion = () => {
           occasionIcon: base64,
           displayOrder: parseInt(occasionOrder),
           occasionDescription: occasionDesc,
+          occasionType: occasionType,
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
         },
       };
@@ -298,6 +303,23 @@ const AddEditOccasion = () => {
             </div>
           </div>
           <div className='form-group row'>
+            <div className="col">
+              <label>Occasion Type</label>
+              <select
+                className="form-control"
+                name="occassionType"
+                value={occasionType}
+                onChange={(e) => (
+                  setOccasionType(e.target.value), setOccasionTypeErr("")
+                )}
+              >
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+              </select>
+              {occasionTypeErr && (
+                <div className="inlineerror">{occasionTypeErr} </div>
+              )}
+            </div>
             <div className='col'>
               <label>Icon</label>
               <input

@@ -133,7 +133,7 @@ const Occasions = () => {
                 <th>Title</th>
                 <th>Icon</th>
                 <th>
-                  <span className="t_min_w">Description</span>
+                  Occasion Type
                 </th>
 
                 <th>Order</th>
@@ -161,7 +161,7 @@ const Occasions = () => {
                     </td>
                     <td>
                       <span style={{ whiteSpace: "pre-wrap" }}>
-                        {item.occasionDescription}
+                        {item.occasionType}
                       </span>
                     </td>
 
