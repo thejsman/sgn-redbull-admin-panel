@@ -80,8 +80,9 @@ const Routes = (props) => {
             {/* Rozy Routes */}
             {/* <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
             <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} /> */}
-            <PrivateRoute exact path='/rozy'         {...props} component={Rozy} />
-            <PrivateRoute exact path='/rozy/create'  {...props} component={AddRozy} />
+            <PrivateRoute exact path='/rozy'            {...props} component={Rozy} />
+            <PrivateRoute exact path='/rozy/create'     {...props} component={AddRozy} />
+            <PrivateRoute exact path='/rozy/edit/:id'   {...props} component={AddRozy} />
 
 
             {/* Occasion Card Routes */}

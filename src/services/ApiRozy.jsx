@@ -25,14 +25,15 @@ function createRozy(params) {
   }
 
   function updateRozy(params) {
-    return axios.put(Api.UPDATE_ROZY, params, {
+    return axios.patch(Api.UPDATE_ROZY, params, {
       headers: headersApplicationJson,
     });
   }
 
   function deleteRozy(params) {
-    return axios.delete(`${Api.DELETE_ROZY}?relationshipName=${params.relationshipName}`, {
+    return axios.delete(`${Api.DELETE_ROZY}`, {
       headers: headersApplicationJson,
+      data: params
     });
   }
 

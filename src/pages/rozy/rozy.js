@@ -34,8 +34,10 @@ const Rozy = () => {
     getRozyList()
   }, [])
 
-  const editPages = _id => {
-    history.push('/rozy/edit/' + _id)
+  const editPages = item => {
+    console.log('ssssssssss', item)
+    history.push({ pathname: "/rozy/edit/" + item.section, state: item });
+
   }
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`)
@@ -51,12 +53,20 @@ const Rozy = () => {
       if (status === 200) {
         setLoader(false)
         let rozyData = JSON.parse(data.message)
+        console.log('rozyData', rozyData);
         rozyData = rozyData.reduce((result, item) => {
+          let status = true;
+          if (item.active) {
+            status = true;
+          } else if (item.active == false) {
+            status = false;
+          }
           if (result[item.sectionName] == undefined)
-            result[item.sectionName] = { section: item.sectionName, languages: [item.sectionLanguage], content: [{ key: item.sectionLanguage, value: item.content }] };
+            result[item.sectionName] = { section: item.sectionName, languages: [item.sectionLanguage], content: [{ key: item.sectionLanguage, value: item.content, status: status }] };
           else {
+
             result[item.sectionName]["languages"].push(item.sectionLanguage);
-            result[item.sectionName]["content"].push({ key: item.sectionLanguage, value: item.content });
+            result[item.sectionName]["content"].push({ key: item.sectionLanguage, value: item.content, status: status });
           }
 
           return result;
@@ -96,35 +106,7 @@ const Rozy = () => {
   // all handler end
   return (
     <div className='page_wrapper'>
-      <Modal show={confirmModal} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p className='text-center'>
-            Are you sure you want to delete this Rozy?
-          </p>
-          <div className='d-flex justify-content-center pb-4'>
-            <button
-              onClick={handleClose}
-              className='btn btn-dark btn-sm pl-5 pr-5'
-            >
-              No
-            </button>
-            <button
-              // onClick={handleDeleteRelationship}
-              className='btn btn-danger btn-sm ml-3 pl-5 pr-5'
-            >
-              Yes
-            </button>
-          </div>
-        </Modal.Body>
-      </Modal>
 
-      {/* <div className="search_bar">
-                <i className="fa fa-search" />
-                <input type="text" className="form-control" placeholder="Search Topic" value={search} name="search" onChange={handlerOnChange} />
-            </div> */}
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className='twocol sb page_header'>
@@ -177,18 +159,11 @@ const Rozy = () => {
 
                       <td>
                         <div className='action'>
-                          <span onClick={() => editPages(item.section)}>
+                          <span onClick={() => editPages(item)}>
                             <i className='fas fa-edit'></i>
                           </span>
 
-                          <span
-                            onClick={() => (
-                              setConfirmModal(true),
-                              setRelationshipName(item.section)
-                            )}
-                          >
-                            <i className='fas fa-trash-alt'></i>
-                          </span>
+
                         </div>
                       </td>
                     </tr>
