@@ -6,11 +6,15 @@
 //dev
 export const devSetting = {
   api: {
-    url: "https://h0myxpanyf.execute-api.us-east-1.amazonaws.com/dev/",
+    url: "https://prdc113ea0.execute-api.us-east-1.amazonaws.com/dev/",
     AUTH: "Basic c29ydGVkX0F1dGg6TXpDWTd5S0ZubHl4dTdHdg==",
     mode: "cors",
     s3_url: "https://devcdn.gosorted.com/",
     url_Prod: "https://devapi.gosorted.com/Sagoon/api/v1/",
+    Sagoonlite_Url : "https://dev.sagoonlite.com/",
+    Occasion_url  :"https://10z7l690ic.execute-api.eu-central-1.amazonaws.com/dev/",
+    rozy_url : "https://6k0xfuii3e.execute-api.eu-central-1.amazonaws.com/dev/",
+    template_url : "https://dev.sagoonlite.com/templateAdmin/"
 
   },
 

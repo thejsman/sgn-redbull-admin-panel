@@ -8,8 +8,7 @@ import { deleteTemplate, templateList } from '../../services/ApiServices'
 import { resHandle } from '../../components/util/utils'
 import { ToastContainer, toast } from 'react-toastify'
 import { Loader } from '../../components/common/loader'
-import siteSetting from '../../config/env/Index'
-import moment from 'moment'
+
 
 const TopicManagement = () => {
   const history = useHistory()
@@ -38,6 +37,7 @@ const TopicManagement = () => {
     console.log(`active page is ${pageNumber}`)
   }
   const getTemplateList = () => {
+    setLoader(true)
     let params = {
       limit: 10,
       LastEvaluatedKey: 'null'
@@ -45,6 +45,7 @@ const TopicManagement = () => {
     templateList(params).then(res => {
       let { status, data } = resHandle(res)
       if (status === 200) {
+        setLoader(false)
         setTemplateList(data.data.Items)
       }
     })
@@ -52,13 +53,14 @@ const TopicManagement = () => {
 
   const handleDeleteTemplate = () => {
     let params = {
-      topicId: notificationName
+      notificationName: notificationName
     }
     handleClose()
+    setLoader(true)
     deleteTemplate(params).then(res => {
-      getTemplateList()
       let { status, data } = resHandle(res)
       if (status === 200) {
+        setLoader(false)
         toast.success(data.message)
         getTemplateList()
       } else {

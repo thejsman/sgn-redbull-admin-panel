@@ -349,7 +349,7 @@ const AskerManagement = () => {
                                             <td>
                                                 <div className="action">
                                                     {item.status == 2 ? <span onClick={() => (setStatusModal(true), setConfirmUser(item))}>
-                                                        <i class="fas fa-unlock text-success"></i>
+                                                        <i className="fas fa-unlock text-success"></i>
                                                     </span> : <span onClick={() => (setStatusModal(true), setConfirmUser(item))}>
                                                         <i className="fas fa-ban text-warning"></i>
                                                     </span>}
