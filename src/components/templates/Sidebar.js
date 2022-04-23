@@ -41,7 +41,7 @@ const Sidebar = () => {
               exact
               to="/occasion-management/occasion"
               className={
-                (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion"))
+                (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion/") || location.pathname.includes("/template/"))
                   ? "active"
                   : ""
               }
@@ -53,7 +53,7 @@ const Sidebar = () => {
             <div
               className="submenu"
               style={{
-                display: (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion/"))
+                display: (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion/") || location.pathname.includes("/template/"))
                   ? "block"
                   : "none",
               }}
@@ -68,7 +68,7 @@ const Sidebar = () => {
               > <i className="fab fa-elementor"></i>{" "}Occasions</NavLink>
               <NavLink to="/occasion-management/templates"
                 className={
-                  location.pathname.includes("/occasion-management/templates")
+                  (location.pathname.includes("/occasion-management/templates") || location.pathname.includes("/template/"))
                     ? "active"
                     : ""
                 }
@@ -76,12 +76,12 @@ const Sidebar = () => {
             </div>
           </div>
         </li>
-        {/* <li>
-          <NavLink to="/occasion-card/create"  >
-            <i className="fas fa-users"></i>{" "}
+        <li>
+          <NavLink to="/card/occasions/create"  >
+            <i className="fa fa-credit-card"></i>{" "}
             <span className="menu_text">Occasion Card</span>
           </NavLink>
-        </li> */}
+        </li>
         <li>
           <NavLink to="/rozy"  >
             <i className="fas fa-crown"></i>{" "}
