@@ -33,8 +33,8 @@ const Templates = () => {
     getTemplateList();
   }, []);
 
-  const editPages = (_id) => {
-    history.push("/template/edit/" + _id);
+  const editPages = (occasionName, templateName) => {
+    history.push("/template/edit/" + occasionName + "/" + templateName);
   };
   const handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);

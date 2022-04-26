@@ -14,6 +14,7 @@ import FamilyRelationManagement from './pages/familyRelationship/FamilyRelations
 import Rozy from "./pages/rozy/rozy";
 import AddRozy from "./pages/rozy/AddRozy";
 import Templates from "./pages/occasionManagement/templates/Templates";
+import AddEditTemplate from "./pages/occasionManagement/templates/AddEditTemplate";
 import AddEditOccasionCard from "./pages/cards/occasionCards/AddEditOccasionCard";
 
 
@@ -75,8 +76,8 @@ const Routes = (props) => {
 
             {/* Template Management Routes */}
             <PrivateRoute exact path="/occasion-management/templates" {...props} component={Templates} />
-            <PrivateRoute exact path="/template/create" {...props} component={AddEditOccasion} />
-            <PrivateRoute exact path="/template/edit/:id" {...props} component={AddEditOccasion} />
+            <PrivateRoute exact path="/template/create" {...props} component={AddEditTemplate} />
+            <PrivateRoute exact path="/template/edit/:oname/:tname" {...props} component={AddEditTemplate} />
 
 
             {/* Family Relation Routes */}
