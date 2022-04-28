@@ -107,7 +107,7 @@ const AddEditOccasion = () => {
         setOccasionOrder(data.displayOrder);
         setOccasionDesc(data.occasionDescription);
         setBase64(data.occasionIcon);
-        setOccasionType(data.occasionType);
+        setOccasionType(data.occasionType ? data.occasionType : 'private');
       } else {
       }
     });
@@ -116,6 +116,7 @@ const AddEditOccasion = () => {
     e.preventDefault();
     if (handleValidate()) {
       setIsSubmit(true);
+      debugger;
       let createOccasionObj = {
         "occasionIdentifier": "occasion",
         occasionName: occasionName.toLowerCase(),

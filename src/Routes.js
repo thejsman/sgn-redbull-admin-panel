@@ -13,7 +13,9 @@ import AddEditFamilyRelationship from './pages/familyRelationship/AddEditFamilyR
 import FamilyRelationManagement from './pages/familyRelationship/FamilyRelationship';
 import Rozy from "./pages/rozy/rozy";
 import AddRozy from "./pages/rozy/AddRozy";
-//import AddEditOccasionCard from './pages/occasionCard/AddEditOccasionCard';
+import Templates from "./pages/occasionManagement/templates/Templates";
+import AddEditTemplate from "./pages/occasionManagement/templates/AddEditTemplate";
+import AddEditOccasionCard from "./pages/cards/occasionCards/AddEditOccasionCard";
 
 
 const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
@@ -71,6 +73,13 @@ const Routes = (props) => {
             <PrivateRoute exact path="/occasion/create" {...props} component={AddEditOccasion} />
             <PrivateRoute exact path="/occasion/edit/:id" {...props} component={AddEditOccasion} />
 
+
+            {/* Template Management Routes */}
+            <PrivateRoute exact path="/occasion-management/templates" {...props} component={Templates} />
+            <PrivateRoute exact path="/template/create" {...props} component={AddEditTemplate} />
+            <PrivateRoute exact path="/template/edit/:oname/:tname" {...props} component={AddEditTemplate} />
+
+
             {/* Family Relation Routes */}
             <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
             <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
@@ -78,16 +87,14 @@ const Routes = (props) => {
 
 
             {/* Rozy Routes */}
-            {/* <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
-            <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} /> */}
             <PrivateRoute exact path='/rozy'            {...props} component={Rozy} />
             <PrivateRoute exact path='/rozy/create'     {...props} component={AddRozy} />
             <PrivateRoute exact path='/rozy/edit/:id'   {...props} component={AddRozy} />
 
 
             {/* Occasion Card Routes */}
+            <PrivateRoute exact path="/card/occasions/create" {...props} component={AddEditOccasionCard} />
             {/* <PrivateRoute exact path="/occasion-card/" {...props} component={Occasions} />
-            <PrivateRoute exact path="/occasion-card/create" {...props} component={AddEditOccasionCard} />
             <PrivateRoute exact path="/occasion-card/edit/:id" {...props} component={AddEditOccasion} /> */}
 
 

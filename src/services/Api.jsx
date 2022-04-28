@@ -23,6 +23,12 @@ export default {
   GET_OCCASION_BY_NAME:   siteSetting.api.Occasion_url+"occasion",
   DELETE_OCCASION:        siteSetting.api.Occasion_url+"occasion",
 
+  // Occasion Template Section
+  GET_OCCASION_TEMPLATE_LIST:      siteSetting.api.Occasion_url +"templates",
+  CREATE_OCCASION_TEMPLATE:        siteSetting.api.Occasion_url+"template",
+  GET_OCCASION_TEMPLATE_BY_NAME:   siteSetting.api.Occasion_url+"template",
+  DELETE_OCCASION_TEMPLATE:        siteSetting.api.Occasion_url+"template",
+
 
   //Family Relationship
   DELETE_FAMILY_RELATIONSHIP: siteSetting.api.Sagoonlite_Url + "familyAdmin/releationship/delete",
