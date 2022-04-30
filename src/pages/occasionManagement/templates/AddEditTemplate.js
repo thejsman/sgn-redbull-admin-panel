@@ -45,7 +45,7 @@ const AddEditTemplate = () => {
   ];
 
   const numberRegEx = /^[0-9\b]+$/;
-  const albhaRegEx = /^[a-zA-z]+$/;
+  const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
   const handleValidate = () => {
     let validate = true;
 
@@ -59,8 +59,8 @@ const AddEditTemplate = () => {
     if (!templateName.replace(/\s+/g, "")) {
       setTemplateNameErr("Template name is required");
       validate = false;
-    } else if (!albhaRegEx.test(templateName)) {
-      setTemplateNameErr("only alphabets are allowed")
+    } else if (!albhaNumericRegEx.test(templateName)) {
+      setTemplateNameErr("only alphanumeric values are allowed")
       validate = false
     } else {
       setTemplateNameErr("")
