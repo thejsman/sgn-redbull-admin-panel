@@ -47,9 +47,9 @@ export default {
 
 
   // vouchers Section
-  GET_VOCHERS_LIST:      siteSetting.api.voucher_url +"list",
-  CREATE_VOCHERS:        siteSetting.api.voucher_url+"create",
-  UPDATE_VOCHERS:          siteSetting.api.voucher_url+"update",
+  GET_VOUCHERS_LIST:      siteSetting.api.voucher_url +"list",
+  CREATE_VOUCHERS:        siteSetting.api.voucher_url+"create",
+  UPDATE_VOUCHERS:          siteSetting.api.voucher_url+"update",
   GET_COUPONLIST_BY_PRODUCTNAME:   siteSetting.api.voucher_url+"/get",
   GET_COUPONDETAIL_BY_COUPONID:   siteSetting.api.voucher_url+"/getById",
  

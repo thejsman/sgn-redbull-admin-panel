@@ -13,7 +13,7 @@ const headersApplicationJson = {
   "Access-Control-Allow-Origin" : "*"
 };
 function createVoucher(params) {
-    return axios.post(Api.CREATE_VOCHERS, params, {
+    return axios.post(Api.CREATE_VOUCHERS, params, {
       headers: headersApplicationJson,
     });
   }
@@ -26,7 +26,7 @@ function createVoucher(params) {
   }
 
   function updateVoucher(params) {
-    return axios.patch(Api.UPDATE_VOCHERS, params, {
+    return axios.patch(Api.UPDATE_VOUCHERS, params, {
       headers: headersApplicationJson,
     });
   }
@@ -34,7 +34,7 @@ function createVoucher(params) {
 
   function VoucherList(params) {
     return axios.get(
-       Api.GET_VOCHERS_LIST +'?limit='+params.limit+'&pk=null', {
+       Api.GET_VOUCHERS_LIST +'?limit='+params.limit+'&pk=null', {
         headers: headersApplicationJson,
       });
   }

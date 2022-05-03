@@ -10,7 +10,7 @@ import { Loader } from '../../components/common/loader'
 import moment from 'moment'
 
 
-const Vocher = () => {
+const Voucher = () => {
   const history = useHistory()
   const breadcrumb = [{ link: '', linkText: 'Voucher Management' }]
   const [itemId, setItemId] = useState([]);
@@ -25,7 +25,7 @@ const Vocher = () => {
 
   // all handler start
   useEffect(() => {
-    getVocherList()
+    getVoucherList()
   }, [])
 
   const editPages = _id => {
@@ -34,7 +34,7 @@ const Vocher = () => {
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`)
   }
-  const getVocherList = () => {
+  const getVoucherList = () => {
     setLoader(true)
     let params = {
       limit: 100,
@@ -79,9 +79,9 @@ const Vocher = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className='twocol sb page_header'>
-        <h2>Vocher Management</h2>
+        <h2>Voucher Management</h2>
         <Link to='/voucher/create' className='btn btn-primary btn-sm'>
-          Add Vocher
+          Add Voucher
         </Link>
       </div>
       <div className='twocol sb page_header'>
@@ -173,4 +173,4 @@ const Vocher = () => {
     </div >
   )
 }
-export default Vocher
+export default Voucher

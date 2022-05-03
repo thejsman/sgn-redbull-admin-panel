@@ -91,7 +91,7 @@ const Sidebar = () => {
         <li>
           <NavLink to="/voucher"  >
             <i className="fas fa-gift"></i>{" "}
-            <span className="menu_text">Vocher</span>
+            <span className="menu_text">Voucher</span>
           </NavLink>
         </li>
       </ul>
