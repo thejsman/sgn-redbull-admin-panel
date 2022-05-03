@@ -88,6 +88,12 @@ const Sidebar = () => {
             <span className="menu_text">Rozy</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/voucher"  >
+            <i className="fas fa-gift"></i>{" "}
+            <span className="menu_text">Vocher</span>
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

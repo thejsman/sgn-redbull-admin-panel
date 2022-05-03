@@ -44,5 +44,13 @@ export default {
   UPDATE_ROZY:          siteSetting.api.Sagoonlite_Url+"rozy/rozy",
   GET_ROZY_BY_NAME:   siteSetting.api.Sagoonlite_Url+"rozy/rozy",
   DELETE_ROZY:        siteSetting.api.Sagoonlite_Url+"rozy/rozy",
+
+
+  // vouchers Section
+  GET_VOCHERS_LIST:      siteSetting.api.voucher_url +"list",
+  CREATE_VOCHERS:        siteSetting.api.voucher_url+"create",
+  UPDATE_VOCHERS:          siteSetting.api.voucher_url+"update",
+  GET_COUPONLIST_BY_PRODUCTNAME:   siteSetting.api.voucher_url+"/get",
+  GET_COUPONDETAIL_BY_COUPONID:   siteSetting.api.voucher_url+"/getById",
  
 };

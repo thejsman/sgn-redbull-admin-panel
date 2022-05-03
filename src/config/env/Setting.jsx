@@ -15,6 +15,7 @@ export const devSetting = {
     Occasion_url  :"https://10z7l690ic.execute-api.eu-central-1.amazonaws.com/dev/",
     rozy_url : "https://6k0xfuii3e.execute-api.eu-central-1.amazonaws.com/dev/",
     template_url : "https://dev.sagoonlite.com/templateAdmin/",
+    voucher_url : "https://dev.sagoonlite.com/adminVoucher/"
     
 
   },
