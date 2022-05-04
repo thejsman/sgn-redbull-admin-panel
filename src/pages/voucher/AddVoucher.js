@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   createVoucher,
   getVoucherByName,
@@ -11,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Spinner } from "react-bootstrap"
 import { Loader } from '../../components/common/loader';
 import moment from "moment";
+import DatePicker from "react-datepicker";
 
 
 const AddVoucher = () => {
@@ -23,7 +25,7 @@ const AddVoucher = () => {
   const [variantIdErr, setVariantIdErr] = useState('');
   const [productName, setProductName] = useState('');
   const [productNameErr, setProductNameErr] = useState('');
-  const [validTill, setValidTill] = useState('');
+  const [validTill, setValidTill] = useState(new Date());
   const [validTillErr, setValidTillErr] = useState('');
   const [coupon, setCoupon] = useState('');
   const [couponErr, setCouponErr] = useState('');
@@ -85,7 +87,7 @@ const AddVoucher = () => {
       setValueErr("")
     }
 
-    if (!validTill.replace(/\s+/g, '')) {
+    if (!validTill) {
       setValidTillErr("Till Date is required")
       validate = false
     } else {
@@ -199,15 +201,8 @@ const AddVoucher = () => {
             </div>
             <div className="col">
               <label>Valid Till Date</label>
-              <input
-                type='text'
-                className="form-control"
-                value={validTill}
-                name="validTill"
-                onChange={(e) => (
-                  setValidTill(e.target.value), setValidTillErr("")
-                )}
-              />
+              <DatePicker selected={validTill} dateFormat="dd/MM/yyyy" className="form-control datePicker" onChange={(date) => setValidTill(date)} />
+
               {validTillErr && (
                 <div className="inlineerror">{validTillErr} </div>
               )}
@@ -247,9 +242,10 @@ const AddVoucher = () => {
           <div className='form-group row'>
 
             <div className="col">
-              <label>Coupon</label>
+              <label>Coupons</label>
               <input
                 type='text'
+                placeholder="Enter Coupons with Comma Separated. Like (coupon1,coupon2)"
                 className="form-control"
                 keyboardType='phone-pad'
                 value={coupon}
