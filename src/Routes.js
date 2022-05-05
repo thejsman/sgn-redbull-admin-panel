@@ -16,6 +16,11 @@ import AddRozy from "./pages/rozy/AddRozy";
 import Templates from "./pages/occasionManagement/templates/Templates";
 import AddEditTemplate from "./pages/occasionManagement/templates/AddEditTemplate";
 import AddEditOccasionCard from "./pages/cards/occasionCards/AddEditOccasionCard";
+import Voucher from "./pages/voucher/Voucher";
+import Coupons from "./pages/voucher/coupons";
+import AddVoucher from "./pages/voucher/AddVoucher";
+import EditCoupon from "./pages/voucher/editCoupon";
+import OccasionCard from "./pages/cards/occasionCards/OccasionCard";
 
 
 const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
@@ -94,9 +99,14 @@ const Routes = (props) => {
 
             {/* Occasion Card Routes */}
             <PrivateRoute exact path="/card/occasions/create" {...props} component={AddEditOccasionCard} />
-            {/* <PrivateRoute exact path="/occasion-card/" {...props} component={Occasions} />
-            <PrivateRoute exact path="/occasion-card/edit/:id" {...props} component={AddEditOccasion} /> */}
+            <PrivateRoute exact path="/card/occasions" {...props} component={OccasionCard} />
+            {/*<PrivateRoute exact path="/occasion-card/edit/:id" {...props} component={AddEditOccasion} /> */}
 
+            {/* Voucher Routes */}
+            <PrivateRoute exact path="/voucher" {...props} component={Voucher} />
+            <PrivateRoute exact path="/coupons/:id" {...props} component={Coupons} />
+            <PrivateRoute exact path="/voucher/create" {...props} component={AddVoucher} />
+            <PrivateRoute exact path="/coupon/edit/:id" {...props} component={EditCoupon} />
 
           </Switch>
         </Router>

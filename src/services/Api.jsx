@@ -44,5 +44,20 @@ export default {
   UPDATE_ROZY:          siteSetting.api.Sagoonlite_Url+"rozy/rozy",
   GET_ROZY_BY_NAME:   siteSetting.api.Sagoonlite_Url+"rozy/rozy",
   DELETE_ROZY:        siteSetting.api.Sagoonlite_Url+"rozy/rozy",
+
+
+  // vouchers Section
+  GET_VOUCHERS_LIST:      siteSetting.api.voucher_url +"list",
+  CREATE_VOUCHERS:        siteSetting.api.voucher_url+"create",
+  UPDATE_VOUCHERS:          siteSetting.api.voucher_url+"update",
+  GET_COUPONLIST_BY_PRODUCTNAME:   siteSetting.api.voucher_url+"/get",
+  GET_COUPONDETAIL_BY_COUPONID:   siteSetting.api.voucher_url+"/getById",
+
+    // Card Occasion Section
+    GET_CARD_OCCASION_LIST:      siteSetting.api.cardOccasion_url +"cards/cardIdentifier",
+    CREATE_CARD_OCCASION:        siteSetting.api.cardOccasion_url+"create-card",
+    UPDATE_CARD_OCCASION:          siteSetting.api.cardOccasion_url+"create-card",
+    GET_CARD_OCCASION_BY_OCCASIONNAME:   siteSetting.api.cardOccasion_url+"card/",
+    DELETE_CARD_OCCASION:        siteSetting.api.cardOccasion_url+"delete-card",
  
 };

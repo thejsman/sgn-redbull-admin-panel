@@ -402,6 +402,9 @@ label {
   outline: 0;
   box-shadow: 0 0 0 0.2rem $secondary;
 }
+.datePicker {
+  height: 43px !important;
+}
 .form-control {
   background: #fff;
   border: 1px solid #e6e6e6;
@@ -1652,6 +1655,12 @@ td.cm_2_line span {
   white-space: pre-wrap;
 word-wrap: break-word;
 background-color: #eef1f5;
+}
+
+.tablecollapse .text-wrap {
+  word-break: break-all;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .iconImg {

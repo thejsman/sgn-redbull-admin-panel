@@ -77,15 +77,22 @@ const Sidebar = () => {
           </div>
         </li>
         <li>
-          <NavLink to="/card/occasions/create"  >
+          <NavLink to="/card/occasions/"  >
             <i className="fa fa-credit-card"></i>{" "}
             <span className="menu_text">Occasion Card</span>
           </NavLink>
         </li>
+
         <li>
           <NavLink to="/rozy"  >
             <i className="fas fa-crown"></i>{" "}
             <span className="menu_text">Rozy</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/voucher"  >
+            <i className="fas fa-gift"></i>{" "}
+            <span className="menu_text">Voucher</span>
           </NavLink>
         </li>
       </ul>

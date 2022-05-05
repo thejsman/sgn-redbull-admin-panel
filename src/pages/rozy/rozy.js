@@ -35,7 +35,6 @@ const Rozy = () => {
   }, [])
 
   const editPages = item => {
-    console.log('ssssssssss', item)
     history.push({ pathname: "/rozy/edit/" + item.section, state: item });
 
   }
