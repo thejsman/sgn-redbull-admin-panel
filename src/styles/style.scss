@@ -1657,6 +1657,12 @@ word-wrap: break-word;
 background-color: #eef1f5;
 }
 
+.tablecollapse .text-wrap {
+  word-break: break-all;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 .iconImg {
   width: 150px;
 }
