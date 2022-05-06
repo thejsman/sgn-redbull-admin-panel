@@ -53,9 +53,10 @@ const OccasionCard = () => {
   const handleDeleteCardOccasion = () => {
     let params = {
       cardName: cardName,
+      cardIdentifier: "cardIdentifier"
     }
-    handleClose()
-    setLoader(true)
+    handleClose();
+    setLoader(true);
     deleteCardOccasion(params).then(res => {
       setLoader(false)
       let { status, data } = resHandle(res)

@@ -178,16 +178,16 @@ const AddEditOccasionCard = () => {
                     setLottieBackgroundBase64(reader.result);
                     setLottieBackgroundFileName(file.name);
                     setLottieBackgroundFileNameErr("")
+                    setEditImageBackground(true);
+
                 } else {
                     setLottieGraphicBase64(reader.result);
                     setLottieGraphicFileName(file.name);
                     setLottieGraphicFileNameErr("");
+                    setEditImageGraphic(true);
                 }
-                // setBase64(reader.result)
-                // setIconUrl(file.name)
-                // setEditImage(true)
+
             },
-            false
         )
         if (file) {
             reader.readAsDataURL(file)
@@ -201,12 +201,105 @@ const AddEditOccasionCard = () => {
         }
         if (window.location.pathname !== "/card/occasions/create") {
             setLoader(true);
-            //handleGetRealtionShipById(id);
+            handleGetCardDetailById(id);
 
         }
     }, []);
 
 
+
+    const handleGetCardDetailById = (id) => {
+        let params = {
+            cardOccasionName: id,
+        };
+        getCardOccasionByName(params).then((res) => {
+            let { status, data } = resHandle(res);
+            console.log(status, data, "datadatadatadatadata");
+            if (status === 200) {
+                setLoader(false);
+                setCardName(data.cardName);
+                setStatus(data.status);
+
+
+                setHeadingText(data?.heading?.text);
+                setHeadingColor(data?.heading?.textColor);
+                setColor(data?.heading?.textColor);
+
+                setContentText(data.content.text);
+                setContentColor(data.content.textColor);
+                setColor3(data.content.textColor);
+
+
+                setCtaText(data.cta.text);
+                setCtaColor(data.cta.textColor);
+                setColor1(data.cta.textColor);
+                setCtaBGColor(data.cta.backgroundColor);
+                setColor2(data.cta.backgroundColor);
+                setCtaAction(data.cta.action);
+
+                setLottieBackgroundBase64(data.lottie.lottieBackground);
+                setColor4(data.lottie.backgroundColor);
+                setLottieColor(data.lottie.backgroundColor);
+                setLottieGraphicBase64(data.lottie.lottieGraphic);
+                setLottieBackgroundFileName(data.lottie.lottieBackgroundFileName);
+                setLottieGraphicFileName(data.lottie.lottieGraphicFileName);
+
+
+
+            } else {
+                setLoader(false);
+            }
+        });
+    };
+
+
+    const handleUpdateCardOccasion = e => {
+        e.preventDefault()
+        if (handleValidate()) {
+            setIsSubmit(true);
+            let createObj = {
+                cardIdentifier: "cardIdentifier",
+                cardName: cardName.toLowerCase(),
+                heading: {
+                    text: headingText,
+                    textColor: headingColor
+                },
+                cta: {
+                    text: ctaText,
+                    textColor: ctaColor,
+                    backgroundColor: ctaBGColor,
+                    action: ctaAction
+                },
+                content: {
+                    text: contentText,
+                    textColor: contentColor
+                },
+                lottie: {
+                    backgroundColor: lottieColor,
+                    lottieBackground: lottieBackgroundBase64,
+                    lottieBackgroundFileName: lottieBackgroundFileName,
+                    lottieGraphic: lottieGraphicBase64,
+                    lottieGraphicFileName: lottieGraphicFileName
+
+                },
+                status: status
+            }
+
+
+            console.log("createObj---", createObj);
+            updateCardOccasion(createObj).then((res) => {
+                let { status, data } = resHandle(res);
+                setIsSubmit(false);
+                if (status === 200) {
+                    toast.success(data.message);
+                    history.push("/card/occasions/");
+                } else {
+                    toast.success(data.message);
+                }
+            });
+
+        }
+    }
 
 
     const handleCreateCardOccasion = e => {
@@ -277,6 +370,7 @@ const AddEditOccasionCard = () => {
                                 type='text'
                                 className='form-control'
                                 name='cardName'
+                                value={cardName}
                                 onChange={e => (
                                     setCardName(e.target.value), setCardNameErr('')
                                 )}
@@ -316,7 +410,7 @@ const AddEditOccasionCard = () => {
                                     type='text'
                                     className='form-control'
                                     name='headingText'
-
+                                    value={headingText}
                                     onChange={e => (
                                         setHeadingText(e.target.value), setHeadingTextErr('')
                                     )}
@@ -386,7 +480,7 @@ const AddEditOccasionCard = () => {
                                     type='text'
                                     className='form-control'
                                     name='ctaText'
-
+                                    value={ctaText}
                                     onChange={e => (
                                         setCtaText(e.target.value), setCtaTextErr('')
                                     )}
@@ -493,7 +587,7 @@ const AddEditOccasionCard = () => {
                                     type='text'
                                     className='form-control'
                                     name='action'
-
+                                    value={ctaAction}
                                     onChange={e => (
                                         setCtaAction(e.target.value), setCtaActionErr('')
                                     )}
@@ -519,6 +613,7 @@ const AddEditOccasionCard = () => {
                                     type='text'
                                     className='form-control'
                                     name='contentText'
+                                    value={contentText}
                                     onChange={e => (
                                         setContentText(e.target.value), setContentTextErr('')
                                     )}
@@ -641,6 +736,7 @@ const AddEditOccasionCard = () => {
                                         {lottieBackgroundFileName ? lottieBackgroundFileName : 'Choose file'}
                                     </label>
                                 </div>
+                                {(!isAddCard && lottieBackgroundBase64) && <a href={lottieBackgroundBase64} download={lottieBackgroundFileName} target="blank"> {lottieBackgroundFileName} </a>}
                                 {lottieBackgroundFileNameErr && <div className='inlineerror'>{lottieBackgroundFileNameErr} </div>}
                             </div>
                             <div className='col'>
@@ -657,6 +753,7 @@ const AddEditOccasionCard = () => {
 
                                     </label>
                                 </div>
+                                {(!isAddCard && lottieGraphicBase64) && <a href={lottieGraphicBase64} target="blank" download={lottieGraphicFileName}> {lottieGraphicFileName} </a>}
                                 {lottieGraphicFileNameErr && <div className='inlineerror'>{lottieGraphicFileNameErr} </div>}
 
                             </div>
@@ -693,6 +790,7 @@ const AddEditOccasionCard = () => {
                             <button
                                 type='button'
                                 className='btn btn-primary rounded-pill'
+                                onClick={handleUpdateCardOccasion}
                                 disabled={isSubmit ? 'disabled' : ''}
                             >
                                 {isSubmit ? (

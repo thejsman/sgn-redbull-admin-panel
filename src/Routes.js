@@ -100,7 +100,7 @@ const Routes = (props) => {
             {/* Occasion Card Routes */}
             <PrivateRoute exact path="/card/occasions/create" {...props} component={AddEditOccasionCard} />
             <PrivateRoute exact path="/card/occasions" {...props} component={OccasionCard} />
-            {/*<PrivateRoute exact path="/occasion-card/edit/:id" {...props} component={AddEditOccasion} /> */}
+            <PrivateRoute exact path="/card/occasions/edit/:id" {...props} component={AddEditOccasionCard} />
 
             {/* Voucher Routes */}
             <PrivateRoute exact path="/voucher" {...props} component={Voucher} />
