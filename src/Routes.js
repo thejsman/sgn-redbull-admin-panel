@@ -21,6 +21,8 @@ import Coupons from "./pages/voucher/coupons";
 import AddVoucher from "./pages/voucher/AddVoucher";
 import EditCoupon from "./pages/voucher/editCoupon";
 import OccasionCard from "./pages/cards/occasionCards/OccasionCard";
+import AddEditTaskCard from "./pages/cards/taskCards/AddEdiTaskCard";
+import TaskCard from "./pages/cards/taskCards/TaskCard";
 
 
 const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
@@ -101,6 +103,12 @@ const Routes = (props) => {
             <PrivateRoute exact path="/card/occasions/create" {...props} component={AddEditOccasionCard} />
             <PrivateRoute exact path="/card/occasions" {...props} component={OccasionCard} />
             <PrivateRoute exact path="/card/occasions/edit/:id" {...props} component={AddEditOccasionCard} />
+
+            {/* Task Card Routes */}
+            <PrivateRoute exact path="/card/tasks/create" {...props} component={AddEditTaskCard} />
+            <PrivateRoute exact path="/card/tasks" {...props} component={TaskCard} />
+            <PrivateRoute exact path="/card/tasks/edit/:id" {...props} component={AddEditTaskCard} />
+
 
             {/* Voucher Routes */}
             <PrivateRoute exact path="/voucher" {...props} component={Voucher} />
