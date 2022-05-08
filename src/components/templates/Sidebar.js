@@ -77,12 +77,46 @@ const Sidebar = () => {
           </div>
         </li>
         <li>
-          <NavLink to="/card/occasions/"  >
-            <i className="fa fa-credit-card"></i>{" "}
-            <span className="menu_text">Occasion Card</span>
-          </NavLink>
-        </li>
+          <div className="">
+            <NavLink
+              exact
+              to="/card/occasions"
+              className={
+                (location.pathname.includes("/card/"))
+                  ? "active"
+                  : ""
+              }
+            >
+              <i className="fa fa-credit-card"></i>{" "}
 
+              <span className="menu_text">Cards management</span>
+            </NavLink>
+            <div
+              className="submenu"
+              style={{
+                display: (location.pathname.includes("/card/"))
+                  ? "block"
+                  : "none",
+              }}
+            >
+              <NavLink to="/card/occasions"
+                className={
+                  (location.pathname.includes("/card/occasions"))
+                    ? "active"
+                    : ""
+                }
+
+              > <i className="fab fa-elementor"></i>{" "}Occasion Cards</NavLink>
+              <NavLink to="/card/tasks"
+                className={
+                  (location.pathname.includes("/card/tasks"))
+                    ? "active"
+                    : ""
+                }
+              ><i className="fas fa-calendar-week"></i>{" "}Task Card</NavLink>
+            </div>
+          </div>
+        </li>
         <li>
           <NavLink to="/rozy"  >
             <i className="fas fa-crown"></i>{" "}

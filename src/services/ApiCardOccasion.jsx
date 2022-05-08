@@ -19,20 +19,21 @@ function createCardOccasion(params) {
 
   function getCardOccasionByName(params) {
     console.log("params",params);
-    return axios.get(`${Api.GET_CARD_OCCASION_BY_OCCASIONNAME}?relationshipName=${params.relationshipName}`, {
+    return axios.get(`${Api.GET_CARD_OCCASION_BY_OCCASIONNAME}cardIdentifier/${params.cardOccasionName}`, {
       headers: headersApplicationJson,
     });
   }
 
   function updateCardOccasion(params) {
-    return axios.put(Api.UPDATE_CARD_OCCASION, params, {
+    return axios.post(Api.UPDATE_CARD_OCCASION, params, {
       headers: headersApplicationJson,
     });
   }
 
   function deleteCardOccasion(params) {
-    return axios.delete(`${Api.DELETE_CARD_OCCASION}?relationshipName=${params.relationshipName}`, {
+    return axios.delete(Api.DELETE_CARD_OCCASION, {
       headers: headersApplicationJson,
+      data: params
     });
   }
 

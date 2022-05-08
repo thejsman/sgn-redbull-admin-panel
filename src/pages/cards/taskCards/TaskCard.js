@@ -9,10 +9,9 @@ import { ToastContainer, toast } from 'react-toastify'
 import { Loader } from '../../../components/common/loader'
 
 
-
-const OccasionCard = () => {
+const TaskCard = () => {
   const history = useHistory()
-  const breadcrumb = [{ link: '', linkText: 'Card Occasion Management' }]
+  const breadcrumb = [{ link: '', linkText: 'Task Cards Management' }]
 
   const [confirmModal, setConfirmModal] = useState(false)
   const [confirmMsg, setConfirmMsg] = useState('')
@@ -30,7 +29,7 @@ const OccasionCard = () => {
   }, [])
 
   const editPages = _id => {
-    history.push('/card/occasions/edit/' + _id)
+    history.push('/card/tasks/edit/' + _id)
   }
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`)
@@ -83,7 +82,7 @@ const OccasionCard = () => {
         </Modal.Header>
         <Modal.Body>
           <p className='text-center'>
-            Are you sure you want to delete this card occasion?
+            Are you sure you want to delete this task card?
           </p>
           <div className='d-flex justify-content-center pb-4'>
             <button
@@ -109,9 +108,9 @@ const OccasionCard = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className='twocol sb page_header'>
-        <h2>Card Occasion Management</h2>
-        <Link to='/card/occasions/create' className='btn btn-primary btn-sm'>
-          Add Card Occasion
+        <h2>Task Cards Management</h2>
+        <Link to='/card/tasks/create' className='btn btn-primary btn-sm'>
+          Add Task Card
         </Link>
       </div>
       <div className='twocol sb page_header'>
@@ -211,4 +210,4 @@ const OccasionCard = () => {
     </div>
   )
 }
-export default OccasionCard
+export default TaskCard

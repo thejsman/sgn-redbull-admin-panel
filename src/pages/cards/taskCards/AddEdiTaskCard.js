@@ -10,7 +10,7 @@ import { createCardOccasion, getCardOccasionByName, updateCardOccasion } from '.
 
 
 
-const AddEditOccasionCard = () => {
+const AddEditTaskCard = () => {
     const history = useHistory();
     const { id } = useParams();
 
@@ -68,8 +68,8 @@ const AddEditOccasionCard = () => {
 
 
     const breadcrumb = [
-        { link: '/card/occasions/', linkText: 'Occasion card' },
-        { link: '', linkText: 'Add Occasion Card' }
+        { link: '/card/tasks/', linkText: 'Task cards' },
+        { link: '', linkText: 'Add Task Card' }
     ]
 
     const albhaRegEx = /^[a-zA-z]+$/;
@@ -196,10 +196,10 @@ const AddEditOccasionCard = () => {
 
 
     useEffect(() => {
-        if (window.location.pathname == "/card/occasions/create") {
+        if (window.location.pathname == "/card/tasks/create") {
             setIsAddCard(true);
         }
-        if (window.location.pathname !== "/card/occasions/create") {
+        if (window.location.pathname !== "/card/tasks/create") {
             setLoader(true);
             handleGetCardDetailById(id);
 
@@ -292,7 +292,7 @@ const AddEditOccasionCard = () => {
                 setIsSubmit(false);
                 if (status === 200) {
                     toast.success(data.message);
-                    history.push("/card/occasions/");
+                    history.push("/card/tasks/");
                 } else {
                     toast.success(data.message);
                 }
@@ -338,7 +338,7 @@ const AddEditOccasionCard = () => {
                 setIsSubmit(false);
                 if (status === 200) {
                     toast.success(data.message);
-                    history.push("/card/occasions/");
+                    history.push("/card/tasks/");
                 } else {
                     toast.success(data.message);
                 }
@@ -357,7 +357,7 @@ const AddEditOccasionCard = () => {
         <div className='page_wrapper'>
             <Breadcrumb breadcrumb={breadcrumb} />
             <div className='twocol sb page_header'>
-                <h2>Add Occasion Card </h2>
+                <h2>Add Task Card </h2>
             </div>
             {loader ? (
                 <Loader />
@@ -819,4 +819,4 @@ const AddEditOccasionCard = () => {
     )
 }
 
-export default AddEditOccasionCard
+export default AddEditTaskCard
