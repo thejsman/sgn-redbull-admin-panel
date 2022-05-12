@@ -15,7 +15,6 @@ import { Loader } from '../../../components/common/loader'
 
 const AddEditTemplate = () => {
   const history = useHistory();
-  debugger;
   const { oname, tname } = useParams();
   ///const location=useLocation();
   // console.log("location",location.pathname);

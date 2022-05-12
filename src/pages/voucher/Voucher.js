@@ -37,10 +37,10 @@ const Voucher = () => {
   const getVoucherList = () => {
     setLoader(true)
     let params = {
-      limit: 100,
+      limit: 5000,
       LastEvaluatedKey: 'null',
       sOrder: 1,
-      eOrder: 101,
+      eOrder: 5001,
       scanOrder: true
     }
     VoucherList(params).then(res => {

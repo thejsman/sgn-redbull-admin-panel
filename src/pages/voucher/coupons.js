@@ -24,7 +24,6 @@ const Coupons = () => {
 
   // all handler start
   useEffect(() => {
-    debugger;
     getCouponList(id)
   }, [])
 

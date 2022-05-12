@@ -116,7 +116,6 @@ const AddEditOccasion = () => {
     e.preventDefault();
     if (handleValidate()) {
       setIsSubmit(true);
-      debugger;
       let createOccasionObj = {
         "occasionIdentifier": "occasion",
         occasionName: occasionName.toLowerCase(),
@@ -131,6 +130,7 @@ const AddEditOccasion = () => {
 
       if (editImage) {
         createOccasionObj.data['occasionIcon'] = base64;
+        createOccasionObj.data['fileName'] = fileName;
       }
       console.log("createOccasionObj---", createOccasionObj);
       createOccasion(createOccasionObj).then((res) => {
@@ -187,6 +187,7 @@ const AddEditOccasion = () => {
           occasionDescription: occasionDesc,
           occasionType: occasionType,
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
+          fileName: fileName
         },
       };
       console.log("createOccasionObj---", createOccasionObj);
@@ -316,6 +317,7 @@ const AddEditOccasion = () => {
               >
                 <option value="private">Private</option>
                 <option value="public">Public</option>
+                <option value="wishes">Wishes</option>
               </select>
               {occasionTypeErr && (
                 <div className="inlineerror">{occasionTypeErr} </div>
