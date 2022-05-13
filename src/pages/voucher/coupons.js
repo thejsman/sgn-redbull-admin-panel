@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useHistory, useParams } from 'react-router-dom'
-import { Modal, Dropdown } from 'react-bootstrap'
-import Pagination from 'react-js-pagination'
-import Breadcrumb from '../../components/common/Breadcrumb'
-import { couponList } from '../../services/ApiVoucher'
-import { resHandle } from '../../components/util/utils'
-import { ToastContainer, toast } from 'react-toastify'
-import { Loader } from '../../components/common/loader'
-import moment from 'moment'
-
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { Modal, Dropdown } from "react-bootstrap";
+import Pagination from "react-js-pagination";
+import Breadcrumb from "../../components/common/Breadcrumb";
+import { couponList } from "../../services/ApiVoucher";
+import { resHandle } from "../../components/util/utils";
+import { ToastContainer, toast } from "react-toastify";
+import { Loader } from "../../components/common/loader";
+import moment from "moment";
 
 const Coupons = () => {
   const history = useHistory()
