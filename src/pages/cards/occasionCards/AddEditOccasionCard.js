@@ -38,6 +38,8 @@ const AddEditOccasionCard = () => {
 
     const [ctaAction, setCtaAction] = useState("");
     const [ctaActionErr, setCtaActionErr] = useState('')
+    const [ctaActionTitle, setCtaActionTitle] = useState("");
+    const [ctaActionTitleErr, setCtaActionTitleErr] = useState('')
 
 
     const [color3, setColor3] = useState("#194D33");

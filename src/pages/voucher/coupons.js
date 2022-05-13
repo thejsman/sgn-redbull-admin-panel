@@ -18,10 +18,12 @@ const Coupons = () => {
   const [productName, setProductName] = useState([])
   const [couponArrList, setCouponList] = useState([])
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(100)
+  const [limit, setLimit] = useState(10)
   const [count, setCount] = useState(10)
   const [loader, setLoader] = useState(false)
-
+  const [pk, setPK] = useState(null)
+  const [couponVoucherIdPage, setcouponVoucherIdPage] = useState(null)
+  const [pageState, setPageState] = useState([{ page: 1, pk: null, couponVoucherId: null }])
   // all handler start
   useEffect(() => {
     getCouponList(id)
@@ -31,14 +33,28 @@ const Coupons = () => {
     history.push('/coupon/edit/' + _id)
   }
   const handlePageChange = pageNumber => {
+    debugger;
     console.log(`active page is ${pageNumber}`)
+    let pageno = parseInt(pageNumber);
+    if (pageno > page) {
+      let arr = pageState;
+      arr.push({ page: pageno, pk: pk, couponVoucherId: couponVoucherIdPage })
+      setPageState([...arr]);
+    } else {
+
+    }
+    setPage(pageno)
+
+    getCouponList(id);
   }
   const getCouponList = (id) => {
     setLoader(true)
     let params = {
-      limit: 100,
+      limit: limit,
       LastEvaluatedKey: 'null',
-      productName: id
+      productName: id,
+      pk: pk,
+      couponVoucherId: couponVoucherIdPage
 
     }
     couponList(params).then(res => {
@@ -46,6 +62,15 @@ const Coupons = () => {
       if (status === 200) {
         setLoader(false)
         setCouponList(data.data.Items)
+        if ((Object.keys(data.data.LastEvaluatedKey).length > 0) && data.data.LastEvaluatedKey.pk) {
+          setPK(data.data.LastEvaluatedKey.pk);
+          setcouponVoucherIdPage(data.data.LastEvaluatedKey.couponVoucherId)
+          setCount(count + 10)
+
+
+        } else {
+          setPK("0")
+        }
       }
     })
   }
