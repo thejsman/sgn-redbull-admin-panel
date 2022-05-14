@@ -76,7 +76,7 @@ const Occasions = () => {
     }).catch((err) => {
       setLoader(false)
       console.log("err", err)
-      toast.error("Some technical issue occured, Please try again later");
+      toast.error("Sorry, a technical error occurred! Please try again later")
     });;
   };
 

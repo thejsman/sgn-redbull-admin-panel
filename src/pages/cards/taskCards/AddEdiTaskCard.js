@@ -248,7 +248,11 @@ const AddEditTaskCard = () => {
 
             } else {
                 setLoader(false);
+                toast.error("Sorry, a technical error occurred! Please try again later")
             }
+        }).catch((err) => {
+            setLoader(false);
+            toast.error("Sorry, a technical error occurred! Please try again later")
         });
     };
 
@@ -296,6 +300,9 @@ const AddEditTaskCard = () => {
                 } else {
                     toast.success(data.message);
                 }
+            }).catch((err) => {
+                setIsSubmit(false);
+                toast.error("Sorry, a technical error occurred! Please try again later")
             });
 
         }
@@ -342,6 +349,9 @@ const AddEditTaskCard = () => {
                 } else {
                     toast.success(data.message);
                 }
+            }).catch((err) => {
+                setIsSubmit(false);
+                toast.error("Sorry, a technical error occurred! Please try again later")
             });
 
         }

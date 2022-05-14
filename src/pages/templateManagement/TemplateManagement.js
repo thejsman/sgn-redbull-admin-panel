@@ -48,7 +48,10 @@ const TopicManagement = () => {
         setLoader(false)
         setTemplateList(data.data.Items)
       }
-    })
+    }).catch((err) => {
+      setLoader(false)
+      setTemplateList([])
+    });
   }
 
   const handleDeleteTemplate = () => {
@@ -66,7 +69,10 @@ const TopicManagement = () => {
       } else {
         toast.error(data.message)
       }
-    })
+    }).catch((err) => {
+      setLoader(false);
+      toast.error("Sorry, a technical error occurred! Please try again later")
+    });
   }
 
   const handleClose = () => {

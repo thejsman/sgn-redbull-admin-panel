@@ -50,7 +50,10 @@ const FamilyRelationship = () => {
         setLoader(false)
         setRelationArrayList(data.data.Items)
       }
-    })
+    }).catch((err) => {
+      setLoader(false);
+      setRelationArrayList([])
+    });
   }
 
   const handleDeleteRelationship = () => {
@@ -71,7 +74,10 @@ const FamilyRelationship = () => {
       } else {
         toast.error(data.message)
       }
-    })
+    }).catch((err) => {
+      setLoader(false);
+      toast.error("Sorry, a technical error occurred! Please try again later")
+    });
   }
 
   const handleClose = () => {

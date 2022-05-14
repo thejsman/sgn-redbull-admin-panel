@@ -100,6 +100,9 @@ const AddEditTemplate = () => {
         setTemplateOrder(data.displayOrder);
       } else {
       }
+    }).catch((err) => {
+      setLoader(false);
+      toast.error("Sorry, a technical error occurred! Please try again later")
     });
 
   };
@@ -130,6 +133,9 @@ const AddEditTemplate = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
     }
   };
@@ -164,6 +170,9 @@ const AddEditTemplate = () => {
         setOccasionList(data.occasionList);
         setLoader(false)
       }
+    }).catch((err) => {
+      setOccasionList([]);
+      setLoader(false)
     });
   };
   useEffect(() => {
@@ -201,6 +210,9 @@ const AddEditTemplate = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
     }
   };
