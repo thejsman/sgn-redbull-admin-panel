@@ -134,7 +134,7 @@ const AddVoucher = () => {
 		<div className="page_wrapper">
 			<Breadcrumb breadcrumb={breadcrumb} />
 			<div className="twocol sb page_header">
-				<h2>'Add Voucher</h2>
+				<h2>Add Voucher</h2>
 			</div>
 			{loader ? (
 				<Loader />

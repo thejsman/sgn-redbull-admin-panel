@@ -12,7 +12,7 @@ import moment from "moment";
 const Coupons = () => {
   const history = useHistory()
   const { id } = useParams();
-  const breadcrumb = [{ link: '/voucher', linkText: 'Voucher Management' }, { link: '', linkText: 'Coupon Management' }]
+  const breadcrumb = [{ link: '/voucher', linkText: 'Voucher Management' }, { link: '', linkText: 'Coupon List' }]
   const [couponVoucherId, setCouponVoucherId] = useState([]);
   const [productName, setProductName] = useState([])
   const [couponArrList, setCouponList] = useState([])
@@ -25,7 +25,7 @@ const Coupons = () => {
   const [pageState, setPageState] = useState([{ page: 1, pk: null, couponVoucherId: null }])
   // all handler start
   useEffect(() => {
-    getCouponList(id)
+    getCouponList(id, null, null, page)
 
   }, [])
 
@@ -33,7 +33,6 @@ const Coupons = () => {
     history.push('/coupon/edit/' + _id)
   }
   const handlePageChange = pageNumber => {
-    debugger;
     console.log(`active page is ${pageNumber}`)
     let pageno = parseInt(pageNumber);
     let arr = pageState;
@@ -42,35 +41,42 @@ const Coupons = () => {
       setPage(pageno);
       arr.push({ page: pageno, pk: pk, couponVoucherId: couponVoucherIdPage });
       setPageState([...arr]);
-      setCount(count + limit)
+      let totCount = count + limit;
+      setCount(totCount)
+      getCouponList(id, pk, couponVoucherIdPage, pageno);
     } else {
+
       setPage(pageno);
-      setPK(data[0].pk)
-      setcouponVoucherIdPage(data[0].couponVoucherId)
+      // setPK(data[0].pk)
+      // setcouponVoucherIdPage(data[0].couponVoucherId)
+      getCouponList(id, data[0].pk, data[0].couponVoucherId, data[0].page);
+
     }
-
-
-    getCouponList(id);
   }
-  const getCouponList = (id) => {
+
+
+  const getCouponList = (id, pkvalue, couponVoucherIdValue, nextPage) => {
     setLoader(true)
     let params = {
       limit: limit,
       LastEvaluatedKey: 'null',
       productName: id,
-      pk: pk,
-      couponVoucherId: couponVoucherIdPage
+      pk: pkvalue,
+      couponVoucherId: couponVoucherIdValue
 
     }
     couponList(params).then(res => {
       let { status, data } = resHandle(res)
       if (status === 200) {
-        debugger;
         setLoader(false)
         setCouponList([...data.data.Items])
         if (data.data.LastEvaluatedKey && (Object.keys(data.data.LastEvaluatedKey).length > 0)) {
-          setPK(data.data.LastEvaluatedKey.pk);
-          setcouponVoucherIdPage(data.data.LastEvaluatedKey.couponVoucherId)
+          let arr = pageState;
+          if (arr.findIndex(item => item.page == (nextPage + 1)) == -1) {
+            setPK(data.data.LastEvaluatedKey.pk);
+            setcouponVoucherIdPage(data.data.LastEvaluatedKey.couponVoucherId)
+          }
+
         }
         if (data.data.Items.length == 0) {
           setCount(count - limit);
@@ -89,7 +95,7 @@ const Coupons = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className='twocol sb page_header'>
-        <h2>Coupon Management</h2>
+        <h2>Coupon List</h2>
 
       </div>
       <div className='twocol sb page_header'>

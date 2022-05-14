@@ -87,7 +87,7 @@ const AddEditOccasionCard = () => {
 
     const breadcrumb = [
         { link: '/card/occasions/', linkText: 'Occasion card' },
-        { link: '', linkText: 'Add Occasion Card' }
+        { link: '', linkText: isAddCard ? 'Add Occasion Card' : 'Edit Occasion Card' }
     ]
 
     const albhaRegEx = /^[a-zA-z]+$/;
@@ -287,7 +287,6 @@ const AddEditOccasionCard = () => {
                 setLoader(false);
             }
         }).catch((err) => {
-            debugger
             setLoader(false);
             toast.error("Sorry, a technical error occurred! Please try again later")
         });
@@ -408,7 +407,7 @@ const AddEditOccasionCard = () => {
         <div className='page_wrapper'>
             <Breadcrumb breadcrumb={breadcrumb} />
             <div className='twocol sb page_header'>
-                <h2>Add Occasion Card </h2>
+                <h2>{isAddCard ? 'Add Occasion Card' : 'Edit Occasion Card'} </h2>
             </div>
             {loader ? (
                 <Loader />

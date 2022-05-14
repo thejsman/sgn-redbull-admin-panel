@@ -69,7 +69,7 @@ const AddEditTaskCard = () => {
 
     const breadcrumb = [
         { link: '/card/tasks/', linkText: 'Task cards' },
-        { link: '', linkText: 'Add Task Card' }
+        { link: '', linkText: isAddCard ? 'Add Task Card' : 'Edit Task Card' }
     ]
 
     const albhaRegEx = /^[a-zA-z]+$/;
@@ -368,7 +368,7 @@ const AddEditTaskCard = () => {
         <div className='page_wrapper'>
             <Breadcrumb breadcrumb={breadcrumb} />
             <div className='twocol sb page_header'>
-                <h2>Add Task Card </h2>
+                <h2>{isAddCard ? 'Add Task Card' : 'Edit Task Card'} </h2>
             </div>
             {loader ? (
                 <Loader />
