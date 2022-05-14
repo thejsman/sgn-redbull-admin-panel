@@ -52,6 +52,9 @@ const Occasions = () => {
         setLoader(false)
         setOccasionList(data.occasionList);
       }
+    }).catch((err) => {
+      setLoader(false)
+      setOccasionList([])
     });
   };
 
@@ -70,7 +73,11 @@ const Occasions = () => {
       } else {
         toast.error(data.message);
       }
-    });
+    }).catch((err) => {
+      setLoader(false)
+      console.log("err", err)
+      toast.error("Some technical issue occured, Please try again later");
+    });;
   };
 
   const handleClose = () => {
