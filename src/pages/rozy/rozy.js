@@ -187,7 +187,7 @@ const Rozy = () => {
                 ))
               ) : (
                 <tr key="notfound">
-                  <td colSpan='8'>
+                  <td colSpan='4'>
                     <div className='nodatafound'>
                       <h3>No Data Found</h3>
                     </div>

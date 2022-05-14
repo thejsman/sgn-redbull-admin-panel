@@ -192,7 +192,7 @@ const FamilyRelationship = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan='8'>
+                  <td colSpan='6'>
                     <div className='nodatafound'>
                       <h3>No Data Found</h3>
                     </div>

@@ -75,12 +75,12 @@ const AddEditOccasion = () => {
     } else {
       setOccasionOrderErr("");
     }
-    if (!occasionDesc.replace(/\s+/g, "")) {
-      setOccasionDescErr("Occasion describtion is required");
-      validate = false;
-    } else {
-      setOccasionDescErr("");
-    }
+    // if (!occasionDesc.replace(/\s+/g, "")) {
+    //   setOccasionDescErr("Occasion describtion is required");
+    //   validate = false;
+    // } else {
+    //   setOccasionDescErr("");
+    // }
     if (isAddOccasion && !base64) {
       setImageErr('Image is required')
       validate = false

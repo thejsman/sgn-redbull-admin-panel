@@ -195,7 +195,7 @@ const Occasions = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8">
+                  <td colSpan="7">
                     <div className="nodatafound">
                       <h3>No Data Found</h3>
                     </div>
