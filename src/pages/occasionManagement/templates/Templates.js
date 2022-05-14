@@ -106,6 +106,9 @@ const Templates = () => {
 
         setLoader(false)
       }
+    }).catch((err) => {
+      setOccasionList([]);
+      setLoader(false)
     });
   };
 

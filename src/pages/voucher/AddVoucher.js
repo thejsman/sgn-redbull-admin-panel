@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-	createVoucher,
-	getVoucherByName,
-	updateVoucher,
-} from "../../services/ApiVoucher";
+import { createVoucher } from "../../services/ApiVoucher";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -124,6 +120,9 @@ const AddVoucher = () => {
 				} else {
 					toast.success(data.message);
 				}
+			}).catch((err) => {
+				setIsSubmit(false);
+				toast.error("Sorry, a technical error occurred! Please try again later")
 			});
 		}
 	};

@@ -87,6 +87,9 @@ const EditCoupon = () => {
 			} else {
 				setLoader(false);
 			}
+		}).catch((err) => {
+			setLoader(false);
+			toast.error("Sorry, a technical error occurred! Please try again later")
 		});
 	};
 	const handleUpdateCoupon = (e) => {
@@ -110,6 +113,9 @@ const EditCoupon = () => {
 				} else {
 					toast.success(data.message);
 				}
+			}).catch((err) => {
+				setIsSubmit(false);
+				toast.error("Sorry, a technical error occurred! Please try again later")
 			});
 		}
 	};

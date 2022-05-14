@@ -66,7 +66,10 @@ const Voucher = () => {
         setLoader(false)
         setVoucherList(Object.values(resData))
       }
-    })
+    }).catch((err) => {
+      setLoader(false)
+      setVoucherList([])
+    });
   }
 
 

@@ -111,7 +111,12 @@ const AddRozy = () => {
         toast.success(data.message);
         contentList[index]['isDelete'] = false;
       }
-    });
+    }).catch((err) => {
+      setLoader(false);
+      contentList[index]['isDelete'] = false;
+      setContentList([...contentList]);
+      toast.error("Sorry, a technical error occurred! Please try again later")
+    })
 
   }
 
@@ -140,6 +145,10 @@ const AddRozy = () => {
       } else {
         toast.success(data.message);
       }
+    }).catch((err) => {
+      contentList[index]['isSubmit'] = false;
+      setContentList([...contentList]);
+      toast.error("Sorry, a technical error occurred! Please try again later")
     });
 
   };
@@ -177,6 +186,9 @@ const AddRozy = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
     }
   };
@@ -200,6 +212,9 @@ const AddRozy = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
     }
   };

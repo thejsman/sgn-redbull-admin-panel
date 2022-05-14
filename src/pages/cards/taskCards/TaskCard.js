@@ -46,7 +46,10 @@ const TaskCard = () => {
         setLoader(false)
         setCardList(data.cardList)
       }
-    })
+    }).catch((err) => {
+      setLoader(false);
+      setCardList([])
+    });
   }
 
   const handleDeleteCardOccasion = () => {
@@ -65,7 +68,10 @@ const TaskCard = () => {
       } else {
         toast.error(data.message)
       }
-    })
+    }).catch((err) => {
+      setLoader(false);
+      toast.error("Sorry, a technical error occurred! Please try again later")
+    });
   }
 
   const handleClose = () => {

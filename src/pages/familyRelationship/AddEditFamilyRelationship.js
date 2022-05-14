@@ -92,6 +92,9 @@ const AddEditFamilyRelationship = () => {
       } else {
         setLoader(false);
       }
+    }).catch((err) => {
+      setLoader(false)
+      toast.error("Sorry, a technical error occurred! Please try again later")
     });
   };
   const handleUpdateFamilyRelationship = (e) => {
@@ -119,6 +122,9 @@ const AddEditFamilyRelationship = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
     }
   };
@@ -155,6 +161,9 @@ const AddEditFamilyRelationship = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
 
     }

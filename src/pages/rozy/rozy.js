@@ -73,7 +73,10 @@ const Rozy = () => {
         rozyData = Object.values(rozyData);
         setRozyArrayList(rozyData);
       }
-    })
+    }).catch((err) => {
+      setLoader(false);
+      setRozyArrayList([]);
+    });
   }
 
   // const handleDeleteRozy = () => {

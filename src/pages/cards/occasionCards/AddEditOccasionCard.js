@@ -282,6 +282,9 @@ const AddEditOccasionCard = () => {
             } else {
                 setLoader(false);
             }
+        }).catch((err) => {
+            setLoader(false);
+            toast.error("Sorry, a technical error occurred! Please try again later")
         });
     };
 
@@ -331,6 +334,9 @@ const AddEditOccasionCard = () => {
                 } else {
                     toast.success(data.message);
                 }
+            }).catch((err) => {
+                setLoader(false)
+                toast.error("Sorry, a technical error occurred! Please try again later")
             });
 
         }
@@ -379,6 +385,9 @@ const AddEditOccasionCard = () => {
                 } else {
                     toast.success(data.message);
                 }
+            }).catch((err) => {
+                setLoader(false)
+                toast.error("Sorry, a technical error occurred! Please try again later")
             });
 
         }
