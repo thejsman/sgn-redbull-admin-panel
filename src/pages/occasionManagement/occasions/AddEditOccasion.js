@@ -103,7 +103,12 @@ const AddEditOccasion = () => {
         setOccasionName(data.occasionName);
         setOccasionTitle(data.displayTitle);
         setOccasionIcon(data.occasionIcon);
-        setOccasionStatus(data.occasionStatus);
+        if (data.occasionStatus == true) {
+          setOccasionStatus(true);
+        } else {
+          setOccasionStatus(false);
+        }
+
         setOccasionOrder(data.displayOrder);
         setOccasionDesc(data.occasionDescription);
         setBase64(data.occasionIcon);

@@ -146,6 +146,13 @@ const AddEditOccasionCard = () => {
             setCtaActionErr("")
         }
 
+        if (!ctaActionTitle.replace(/\s+/g, '')) {
+            setCtaActionTitleErr("CTA Action Title is required")
+            validate = false
+        } else {
+            setCtaActionTitleErr("")
+        }
+
 
         if (!contentText.replace(/\s+/g, '')) {
             setContentTextErr("Content Text is required")
@@ -254,6 +261,7 @@ const AddEditOccasionCard = () => {
                 setCtaBGColor(data.cta.backgroundColor);
                 setColor2(data.cta.backgroundColor);
                 setCtaAction(data.cta.action);
+                setCtaActionTitle(data.cta.actionTitle);
 
                 setLottieBackgroundBase64(data.lottie.lottieBackground);
                 setColor4(data.lottie.backgroundColor);
@@ -294,7 +302,8 @@ const AddEditOccasionCard = () => {
                     text: ctaText,
                     textColor: ctaColor,
                     backgroundColor: ctaBGColor,
-                    action: ctaAction
+                    action: ctaAction,
+                    actionTitle: ctaActionTitle
                 },
                 content: {
                     text: contentText,
@@ -344,7 +353,8 @@ const AddEditOccasionCard = () => {
                     text: ctaText,
                     textColor: ctaColor,
                     backgroundColor: ctaBGColor,
-                    action: ctaAction
+                    action: ctaAction,
+                    actionTitle: ctaActionTitle
                 },
                 content: {
                     text: contentText,
@@ -652,7 +662,24 @@ const AddEditOccasionCard = () => {
                                 )}
 
                             </div>
+                            <div className='col'>
+                                <label>Action Title</label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    name='action'
+                                    value={ctaActionTitle}
+                                    onChange={e => (
+                                        setCtaActionTitle(e.target.value), setCtaActionTitleErr('')
+                                    )}
+                                />
+                                {ctaActionTitleErr ? (
+                                    <div className='inlineerror'>{ctaActionTitleErr} </div>
+                                ) : (
+                                    ''
+                                )}
 
+                            </div>
                         </div>
 
                     </div>

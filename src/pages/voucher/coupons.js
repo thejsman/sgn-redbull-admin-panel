@@ -17,8 +17,8 @@ const Coupons = () => {
   const [productName, setProductName] = useState([])
   const [couponArrList, setCouponList] = useState([])
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(10)
-  const [count, setCount] = useState(10)
+  const [limit, setLimit] = useState(20)
+  const [count, setCount] = useState(21)
   const [loader, setLoader] = useState(false)
   const [pk, setPK] = useState(null)
   const [couponVoucherIdPage, setcouponVoucherIdPage] = useState(null)
@@ -26,6 +26,7 @@ const Coupons = () => {
   // all handler start
   useEffect(() => {
     getCouponList(id)
+
   }, [])
 
   const editPages = _id => {
@@ -35,14 +36,19 @@ const Coupons = () => {
     debugger;
     console.log(`active page is ${pageNumber}`)
     let pageno = parseInt(pageNumber);
-    if (pageno > page) {
-      let arr = pageState;
-      arr.push({ page: pageno, pk: pk, couponVoucherId: couponVoucherIdPage })
+    let arr = pageState;
+    let data = arr.filter(item => item.page == pageno)
+    if (data.length == 0) {
+      setPage(pageno);
+      arr.push({ page: pageno, pk: pk, couponVoucherId: couponVoucherIdPage });
       setPageState([...arr]);
+      setCount(count + limit)
     } else {
-
+      setPage(pageno);
+      setPK(data[0].pk)
+      setcouponVoucherIdPage(data[0].couponVoucherId)
     }
-    setPage(pageno)
+
 
     getCouponList(id);
   }
@@ -59,16 +65,15 @@ const Coupons = () => {
     couponList(params).then(res => {
       let { status, data } = resHandle(res)
       if (status === 200) {
+        debugger;
         setLoader(false)
-        setCouponList(data.data.Items)
-        if ((Object.keys(data.data.LastEvaluatedKey).length > 0) && data.data.LastEvaluatedKey.pk) {
+        setCouponList([...data.data.Items])
+        if (data.data.LastEvaluatedKey && (Object.keys(data.data.LastEvaluatedKey).length > 0)) {
           setPK(data.data.LastEvaluatedKey.pk);
           setcouponVoucherIdPage(data.data.LastEvaluatedKey.couponVoucherId)
-          setCount(count + 10)
-
-
-        } else {
-          setPK("0")
+        }
+        if (data.data.Items.length == 0) {
+          setCount(count - limit);
         }
       }
     })
@@ -176,18 +181,16 @@ const Coupons = () => {
         )}
       </div>
 
-      {couponArrList.length ? (
-        <div className='text-center'>
-          <Pagination
-            activePage={page}
-            itemsCountPerPage={limit}
-            totalItemsCount={count}
-            onChange={e => handlePageChange(e)}
-          />
-        </div>
-      ) : (
-        ''
-      )}
+
+      <div className='text-center'>
+        <Pagination
+          activePage={page}
+          itemsCountPerPage={limit}
+          totalItemsCount={count}
+          onChange={e => handlePageChange(e)}
+        />
+      </div>
+
 
       <ToastContainer />
     </div>
