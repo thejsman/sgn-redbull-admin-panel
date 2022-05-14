@@ -36,18 +36,19 @@ const AddEditFamilyRelationship = () => {
 
   const breadcrumb = [
     { link: '/family-relationship', linkText: 'Family Relationship Management' },
-    { link: '', linkText: 'Add Family Relationship' }
+    { link: '', linkText: isAddFamilyRelationship ? 'Add Family Relationship' : 'Edit Family Relationship' }
   ]
 
   const numberRegEx = /^[0-9\b]+$/;
   const albhaRegEx = /^[a-zA-z]+$/;
+  const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
   const handleValidate = () => {
     let validate = true
     if (!relationshipName.replace(/\s+/g, '')) {
       setRelationshipNameErr("Relationship name is required")
       validate = false
-    } else if (!albhaRegEx.test(relationshipName)) {
-      setRelationshipNameErr("only alphabets are allowed")
+    } else if (!albhaNumericRegEx.test(relationshipName)) {
+      setRelationshipNameErr("Special characters and spaces are not allowed")
       validate = false
     } else {
       setRelationshipNameErr("")
@@ -104,7 +105,7 @@ const AddEditFamilyRelationship = () => {
       let obj = {
         displayOrder: order,
         displayName: displayName,
-        relationshipName: relationshipName.toLowerCase()
+        relationshipName: relationshipName
       };
       if (editImage) {
         obj['fileName'] = iconUrl;
@@ -144,7 +145,7 @@ const AddEditFamilyRelationship = () => {
     if (handleValidate()) {
       setIsSubmit(true);
       let createObj = {
-        relationshipName: relationshipName.toLowerCase(),
+        relationshipName: relationshipName,
         relationshipIdentifier: "relationship",
         displayOrder: order,
         displayName: displayName,

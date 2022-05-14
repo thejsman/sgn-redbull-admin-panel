@@ -39,13 +39,14 @@ const AddVoucher = () => {
 
 	const numberRegEx = /^[0-9\b]+$/;
 	const albhaRegEx = /^[a-zA-z]+$/;
+	const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
 	const handleValidate = () => {
 		let validate = true;
 		if (!productName.replace(/\s+/g, "")) {
 			setProductNameErr("Product Name is required");
 			validate = false;
-		} else if (!albhaRegEx.test(productName)) {
-			setProductNameErr("only albhabets are allowed");
+		} else if (!albhaNumericRegEx.test(productName)) {
+			setProductNameErr("Special characters and spaces are not allowed");
 			validate = false;
 		} else {
 			setProductNameErr("");
@@ -104,7 +105,7 @@ const AddVoucher = () => {
 			let createObj = {
 				itemId,
 				variantId,
-				productName: productName.toLowerCase(),
+				productName: productName,
 				validTill: parseInt(moment(validTill).format("X")),
 				coupon,
 				status,

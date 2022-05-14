@@ -73,14 +73,15 @@ const AddEditTaskCard = () => {
     ]
 
     const albhaRegEx = /^[a-zA-z]+$/;
+    const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
     const handleValidate = () => {
         let validate = true
 
         if (!cardName.replace(/\s+/g, '')) {
             setCardNameErr("Card name is required")
             validate = false
-        } else if (!albhaRegEx.test(cardName)) {
-            setCardNameErr("only alphabets are allowed")
+        } else if (!albhaNumericRegEx.test(cardName)) {
+            setCardNameErr("Special characters and spaces are not allowed")
             validate = false
         } else {
             setCardNameErr("")
@@ -263,7 +264,7 @@ const AddEditTaskCard = () => {
             setIsSubmit(true);
             let createObj = {
                 cardIdentifier: "cardIdentifier",
-                cardName: cardName.toLowerCase(),
+                cardName: cardName,
                 heading: {
                     text: headingText,
                     textColor: headingColor
@@ -315,7 +316,7 @@ const AddEditTaskCard = () => {
             setIsSubmit(true);
             let createObj = {
                 cardIdentifier: "cardIdentifier",
-                cardName: cardName.toLowerCase(),
+                cardName: cardName,
                 heading: {
                     text: headingText,
                     textColor: headingColor

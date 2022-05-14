@@ -6,7 +6,7 @@ import { checkUrlType, resHandle } from '../../components/util/utils';
 import moment from 'moment';
 import siteSetting from '../../config/env/Index';
 import Pagination from 'react-js-pagination';
-import { Tabs, Tab, Modal} from 'react-bootstrap';
+import { Tabs, Tab, Modal } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -77,7 +77,7 @@ const AskerView = () => {
         let query = `?userID=${id}&limit=${limit}&page=${followerPage}`;
         getUserFollowingService(query).then(res => {
             let { status, data } = resHandle(res);
-            if(status){
+            if (status) {
                 setFollowers(data.result);
                 setFollowersCount(data.count);
             }
@@ -89,10 +89,10 @@ const AskerView = () => {
         let query = `?userID=${id}&limit=${limit}&page=${topicsfollowPage}`;
         getUserTopicsFollowingService(query).then(res => {
             let { status, data } = resHandle(res);
-            if(status){
+            if (status) {
                 setTopicsfollow(data.result);
                 setTopicsfollowCount(data.count);
-                
+
             }
         })
     }
@@ -149,7 +149,7 @@ const AskerView = () => {
     }
 
 
-    
+
     const handleClose = () => {
         setConfirmModal(false);
         setStatusModal(false);
@@ -161,7 +161,7 @@ const AskerView = () => {
     const userStatusUpdate = () => {
         let params = {}
 
-        if(isDeleteModal){
+        if (isDeleteModal) {
             params.deleteUserId = id;
             handleClose();
             deleteUserService(params).then(res => {
@@ -171,7 +171,7 @@ const AskerView = () => {
                     history.push("/asker-management")
                 }
             })
-        }else{
+        } else {
             params.userId = id
             params.status = userStatus == 1 ? 2 : 1;
             handleClose();
@@ -183,7 +183,7 @@ const AskerView = () => {
                 }
             })
         }
-        
+
 
     }
 
@@ -232,13 +232,13 @@ const AskerView = () => {
                 <div className="col">
                     <div className="askerview-wrapper">
 
-                    <div className="d_action">
-                        {userStatus == 2 ? <span onClick={() => setStatusModal(true)}><i className="fas fa-unlock text-success" /></span>
-                        :
-                        <span onClick={() => setStatusModal(true)}><i className="fas fa-ban text-warning" /></span>}
-            
-                        <span onClick={() => (setConfirmModal(true), setIsDeleteModal(true))}><i className="fas fa-trash-alt" /></span>
-                    </div>
+                        <div className="d_action">
+                            {userStatus == 2 ? <span onClick={() => setStatusModal(true)}><i className="fas fa-unlock text-success" /></span>
+                                :
+                                <span onClick={() => setStatusModal(true)}><i className="fas fa-ban text-warning" /></span>}
+
+                            <span onClick={() => (setConfirmModal(true), setIsDeleteModal(true))}><i className="fas fa-trash-alt" /></span>
+                        </div>
 
 
 
@@ -404,15 +404,15 @@ const AskerView = () => {
                         </div>
 
                         {followers?.length ? <div className="text-center">
-                                <Pagination
-                                    activePage={followerPage}
-                                    itemsCountPerPage={limit}
-                                    totalItemsCount={followersCount}
-                                    pageRangeDisplayed={4}
-                                    onChange={e => setFollowersPage(e)}
-                                />
-                            </div> : ''
-                            }
+                            <Pagination
+                                activePage={followerPage}
+                                itemsCountPerPage={limit}
+                                totalItemsCount={followersCount}
+                                pageRangeDisplayed={4}
+                                onChange={e => setFollowersPage(e)}
+                            />
+                        </div> : ''
+                        }
                     </div>
                 </Tab>
 
@@ -422,7 +422,7 @@ const AskerView = () => {
                     <div className="askerview-wrapper">
                         <h4>Topics Following</h4>
                         <div className="">
-                        
+
                             <table className="table  table-bordered user-table table-hover align-items-center">
                                 <thead>
                                     <tr>
@@ -437,28 +437,28 @@ const AskerView = () => {
                                         <td>{(topicsfollowPage - 1) * limit + (i + 1)}</td>
                                         <td>{item.topicName}</td>
                                         <td>{item.domainName}</td>
-                                        <td><Link to={`/edit-topic/${item.topicId}`}><i className='fas fa-eye text-primary' /></Link></td>
+                                        <td><Link to={`/edit-notification/${item.topicId}`}><i className='fas fa-eye text-primary' /></Link></td>
                                     </tr>)}
                                 </tbody>
                             </table>
                         </div>
 
                         {topicsfollow?.length ? <div className="text-center">
-                                <Pagination
-                                    activePage={topicsfollowPage}
-                                    itemsCountPerPage={limit}
-                                    totalItemsCount={topicsfollowCount}
-                                    pageRangeDisplayed={4}
-                                    onChange={e => setTopicsfollowPage(e)}
-                                />
-                            </div> : ''
-                            }
+                            <Pagination
+                                activePage={topicsfollowPage}
+                                itemsCountPerPage={limit}
+                                totalItemsCount={topicsfollowCount}
+                                pageRangeDisplayed={4}
+                                onChange={e => setTopicsfollowPage(e)}
+                            />
+                        </div> : ''
+                        }
                     </div>
                 </Tab>
-            
+
             </Tabs>
 
-            
+
 
 
         </div>

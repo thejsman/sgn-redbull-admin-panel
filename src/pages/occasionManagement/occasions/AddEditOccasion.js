@@ -42,11 +42,12 @@ const AddEditOccasion = () => {
 
   const breadcrumb = [
     { link: "/occasion-management/occasion", linkText: "Occasion Management" },
-    { link: "", linkText: "Add Occasion" },
+    { link: "", linkText: isAddOccasion ? "Add Occasion" : "Edit Occasion" },
   ];
 
   const numberRegEx = /^[0-9\b]+$/;
   const albhaRegEx = /^[a-zA-z]+$/;
+  const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
   const handleValidate = () => {
     let validate = true;
     setOccasionOrderErr("");
@@ -54,8 +55,8 @@ const AddEditOccasion = () => {
     if (!occasionName.replace(/\s+/g, "")) {
       setOccasionNameErr("Occasion name is required");
       validate = false;
-    } else if (!albhaRegEx.test(occasionName)) {
-      setOccasionNameErr("only alphabets are allowed")
+    } else if (!albhaNumericRegEx.test(occasionName)) {
+      setOccasionNameErr("Special characters and spaces are not allowed")
       validate = false
     } else {
       setOccasionNameErr("")
@@ -123,7 +124,7 @@ const AddEditOccasion = () => {
       setIsSubmit(true);
       let createOccasionObj = {
         "occasionIdentifier": "occasion",
-        occasionName: occasionName.toLowerCase(),
+        occasionName: occasionName,
         data: {
           displayTitle: occasionTitle,
           displayOrder: parseInt(occasionOrder),
@@ -184,7 +185,7 @@ const AddEditOccasion = () => {
       setIsSubmit(true);
       let createOccasionObj = {
         "occasionIdentifier": "occasion",
-        occasionName: occasionName.toLowerCase(),
+        occasionName: occasionName,
         data: {
           displayTitle: occasionTitle,
           occasionIcon: base64,
