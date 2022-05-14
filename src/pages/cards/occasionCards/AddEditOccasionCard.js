@@ -87,18 +87,19 @@ const AddEditOccasionCard = () => {
 
     const breadcrumb = [
         { link: '/card/occasions/', linkText: 'Occasion card' },
-        { link: '', linkText: 'Add Occasion Card' }
+        { link: '', linkText: isAddCard ? 'Add Occasion Card' : 'Edit Occasion Card' }
     ]
 
     const albhaRegEx = /^[a-zA-z]+$/;
+    const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
     const handleValidate = () => {
         let validate = true
 
         if (!cardName.replace(/\s+/g, '')) {
             setCardNameErr("Card name is required")
             validate = false
-        } else if (!albhaRegEx.test(cardName)) {
-            setCardNameErr("only alphabets are allowed")
+        } else if (!albhaNumericRegEx.test(cardName)) {
+            setCardNameErr("Special characters and spaces are not allowed")
             validate = false
         } else {
             setCardNameErr("")
@@ -271,10 +272,13 @@ const AddEditOccasionCard = () => {
                 setLottieGraphicFileName(data.lottie.lottieGraphicFileName);
 
                 let arr = [];
-                arr = data.visibility.map(e => {
-                    let index = visibilityData.findIndex((item) => item.value == e);
-                    return visibilityData[index];
-                })
+                if (data.visibility) {
+                    arr = data.visibility.map(e => {
+                        let index = visibilityData.findIndex((item) => item.value == e);
+                        return visibilityData[index];
+                    })
+                }
+
                 setVisibility(arr);
                 console.log('arrarrarr', arr)
 
@@ -295,7 +299,7 @@ const AddEditOccasionCard = () => {
             setIsSubmit(true);
             let createObj = {
                 cardIdentifier: "cardIdentifier",
-                cardName: cardName.toLowerCase(),
+                cardName: cardName,
                 visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
@@ -349,7 +353,7 @@ const AddEditOccasionCard = () => {
             setIsSubmit(true);
             let createObj = {
                 cardIdentifier: "cardIdentifier",
-                cardName: cardName.toLowerCase(),
+                cardName: cardName,
                 visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
@@ -403,7 +407,7 @@ const AddEditOccasionCard = () => {
         <div className='page_wrapper'>
             <Breadcrumb breadcrumb={breadcrumb} />
             <div className='twocol sb page_header'>
-                <h2>Add Occasion Card </h2>
+                <h2>{isAddCard ? 'Add Occasion Card' : 'Edit Occasion Card'} </h2>
             </div>
             {loader ? (
                 <Loader />
@@ -826,7 +830,7 @@ const AddEditOccasionCard = () => {
                                         {lottieBackgroundFileName ? lottieBackgroundFileName : 'Choose file'}
                                     </label>
                                 </div>
-                                {(!isAddCard && lottieBackgroundBase64) && <a href={lottieBackgroundBase64} download={lottieBackgroundFileName} target="blank"> {lottieBackgroundFileName} </a>}
+                                {(!isAddCard && lottieBackgroundBase64) && <a href={lottieBackgroundBase64} download={lottieBackgroundBase64.includes("https://") ? lottieBackgroundBase64 : lottieBackgroundFileName} target="blank"> {lottieBackgroundBase64.includes("https://") ? lottieBackgroundBase64 : lottieBackgroundFileName} </a>}
                                 {lottieBackgroundFileNameErr && <div className='inlineerror'>{lottieBackgroundFileNameErr} </div>}
                             </div>
                             <div className='col'>
@@ -843,7 +847,7 @@ const AddEditOccasionCard = () => {
 
                                     </label>
                                 </div>
-                                {(!isAddCard && lottieGraphicBase64) && <a href={lottieGraphicBase64} target="blank" download={lottieGraphicFileName}> {lottieGraphicFileName} </a>}
+                                {(!isAddCard && lottieGraphicBase64) && <a href={lottieGraphicBase64} target="blank" download={lottieGraphicBase64.includes("https://") ? lottieGraphicBase64 : lottieGraphicFileName}> {lottieGraphicBase64.includes("https://") ? lottieGraphicBase64 : lottieGraphicFileName} </a>}
                                 {lottieGraphicFileNameErr && <div className='inlineerror'>{lottieGraphicFileNameErr} </div>}
 
                             </div>

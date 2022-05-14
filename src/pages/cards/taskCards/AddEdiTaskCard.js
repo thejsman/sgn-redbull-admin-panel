@@ -69,18 +69,19 @@ const AddEditTaskCard = () => {
 
     const breadcrumb = [
         { link: '/card/tasks/', linkText: 'Task cards' },
-        { link: '', linkText: 'Add Task Card' }
+        { link: '', linkText: isAddCard ? 'Add Task Card' : 'Edit Task Card' }
     ]
 
     const albhaRegEx = /^[a-zA-z]+$/;
+    const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
     const handleValidate = () => {
         let validate = true
 
         if (!cardName.replace(/\s+/g, '')) {
             setCardNameErr("Card name is required")
             validate = false
-        } else if (!albhaRegEx.test(cardName)) {
-            setCardNameErr("only alphabets are allowed")
+        } else if (!albhaNumericRegEx.test(cardName)) {
+            setCardNameErr("Special characters and spaces are not allowed")
             validate = false
         } else {
             setCardNameErr("")
@@ -263,7 +264,7 @@ const AddEditTaskCard = () => {
             setIsSubmit(true);
             let createObj = {
                 cardIdentifier: "cardIdentifier",
-                cardName: cardName.toLowerCase(),
+                cardName: cardName,
                 heading: {
                     text: headingText,
                     textColor: headingColor
@@ -315,7 +316,7 @@ const AddEditTaskCard = () => {
             setIsSubmit(true);
             let createObj = {
                 cardIdentifier: "cardIdentifier",
-                cardName: cardName.toLowerCase(),
+                cardName: cardName,
                 heading: {
                     text: headingText,
                     textColor: headingColor
@@ -367,7 +368,7 @@ const AddEditTaskCard = () => {
         <div className='page_wrapper'>
             <Breadcrumb breadcrumb={breadcrumb} />
             <div className='twocol sb page_header'>
-                <h2>Add Task Card </h2>
+                <h2>{isAddCard ? 'Add Task Card' : 'Edit Task Card'} </h2>
             </div>
             {loader ? (
                 <Loader />

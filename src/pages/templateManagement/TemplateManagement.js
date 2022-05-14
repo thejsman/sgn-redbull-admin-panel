@@ -12,7 +12,7 @@ import { Loader } from '../../components/common/loader'
 
 const TopicManagement = () => {
   const history = useHistory()
-  const breadcrumb = [{ link: '', linkText: 'Template Management' }]
+  const breadcrumb = [{ link: '', linkText: 'Notifications' }]
 
   const [confirmModal, setConfirmModal] = useState(false)
   const [confirmTopic, setConfirmTopic] = useState('')
@@ -31,7 +31,7 @@ const TopicManagement = () => {
   }, [])
 
   const editPages = _id => {
-    history.push('/edit-topic/' + _id)
+    history.push('/edit-notification/' + _id)
   }
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`)
@@ -89,7 +89,7 @@ const TopicManagement = () => {
         </Modal.Header>
         <Modal.Body>
           <p className='text-center'>
-            Are you sure you want to delete this Template?
+            Are you sure you want to delete this notification?
           </p>
           <div className='d-flex justify-content-center pb-4'>
             <button
@@ -115,9 +115,9 @@ const TopicManagement = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className='twocol sb page_header'>
-        <h2>Template Management</h2>
-        <Link to='/add-topic' className='btn btn-primary btn-sm'>
-          Add Topic
+        <h2>Notifications</h2>
+        <Link to='/add-notification' className='btn btn-primary btn-sm'>
+          Add Notification
         </Link>
       </div>
       <div className='twocol sb page_header'>
@@ -138,9 +138,9 @@ const TopicManagement = () => {
                 <th>
                   <span className='t_min_w'>Title</span>
                 </th>
-                <th align='center'> Body</th>
+                {/* <th align='center'> Body</th> */}
                 <th>Image</th>
-                <th>Message</th>
+                {/* <th>Message</th> */}
                 <th>Composed</th>
                 <th>Sound</th>
                 <th>Event</th>
@@ -159,9 +159,9 @@ const TopicManagement = () => {
                       <span className=''>{item.title}</span>
                     </td>
 
-                    <td>
+                    {/* <td>
                       <span className=''>{item.body}</span>
-                    </td>
+                    </td> */}
                     <td>
                       <img
                         src={item.image}
@@ -169,9 +169,9 @@ const TopicManagement = () => {
                         className='user-avatar high'
                       />
                     </td>
-                    <td>
+                    {/* <td>
                       <span className=''>{item.message}</span>
-                    </td>
+                    </td> */}
                     <td>
                       <span className=''>{item.composed}</span>
                     </td>
@@ -204,7 +204,7 @@ const TopicManagement = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan='9'>
+                  <td colSpan='7'>
                     <div className='nodatafound'>
                       <h3>No Data Found</h3>
                     </div>

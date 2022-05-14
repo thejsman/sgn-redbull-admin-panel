@@ -24,9 +24,9 @@ const Sidebar = () => {
         </li>
 
         <li>
-          <NavLink to="/topic-management">
+          <NavLink to="/notifications">
             <i className="fas fa-sitemap"></i>{" "}
-            <span className="menu_text">Topic management</span>
+            <span className="menu_text">Notifications</span>
           </NavLink>
         </li>
         <li>

@@ -70,10 +70,10 @@ const Routes = (props) => {
             <PublicRoute exact path="/login" {...props} component={Login} />
             <PrivateRoute exact path="/" {...props} component={Dashboard} />
 
-            {/* Topic Management Routes */}
-            <PrivateRoute exact path="/topic-management" {...props} component={TopicManagement} />
-            <PrivateRoute exact path="/add-topic" {...props} component={AddEditTopic} />
-            <PrivateRoute exact path="/edit-topic/:id" {...props} component={AddEditTopic} />
+            {/* Notifications Routes */}
+            <PrivateRoute exact path="/notifications" {...props} component={TopicManagement} />
+            <PrivateRoute exact path="/add-notification" {...props} component={AddEditTopic} />
+            <PrivateRoute exact path="/edit-notification/:id" {...props} component={AddEditTopic} />
 
             {/* Occasion Management Routes */}
             <PrivateRoute exact path="/occasion-management/occasion" {...props} component={Occasions} />

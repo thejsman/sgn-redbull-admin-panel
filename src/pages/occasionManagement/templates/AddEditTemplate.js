@@ -40,7 +40,7 @@ const AddEditTemplate = () => {
 
   const breadcrumb = [
     { link: "/occasion-management/templates", linkText: "Template Management" },
-    { link: "", linkText: "Add Template" },
+    { link: "", linkText: isAddOccasionTemplate ? "Add Template" : "Edit Template" },
   ];
 
   const numberRegEx = /^[0-9\b]+$/;
@@ -59,7 +59,7 @@ const AddEditTemplate = () => {
       setTemplateNameErr("Template name is required");
       validate = false;
     } else if (!albhaNumericRegEx.test(templateName)) {
-      setTemplateNameErr("only alphanumeric values are allowed")
+      setTemplateNameErr("Special characters and spaces are not allowed")
       validate = false
     } else {
       setTemplateNameErr("")
@@ -113,7 +113,7 @@ const AddEditTemplate = () => {
       let obj = {
         "templateIdentifier": "occasionTemplate",
         occasionName: occasionName,
-        templateName: templateName.toLowerCase(),
+        templateName: templateName,
         data: {
           displayOrder: parseInt(templateOrder),
           status: templateStatus == true || templateStatus == "true" ? true : false,
@@ -192,7 +192,7 @@ const AddEditTemplate = () => {
       let obj = {
         "templateIdentifier": "occasionTemplate",
         occasionName: occasionName,
-        templateName: templateName.toLowerCase(),
+        templateName: templateName,
         data: {
           templateImage: base64,
           fileName: fileName,

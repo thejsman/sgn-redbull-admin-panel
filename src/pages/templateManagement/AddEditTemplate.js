@@ -47,20 +47,22 @@ const AddEditTemplate = () => {
   const [loader, setLoader] = useState(false)
   const [editCase, setEditCase] = useState(false)
   const [editImage, setEditImage] = useState(false)
+  const [isPushToShow, setIsPushToShow] = useState(true);
 
   const breadcrumb = [
-    { link: '/topic-management', linkText: 'Template Management' },
-    { link: '', linkText: 'Add Template' }
+    { link: '/notifications', linkText: 'Notifications' },
+    { link: '', linkText: isAddTopic ? 'Add Notification' : 'Edit Notification' }
   ]
 
   const handleValidate = () => {
     let validate = true
     const albhaRegEx = /^[a-zA-z]+$/;
+    const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
     if (!notificationName.replace(/\s+/g, '')) {
       setNotificationNameErr('Notification name is required')
       validate = false
-    } else if (!albhaRegEx.test(notificationName)) {
-      setNotificationNameErr("only alphabets are allowed")
+    } else if (!albhaNumericRegEx.test(notificationName)) {
+      setNotificationNameErr("Special characters and spaces are not allowed")
       validate = false
     } else {
       setNotificationNameErr('')
@@ -167,7 +169,7 @@ const AddEditTemplate = () => {
       let createTopicObj = {};
       if (!editImage) {
         createTopicObj = {
-          notificationName: notificationName.toLowerCase(),
+          notificationName: notificationName,
           title,
           image,
           message,
@@ -178,12 +180,13 @@ const AddEditTemplate = () => {
           sound,
           event,
           event_type,
-          fileName
+          fileName,
+          isPushToShow
         }
       }
       else {
         createTopicObj = {
-          notificationName: notificationName.toLowerCase(),
+          notificationName: notificationName,
           title,
           image,
           message,
@@ -206,7 +209,7 @@ const AddEditTemplate = () => {
           setLoader(false)
           setEditCase(false)
           toast.success(data.message)
-          history.push('/topic-management')
+          history.push('/notifications')
         } else {
           toast.success(data.message)
         }
@@ -218,10 +221,10 @@ const AddEditTemplate = () => {
   }
   useEffect(() => {
     console.log()
-    if (window.location.pathname == '/add-topic') {
+    if (window.location.pathname == '/add-notification') {
       setIsAddTopic(true)
     }
-    if (window.location.pathname !== '/add-topic') {
+    if (window.location.pathname !== '/add-notification') {
       setLoader(true)
       handleGetTopicById(id)
       setEditCase(true)
@@ -233,7 +236,7 @@ const AddEditTemplate = () => {
     if (handleValidate()) {
       setLoader(true)
       let createTopicObj = {
-        notificationName: notificationName.toLowerCase(),
+        notificationName: notificationName,
         title,
         image,
         message,
@@ -245,16 +248,17 @@ const AddEditTemplate = () => {
         event,
         event_type,
         base64,
-        fileName
+        fileName,
+        isPushToShow
       }
       createTemplate(createTopicObj).then(res => {
         let { status, data } = resHandle(res)
-        // history.push('/topic-management')
+        // history.push('/notifications')
 
         if (status == 200) {
           setLoader(false)
           toast.success(data.message)
-          history.push('/topic-management')
+          history.push('/notifications')
         } else {
           toast.error(data.message)
         }
@@ -289,7 +293,7 @@ const AddEditTemplate = () => {
     <div className='page_wrapper'>
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className='twocol sb page_header'>
-        <h2>{isAddTopic ? 'Add Template' : 'Edit Template'} </h2>
+        <h2>{isAddTopic ? 'Add Notification' : 'Edit Notification'} </h2>
       </div>
 
       {loader ? (
@@ -435,6 +439,22 @@ const AddEditTemplate = () => {
           </div>
 
           <div className='form-group row'>
+            <div className="col">
+              <label>Is Push Notification Show </label>
+              <select
+                className="form-control"
+                name="cars"
+                value={isPushToShow}
+                onChange={(e) => (
+                  setIsPushToShow(e.target.value)
+                )}
+              >
+                <option value={true}>Yes</option>
+                <option value={false}>No</option>
+              </select>
+
+            </div>
+
             <div className='col'>
               <label>Image</label>
               <input

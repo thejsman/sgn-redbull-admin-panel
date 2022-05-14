@@ -30,19 +30,20 @@ const AddRozy = () => {
   const location = useLocation();
   const breadcrumb = [
     { link: "/rozy", linkText: "Rozy Management" },
-    { link: "", linkText: "Add Rozy" },
+    { link: "", linkText: isAddRozy ? 'Add Rozy' : 'Edit Rozy' },
   ];
 
 
   const albhaRegEx = /^[a-zA-z]+$/;
+  const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
   const handleValidate = () => {
     let validate = true;
 
     if (!sectionName.replace(/\s+/g, "")) {
       setSectionNameErr("Section name is required");
       validate = false;
-    } else if (!albhaRegEx.test(sectionName)) {
-      setSectionNameErr("only alphabets are allowed")
+    } else if (!albhaNumericRegEx.test(sectionName)) {
+      setSectionNameErr("Special characters and spaces are not allowed")
       validate = false
     } else {
       setSectionNameErr("")
