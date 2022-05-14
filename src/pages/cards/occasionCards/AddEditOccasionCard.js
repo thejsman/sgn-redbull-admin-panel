@@ -416,6 +416,7 @@ const AddEditOccasionCard = () => {
                                 type='text'
                                 className='form-control'
                                 name='cardName'
+                                autocapitalize="none"
                                 value={cardName}
                                 onChange={e => (
                                     setCardName(e.target.value), setCardNameErr('')

@@ -204,7 +204,7 @@ const TopicManagement = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan='8'>
+                  <td colSpan='9'>
                     <div className='nodatafound'>
                       <h3>No Data Found</h3>
                     </div>
