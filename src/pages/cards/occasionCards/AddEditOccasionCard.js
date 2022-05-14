@@ -38,6 +38,8 @@ const AddEditOccasionCard = () => {
 
     const [ctaAction, setCtaAction] = useState("");
     const [ctaActionErr, setCtaActionErr] = useState('')
+    const [ctaActionTitle, setCtaActionTitle] = useState("");
+    const [ctaActionTitleErr, setCtaActionTitleErr] = useState('')
 
 
     const [color3, setColor3] = useState("#194D33");
@@ -66,6 +68,22 @@ const AddEditOccasionCard = () => {
     const [isSubmit, setIsSubmit] = useState(false);
     const [isAddCard, setIsAddCard] = useState(false);
 
+
+    const visibilityData = [{ label: "Universal", value: 0 }, { label: "India", value: 91 }, { label: "Nepal", value: 977 }];
+
+    const [visibility, setVisibility] = useState([]);
+
+    const onChangeCheckbox = (e, item) => {
+        let temp = visibility;
+        if (e.target.checked == false) {
+            temp = temp.filter((v) => v.value !== item.value);
+        } else {
+            if (temp.findIndex((i) => i.value == item.value) == -1) {
+                temp.push(item);
+            }
+        }
+        setVisibility([...temp]);
+    }
 
     const breadcrumb = [
         { link: '/card/occasions/', linkText: 'Occasion card' },
@@ -244,6 +262,13 @@ const AddEditOccasionCard = () => {
                 setLottieBackgroundFileName(data.lottie.lottieBackgroundFileName);
                 setLottieGraphicFileName(data.lottie.lottieGraphicFileName);
 
+                let arr = [];
+                arr = data.visibility.map(e => {
+                    let index = visibilityData.findIndex((item) => item.value == e);
+                    return visibilityData[index];
+                })
+                setVisibility(arr);
+                console.log('arrarrarr', arr)
 
 
             } else {
@@ -260,6 +285,7 @@ const AddEditOccasionCard = () => {
             let createObj = {
                 cardIdentifier: "cardIdentifier",
                 cardName: cardName.toLowerCase(),
+                visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
                     textColor: headingColor
@@ -309,6 +335,7 @@ const AddEditOccasionCard = () => {
             let createObj = {
                 cardIdentifier: "cardIdentifier",
                 cardName: cardName.toLowerCase(),
+                visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
                     textColor: headingColor
@@ -400,8 +427,34 @@ const AddEditOccasionCard = () => {
                         </div>
 
                     </div>
-
                     <div className='rounded-sm pb-3 bgcolor'>
+                        <label className="pl-1 "># Visibility</label>
+                        <div className="form-group row m-1">
+                            {visibilityData.map((item, index) => {
+                                return (
+                                    <div className="col" key={index}>
+                                        <div className="form-check">
+                                            <input type="checkbox"
+                                                id={`custom-checkbox-${index}`}
+                                                className="form-check-input"
+                                                checked={visibility?.some((d) => d.value == item.value)}
+                                                value={visibility}
+                                                onChange={(e) => {
+                                                    onChangeCheckbox(e, item);
+                                                }}
+                                            />
+                                            <label htmlFor={`custom-checkbox-${index}`} className="form-check-label"  > {item.label} ({item.value})
+                                            </label>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+
+                        </div>
+
+                    </div>
+
+                    <div className='rounded-sm pb-3  mt-4 bgcolor'>
                         <label className="pl-1 "># Heading Detail</label>
                         <div className="form-group row m-1">
                             <div className='col'>

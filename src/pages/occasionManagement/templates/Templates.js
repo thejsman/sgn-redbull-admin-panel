@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
 import Pagination from "react-js-pagination";
-
+import {
+  occasionList
+} from "../../../services/ApiServices";
 import Breadcrumb from "../../../components/common/Breadcrumb";
 import {
   deleteOccasionTemplate,
-  OccasionTemplateList,
+  OccasionTemplateListByOccasionName,
 } from "../../../services/ApiOccasionTemplate";
 import { resHandle } from "../../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +22,7 @@ const Templates = () => {
 
   const [confirmModal, setConfirmModal] = useState(false);
   //const [confirmTopic, setConfirmTopic] = useState("");
+  const [occasionSelectName, setOccasionSelectName] = useState("");
   const [occasionName, setOccasionName] = useState([]);
   const [templateName, setTemplateName] = useState([]);
   const [tempalateList, setTemplateList] = useState([]);
@@ -28,9 +31,12 @@ const Templates = () => {
   const [search, setSearch] = useState("");
   const [count, setCount] = useState(10);
   const [loader, setLoader] = useState(false);
+  const [occasionArrList, setOccasionList] = useState([]);
   // all handler start
   useEffect(() => {
-    getTemplateList();
+    // getTemplateList();
+    getOccasionList();
+
   }, []);
 
   const editPages = (occasionName, templateName) => {
@@ -39,18 +45,25 @@ const Templates = () => {
   const handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
   };
-  const getTemplateList = () => {
+  const getTemplateList = (occasionName) => {
     setLoader(true)
     let params = {
       limit: 200,
       LastEvaluatedKey: "null",
+      occasionName: occasionName
     };
-    OccasionTemplateList(params).then((res) => {
+    OccasionTemplateListByOccasionName(params).then((res) => {
       let { status, data } = resHandle(res);
       if (status === 200) {
         setLoader(false)
-        setTemplateList(data.templateList);
+        setTemplateList([...data.templateList]);
+      } else {
+        setLoader(false)
+        setTemplateList([])
       }
+    }).catch((err) => {
+      setLoader(false)
+      setTemplateList([])
     });
   };
 
@@ -69,6 +82,29 @@ const Templates = () => {
         getTemplateList();
       } else {
         toast.error(data.message);
+      }
+    });
+  };
+
+  const getOccasionList = () => {
+    setLoader(true)
+    let params = {
+      limit: 500,
+      LastEvaluatedKey: "null",
+    };
+    occasionList(params).then((res) => {
+      let { status, data } = resHandle(res);
+      if (status === 200) {
+        let occasionList = data.occasionList.sort((a, b) => {
+          return a.displayTitle.localeCompare(b.displayTitle)
+        });
+        setOccasionList(occasionList);
+        if (occasionList.length > 0) {
+          getTemplateList(occasionList[0].occasionName)
+          setOccasionSelectName(occasionList[0].occasionName);
+        }
+
+        setLoader(false)
       }
     });
   };
@@ -121,8 +157,33 @@ const Templates = () => {
       <div className="twocol sb page_header">
         <div className="headerinner left"></div>
       </div>
+      <div className="form-group row m-4">
+        <div className="col-6">
+          <label>Occasion Name</label>
+          <select
+            className="form-control"
+            name="language"
+            value={occasionSelectName}
+            onChange={(e) => (
+              setOccasionSelectName(e.target.value),
+              getTemplateList(e.target.value)
+            )}
+          >
+            <option key="k_1" value="">
+              Select Occasion Name
+            </option>
+            {occasionArrList.map((item, index) => (
+              <option key={"k" + index} value={item.occasionName}>
+                {item.displayTitle}
 
+              </option>
+            ))}
+
+          </select>
+        </div>
+      </div>
       <div className="table-responsive cm_card p-0">
+
         {loader ? (
           <Loader />
         ) : (
@@ -193,21 +254,23 @@ const Templates = () => {
         )}
       </div>
 
-      {templateList.length ? (
-        <div className="text-center">
-          <Pagination
-            activePage={page}
-            itemsCountPerPage={limit}
-            totalItemsCount={count}
-            onChange={(e) => handlePageChange(e)}
-          />
-        </div>
-      ) : (
-        ""
-      )}
+      {
+        templateList.length ? (
+          <div className="text-center">
+            <Pagination
+              activePage={page}
+              itemsCountPerPage={limit}
+              totalItemsCount={count}
+              onChange={(e) => handlePageChange(e)}
+            />
+          </div>
+        ) : (
+          ""
+        )
+      }
 
       <ToastContainer />
-    </div>
+    </div >
   );
 };
 
