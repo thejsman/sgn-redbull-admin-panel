@@ -298,7 +298,7 @@ const AddEditOccasionCard = () => {
         if (handleValidate()) {
             setIsSubmit(true);
             let createObj = {
-                cardIdentifier: "cardIdentifier",
+                cardIdentifier: "systemOccasionCard",
                 cardName: cardName,
                 visibility: visibility.map(a => a.value),
                 heading: {
@@ -339,7 +339,7 @@ const AddEditOccasionCard = () => {
                     toast.success(data.message);
                 }
             }).catch((err) => {
-                setLoader(false)
+                setIsSubmit(false);
                 toast.error("Sorry, a technical error occurred! Please try again later")
             });
 
@@ -352,7 +352,7 @@ const AddEditOccasionCard = () => {
         if (handleValidate()) {
             setIsSubmit(true);
             let createObj = {
-                cardIdentifier: "cardIdentifier",
+                cardIdentifier: "systemOccasionCard",
                 cardName: cardName,
                 visibility: visibility.map(a => a.value),
                 heading: {
@@ -390,7 +390,7 @@ const AddEditOccasionCard = () => {
                     toast.success(data.message);
                 }
             }).catch((err) => {
-                setLoader(false)
+                setIsSubmit(false);
                 toast.error("Sorry, a technical error occurred! Please try again later")
             });
 

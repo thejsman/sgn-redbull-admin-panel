@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Spinner } from "react-bootstrap"
 import { Loader } from '../../../components/common/loader';
 import { PhotoshopPicker } from "react-color";
-import { createCardOccasion, getCardOccasionByName, updateCardOccasion } from '../../../services/ApiCardOccasion'
+import { createCardTask, getCardTaskByName, updateCardTask } from '../../../services/ApiCardTask'
 
 
 
@@ -211,9 +211,9 @@ const AddEditTaskCard = () => {
 
     const handleGetCardDetailById = (id) => {
         let params = {
-            cardOccasionName: id,
+            cardTaskName: id,
         };
-        getCardOccasionByName(params).then((res) => {
+        getCardTaskByName(params).then((res) => {
             let { status, data } = resHandle(res);
             console.log(status, data, "datadatadatadatadata");
             if (status === 200) {
@@ -263,7 +263,7 @@ const AddEditTaskCard = () => {
         if (handleValidate()) {
             setIsSubmit(true);
             let createObj = {
-                cardIdentifier: "cardIdentifier",
+                cardIdentifier: "taskCard",
                 cardName: cardName,
                 heading: {
                     text: headingText,
@@ -292,7 +292,7 @@ const AddEditTaskCard = () => {
 
 
             console.log("createObj---", createObj);
-            updateCardOccasion(createObj).then((res) => {
+            updateCardTask(createObj).then((res) => {
                 let { status, data } = resHandle(res);
                 setIsSubmit(false);
                 if (status === 200) {
@@ -315,7 +315,7 @@ const AddEditTaskCard = () => {
         if (handleValidate()) {
             setIsSubmit(true);
             let createObj = {
-                cardIdentifier: "cardIdentifier",
+                cardIdentifier: "taskCard",
                 cardName: cardName,
                 heading: {
                     text: headingText,
@@ -341,7 +341,7 @@ const AddEditTaskCard = () => {
                 status: status
             }
             console.log("createObj---", createObj);
-            createCardOccasion(createObj).then((res) => {
+            createCardTask(createObj).then((res) => {
                 let { status, data } = resHandle(res);
                 setIsSubmit(false);
                 if (status === 200) {
