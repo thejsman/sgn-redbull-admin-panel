@@ -83,6 +83,9 @@ const Templates = () => {
       } else {
         toast.error(data.message);
       }
+    }).catch((err) => {
+      setLoader(false);
+      toast.error("Sorry, a technical error occurred! Please try again later")
     });
   };
 

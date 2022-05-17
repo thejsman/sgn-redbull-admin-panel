@@ -56,7 +56,7 @@ const OccasionCard = () => {
   const handleDeleteCardOccasion = () => {
     let params = {
       cardName: cardName,
-      cardIdentifier: "cardIdentifier"
+      cardIdentifier: "systemOccasionCard"
     }
     handleClose();
     setLoader(true);
@@ -143,9 +143,9 @@ const OccasionCard = () => {
               {cardList.length ? (
                 cardList?.map((item, i) => (
                   <tr key={i}>
-                    <td>{(page - 1) * limit + i + 1}</td>
-                    <td>
-                      <span className=''>{item.cardName}</span>
+                    <td className='text-wrap'>{(page - 1) * limit + i + 1}</td>
+                    <td className='text-wrap'>
+                      <span >{item.cardName}</span>
                     </td>
                     <td className="text-wrap">
                       <span style={{
@@ -188,7 +188,7 @@ const OccasionCard = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan='6'>
+                  <td colSpan='6' >
                     <div className='nodatafound'>
                       <h3>No Data Found</h3>
                     </div>

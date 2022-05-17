@@ -11,13 +11,14 @@ export const devSetting = {
     mode: "cors",
     s3_url: "https://devcdn.gosorted.com/",
     url_Prod: "https://devapi.gosorted.com/Sagoon/api/v1/",
-    Sagoonlite_Url : "https://dev.sagoonlite.com/",
-    Occasion_url  :"https://10z7l690ic.execute-api.eu-central-1.amazonaws.com/dev/",
-    rozy_url : "https://6k0xfuii3e.execute-api.eu-central-1.amazonaws.com/dev/",
-    template_url : "https://dev.sagoonlite.com/templateAdmin/",
-    voucher_url : "https://dev.sagoonlite.com/adminVoucher/",
-    cardOccasion_url : "https://0maydym1ik.execute-api.eu-central-1.amazonaws.com/dev/"
-    
+    Sagoonlite_Url: "https://dev.sagoonlite.com/",
+    Occasion_url: "https://10z7l690ic.execute-api.eu-central-1.amazonaws.com/dev/",
+    rozy_url: "https://6k0xfuii3e.execute-api.eu-central-1.amazonaws.com/dev/",
+    template_url: "https://dev.sagoonlite.com/templateAdmin/",
+    voucher_url: "https://dev.sagoonlite.com/adminVoucher/",
+    cardOccasion_url: "https://0maydym1ik.execute-api.eu-central-1.amazonaws.com/dev/",
+    card_url: "https://bwifznalf9.execute-api.eu-central-1.amazonaws.com/dev/"
+
 
   },
 

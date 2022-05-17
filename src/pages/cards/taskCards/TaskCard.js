@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { Modal, Dropdown } from 'react-bootstrap'
 import Pagination from 'react-js-pagination'
 import Breadcrumb from '../../../components/common/Breadcrumb'
-import { cardOccasionList, deleteCardOccasion } from '../../../services/ApiCardOccasion'
+import { cardTaskList, deleteCardTask } from '../../../services/ApiCardTask'
 import { resHandle } from '../../../components/util/utils'
 import { ToastContainer, toast } from 'react-toastify'
 import { Loader } from '../../../components/common/loader'
@@ -40,7 +40,7 @@ const TaskCard = () => {
       limit: 100,
       LastEvaluatedKey: 'null',
     }
-    cardOccasionList(params).then(res => {
+    cardTaskList(params).then(res => {
       let { status, data } = resHandle(res)
       if (status === 200) {
         setLoader(false)
@@ -55,11 +55,11 @@ const TaskCard = () => {
   const handleDeleteCardOccasion = () => {
     let params = {
       cardName: cardName,
-      cardIdentifier: "cardIdentifier"
+      cardIdentifier: "taskCard"
     }
     handleClose();
     setLoader(true);
-    deleteCardOccasion(params).then(res => {
+    deleteCardTask(params).then(res => {
       setLoader(false)
       let { status, data } = resHandle(res)
       if (status === 200) {

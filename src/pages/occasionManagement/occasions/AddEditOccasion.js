@@ -116,6 +116,9 @@ const AddEditOccasion = () => {
         setOccasionType(data.occasionType ? data.occasionType : 'private');
       } else {
       }
+    }).catch((err) => {
+      setLoader(false);
+      toast.error("Sorry, a technical error occurred! Please try again later")
     });
   };
   const handleUpdateOccasion = (e) => {
@@ -148,6 +151,9 @@ const AddEditOccasion = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
     }
   };
@@ -206,6 +212,9 @@ const AddEditOccasion = () => {
         } else {
           toast.success(data.message);
         }
+      }).catch((err) => {
+        setIsSubmit(false);
+        toast.error("Sorry, a technical error occurred! Please try again later")
       });
     }
   };

@@ -55,10 +55,16 @@ export default {
   GET_COUPONDETAIL_BY_COUPONID: siteSetting.api.voucher_url + "/getById",
 
   // Card Occasion Section
-  GET_CARD_OCCASION_LIST: siteSetting.api.cardOccasion_url + "cards/cardIdentifier",
-  CREATE_CARD_OCCASION: siteSetting.api.cardOccasion_url + "create-card",
-  UPDATE_CARD_OCCASION: siteSetting.api.cardOccasion_url + "create-card",
-  GET_CARD_OCCASION_BY_OCCASIONNAME: siteSetting.api.cardOccasion_url + "card/",
-  DELETE_CARD_OCCASION: siteSetting.api.cardOccasion_url + "delete-card",
+  GET_CARD_OCCASION_LIST: siteSetting.api.card_url + "cards/systemOccasionCard",
+  CREATE_CARD_OCCASION: siteSetting.api.card_url + "create-card",
+  UPDATE_CARD_OCCASION: siteSetting.api.card_url + "create-card",
+  GET_CARD_OCCASION_BY_OCCASIONNAME: siteSetting.api.card_url + "card/",
+  DELETE_CARD_OCCASION: siteSetting.api.card_url + "delete-card",
 
+  // Task Occasion Section
+  GET_CARD_TASK_LIST: siteSetting.api.card_url + "cards/taskCard",
+  CREATE_CARD_TASK: siteSetting.api.card_url + "create-card",
+  UPDATE_CARD_TASK: siteSetting.api.card_url + "create-card",
+  GET_CARD_TASK_BY_TASKNAME: siteSetting.api.card_url + "card/",
+  DELETE_CARD_TASK: siteSetting.api.card_url + "delete-card",
 };
