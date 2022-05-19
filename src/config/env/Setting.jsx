@@ -12,7 +12,7 @@ export const devSetting = {
     s3_url: "https://devcdn.gosorted.com/",
     url_Prod: "https://devapi.gosorted.com/Sagoon/api/v1/",
     Sagoonlite_Url: "https://dev.sagoonlite.com/",
-    Occasion_url: "https://10z7l690ic.execute-api.eu-central-1.amazonaws.com/dev/",
+    Occasion_url: "https://xe4rysdekl.execute-api.eu-central-1.amazonaws.com/dev/",
     rozy_url: "https://6k0xfuii3e.execute-api.eu-central-1.amazonaws.com/dev/",
     template_url: "https://dev.sagoonlite.com/templateAdmin/",
     voucher_url: "https://dev.sagoonlite.com/adminVoucher/",
