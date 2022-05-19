@@ -18,7 +18,7 @@ export default {
   GET_DOMAIN_LIST: siteSetting.api.template_url + "notification-list",
 
   // Occasion Section
-  GET_OCCASION_LIST: siteSetting.api.Sagoonlite_Url + "occasion/occasion",
+  GET_OCCASION_LIST: siteSetting.api.Occasion_url + "occasion",
   CREATE_OCCASION: siteSetting.api.Occasion_url + "occasion",
   GET_OCCASION_BY_NAME: siteSetting.api.Occasion_url + "occasion",
   DELETE_OCCASION: siteSetting.api.Occasion_url + "occasion",
@@ -28,7 +28,7 @@ export default {
   CREATE_OCCASION_TEMPLATE: siteSetting.api.Occasion_url + "template",
   GET_OCCASION_TEMPLATE_BY_NAME: siteSetting.api.Occasion_url + "template",
   DELETE_OCCASION_TEMPLATE: siteSetting.api.Occasion_url + "template",
-  GET_OCCASION_TEMPLATE_LIST_BY_NAME: siteSetting.api.cardOccasion_url + "template/",
+  GET_OCCASION_TEMPLATE_LIST_BY_NAME: siteSetting.api.Occasion_url + "templates/",
 
 
   //Family Relationship

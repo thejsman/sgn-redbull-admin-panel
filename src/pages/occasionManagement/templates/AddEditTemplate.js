@@ -117,6 +117,8 @@ const AddEditTemplate = () => {
         data: {
           displayOrder: parseInt(templateOrder),
           status: templateStatus == true || templateStatus == "true" ? true : false,
+          templateImage: base64,
+          fileName: fileName,
         }
       };
       if (editImage) {

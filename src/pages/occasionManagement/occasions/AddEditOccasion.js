@@ -110,6 +110,7 @@ const AddEditOccasion = () => {
           setOccasionStatus(false);
         }
 
+        setFileName(data.fileName);
         setOccasionOrder(data.displayOrder);
         setOccasionDesc(data.occasionDescription);
         setBase64(data.occasionIcon);
@@ -134,6 +135,8 @@ const AddEditOccasion = () => {
           occasionDescription: occasionDesc,
           occasionType: occasionType,
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
+          occasionIcon: occasionIcon,
+          fileName: fileName
         },
       };
 
