@@ -105,90 +105,90 @@ const AddEditOccasionCard = () => {
             setCardNameErr("")
         }
 
-        if (!headingColor.replace(/\s+/g, '')) {
-            setHeadingColorErr("Heading Color is required")
-            validate = false
-        } else {
-            setHeadingColorErr("")
-        }
+        // if (!headingColor.replace(/\s+/g, '')) {
+        //     setHeadingColorErr("Heading Color is required")
+        //     validate = false
+        // } else {
+        //     setHeadingColorErr("")
+        // }
 
-        if (!headingText.replace(/\s+/g, '')) {
-            setHeadingTextErr("Heading Text is required")
-            validate = false
-        } else {
-            setHeadingTextErr("")
-        }
+        // if (!headingText.replace(/\s+/g, '')) {
+        //     setHeadingTextErr("Heading Text is required")
+        //     validate = false
+        // } else {
+        //     setHeadingTextErr("")
+        // }
 
-        if (!ctaText.replace(/\s+/g, '')) {
-            setCtaTextErr("CTA Text is required")
-            validate = false
-        } else {
-            setCtaTextErr("")
-        }
+        // if (!ctaText.replace(/\s+/g, '')) {
+        //     setCtaTextErr("CTA Text is required")
+        //     validate = false
+        // } else {
+        //     setCtaTextErr("")
+        // }
 
-        if (!ctaColor.replace(/\s+/g, '')) {
-            setCtaColorErr("CTA Color is required")
-            validate = false
-        } else {
-            setCtaColorErr("")
-        }
+        // if (!ctaColor.replace(/\s+/g, '')) {
+        //     setCtaColorErr("CTA Color is required")
+        //     validate = false
+        // } else {
+        //     setCtaColorErr("")
+        // }
 
-        if (!ctaBGColor.replace(/\s+/g, '')) {
-            setCtaBGErr("CTA Background Color is required")
-            validate = false
-        } else {
-            setCtaBGErr("")
-        }
+        // if (!ctaBGColor.replace(/\s+/g, '')) {
+        //     setCtaBGErr("CTA Background Color is required")
+        //     validate = false
+        // } else {
+        //     setCtaBGErr("")
+        // }
 
-        if (!ctaAction.replace(/\s+/g, '')) {
-            setCtaActionErr("CTA Action is required")
-            validate = false
-        } else {
-            setCtaActionErr("")
-        }
+        // if (!ctaAction.replace(/\s+/g, '')) {
+        //     setCtaActionErr("CTA Action is required")
+        //     validate = false
+        // } else {
+        //     setCtaActionErr("")
+        // }
 
-        if (!ctaActionTitle.replace(/\s+/g, '')) {
-            setCtaActionTitleErr("CTA Action Title is required")
-            validate = false
-        } else {
-            setCtaActionTitleErr("")
-        }
+        // if (!ctaActionTitle.replace(/\s+/g, '')) {
+        //     setCtaActionTitleErr("CTA Action Title is required")
+        //     validate = false
+        // } else {
+        //     setCtaActionTitleErr("")
+        // }
 
 
-        if (!contentText.replace(/\s+/g, '')) {
-            setContentTextErr("Content Text is required")
-            validate = false
-        } else {
-            setContentTextErr("")
-        }
+        // if (!contentText.replace(/\s+/g, '')) {
+        //     setContentTextErr("Content Text is required")
+        //     validate = false
+        // } else {
+        //     setContentTextErr("")
+        // }
 
-        if (!contentColor.replace(/\s+/g, '')) {
-            setContentColorErr("Content Color is required")
-            validate = false
-        } else {
-            setContentColorErr("")
-        }
+        // if (!contentColor.replace(/\s+/g, '')) {
+        //     setContentColorErr("Content Color is required")
+        //     validate = false
+        // } else {
+        //     setContentColorErr("")
+        // }
 
-        if (!lottieColor.replace(/\s+/g, '')) {
-            setLottieColorErr("Lottie Backgroud Color is required")
-            validate = false
-        } else {
-            setLottieColorErr("")
-        }
+        // if (!lottieColor.replace(/\s+/g, '')) {
+        //     setLottieColorErr("Lottie Backgroud Color is required")
+        //     validate = false
+        // } else {
+        //     setLottieColorErr("")
+        // }
 
-        if (isAddCard && !lottieBackgroundBase64.replace(/\s+/g, '')) {
-            setLottieBackgroundFileNameErr("Background json file is required")
-            validate = false
-        } else {
-            setLottieBackgroundFileNameErr("")
-        }
+        // if (isAddCard && !lottieBackgroundBase64.replace(/\s+/g, '')) {
+        //     setLottieBackgroundFileNameErr("Background json file is required")
+        //     validate = false
+        // } else {
+        //     setLottieBackgroundFileNameErr("")
+        // }
 
-        if (isAddCard && !lottieGraphicBase64.replace(/\s+/g, '')) {
-            setLottieGraphicFileNameErr("Graphic json file is required")
-            validate = false
-        } else {
-            setLottieGraphicFileNameErr("")
-        }
+        // if (isAddCard && !lottieGraphicBase64.replace(/\s+/g, '')) {
+        //     setLottieGraphicFileNameErr("Graphic json file is required")
+        //     validate = false
+        // } else {
+        //     setLottieGraphicFileNameErr("")
+        // }
 
         return validate
     }
