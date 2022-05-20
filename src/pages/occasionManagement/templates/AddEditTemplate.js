@@ -173,7 +173,11 @@ const AddEditTemplate = () => {
           return a.displayTitle.localeCompare(b.displayTitle)
         });
         setOccasionList(occasionList);
-        setOccasionName(occasionList[0].occasionName)
+
+        // if (isAddOccasionTemplate) {
+        //   setOccasionName(occasionList[0].occasionName)
+        // }
+
         setLoader(false)
       }
     }).catch((err) => {
@@ -182,13 +186,14 @@ const AddEditTemplate = () => {
     });
   };
   useEffect(() => {
-    getOccasionList();
+
     if (window.location.pathname == "/template/create") {
       setIsAddOccasionTemplate(true);
     }
     if (window.location.pathname !== "/template/create") {
       handleGetTemplateById(oname, tname);
     }
+    getOccasionList();
   }, []);
 
   const handleCreateTemplate = (e) => {
@@ -247,6 +252,9 @@ const AddEditTemplate = () => {
                   setOccasionName(e.target.value), setOccasionNameErr("")
                 )}
               >
+                <option key={"kotion"} value="">
+                  Select Occasion
+                </option>
                 {occasionArrList.map((item, index) => (
                   <option key={"k" + index} value={item.occasionName}>
                     {item.displayTitle}
