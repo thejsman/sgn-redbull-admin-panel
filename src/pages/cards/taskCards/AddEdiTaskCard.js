@@ -16,6 +16,8 @@ const AddEditTaskCard = () => {
 
     const [cardName, setCardName] = useState('')
     const [cardNameErr, setCardNameErr] = useState('')
+    const [order, setOrder] = useState('')
+    const [orderErr, setOrderErr] = useState('')
 
     const [color, setColor] = useState("#194D33");
     const [headingColor, setHeadingColor] = useState("");
@@ -38,6 +40,7 @@ const AddEditTaskCard = () => {
 
     const [ctaAction, setCtaAction] = useState("");
     const [ctaActionErr, setCtaActionErr] = useState('')
+
 
 
     const [color3, setColor3] = useState("#194D33");
@@ -66,14 +69,33 @@ const AddEditTaskCard = () => {
     const [isSubmit, setIsSubmit] = useState(false);
     const [isAddCard, setIsAddCard] = useState(false);
 
+    const visibilityData = [{ label: "Universal", value: 0 }, { label: "India", value: 91 }, { label: "Nepal", value: 977 }];
+
+    const [visibility, setVisibility] = useState([]);
+
+
 
     const breadcrumb = [
         { link: '/card/tasks/', linkText: 'Task cards' },
         { link: '', linkText: isAddCard ? 'Add Task Card' : 'Edit Task Card' }
     ]
 
+    const onChangeCheckbox = (e, item) => {
+        let temp = visibility;
+        if (e.target.checked == false) {
+            temp = temp.filter((v) => v.value !== item.value);
+        } else {
+            if (temp.findIndex((i) => i.value == item.value) == -1) {
+                temp.push(item);
+            }
+        }
+        setVisibility([...temp]);
+    }
+
+
     const albhaRegEx = /^[a-zA-z]+$/;
     const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
+    const numberRegEx = /^[0-9\b]+$/;
     const handleValidate = () => {
         let validate = true
 
@@ -85,6 +107,16 @@ const AddEditTaskCard = () => {
             validate = false
         } else {
             setCardNameErr("")
+        }
+
+        if (!order) {
+            setOrderErr("Order no is required")
+            validate = false
+        } else if (!numberRegEx.test(order)) {
+            setOrderErr("Order no should be numeric");
+            validate = false;
+        } else {
+            setOrderErr("");
         }
 
         // if (!headingColor.replace(/\s+/g, '')) {
@@ -220,6 +252,7 @@ const AddEditTaskCard = () => {
                 setLoader(false);
                 setCardName(data.cardName);
                 setStatus(data.status);
+                setOrder(data.displayOrder);
 
 
                 setHeadingText(data?.heading?.text);
@@ -246,6 +279,15 @@ const AddEditTaskCard = () => {
                 setLottieGraphicFileName(data.lottie.lottieGraphicFileName);
 
 
+                let arr = [];
+                if (data.visibility) {
+                    arr = data.visibility.map(e => {
+                        let index = visibilityData.findIndex((item) => item.value == e);
+                        return visibilityData[index];
+                    })
+                }
+
+                setVisibility(arr);
 
             } else {
                 setLoader(false);
@@ -265,6 +307,8 @@ const AddEditTaskCard = () => {
             let createObj = {
                 cardIdentifier: "taskCard",
                 cardName: cardName,
+                displayOrder: order,
+                visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
                     textColor: headingColor
@@ -317,6 +361,8 @@ const AddEditTaskCard = () => {
             let createObj = {
                 cardIdentifier: "taskCard",
                 cardName: cardName,
+                displayOrder: order,
+                visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
                     textColor: headingColor
@@ -409,10 +455,50 @@ const AddEditTaskCard = () => {
                             </select>
 
                         </div>
+                        <div className="col">
+                            <label>Order</label>
+                            <input
+                                type='number'
+                                className="form-control"
+                                keyboardType='phone-pad'
+                                value={order}
+                                name="order"
+                                onChange={(e) => (
+                                    setOrder(e.target.value), setOrderErr("")
+                                )}
+                            />
+                            {orderErr && (
+                                <div className="inlineerror">{orderErr} </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className='rounded-sm pb-3 bgcolor'>
+                        <label className="pl-1 "># Visibility</label>
+                        <div className="form-group row m-1">
+                            {visibilityData.map((item, index) => {
+                                return (
+                                    <div className="col" key={index}>
+                                        <div className="form-check">
+                                            <input type="checkbox"
+                                                id={`custom-checkbox-${index}`}
+                                                className="form-check-input"
+                                                checked={visibility?.some((d) => d.value == item.value)}
+                                                value={visibility}
+                                                onChange={(e) => {
+                                                    onChangeCheckbox(e, item);
+                                                }}
+                                            />
+                                            <label htmlFor={`custom-checkbox-${index}`} className="form-check-label"  > {item.label} ({item.value})
+                                            </label>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+
+                        </div>
 
                     </div>
-
-                    <div className='rounded-sm pb-3 bgcolor'>
+                    <div className='rounded-sm pb-3  mt-4 bgcolor'>
                         <label className="pl-1 "># Heading Detail</label>
                         <div className="form-group row m-1">
                             <div className='col'>

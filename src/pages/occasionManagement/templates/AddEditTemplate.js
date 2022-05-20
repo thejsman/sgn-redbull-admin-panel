@@ -169,7 +169,11 @@ const AddEditTemplate = () => {
     occasionList(params).then((res) => {
       let { status, data } = resHandle(res);
       if (status === 200) {
-        setOccasionList(data.occasionList);
+        let occasionList = data.occasionList.sort((a, b) => {
+          return a.displayTitle.localeCompare(b.displayTitle)
+        });
+        setOccasionList(occasionList);
+        setOccasionName(occasionList[0].occasionName)
         setLoader(false)
       }
     }).catch((err) => {

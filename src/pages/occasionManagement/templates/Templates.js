@@ -79,7 +79,7 @@ const Templates = () => {
       if (status === 200) {
         setLoader(false)
         toast.success(data.message)
-        getTemplateList();
+        getTemplateList(occasionName);
       } else {
         toast.error(data.message);
       }

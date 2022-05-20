@@ -16,6 +16,8 @@ const AddEditOccasionCard = () => {
 
     const [cardName, setCardName] = useState('')
     const [cardNameErr, setCardNameErr] = useState('')
+    const [order, setOrder] = useState('')
+    const [orderErr, setOrderErr] = useState('')
 
     const [color, setColor] = useState("#194D33");
     const [headingColor, setHeadingColor] = useState("");
@@ -91,6 +93,7 @@ const AddEditOccasionCard = () => {
     ]
 
     const albhaRegEx = /^[a-zA-z]+$/;
+    const numberRegEx = /^[0-9\b]+$/;
     const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
     const handleValidate = () => {
         let validate = true
@@ -103,6 +106,16 @@ const AddEditOccasionCard = () => {
             validate = false
         } else {
             setCardNameErr("")
+        }
+
+        if (!order) {
+            setOrderErr("Order no is required")
+            validate = false
+        } else if (!numberRegEx.test(order)) {
+            setOrderErr("Order no should be numeric");
+            validate = false;
+        } else {
+            setOrderErr("");
         }
 
         // if (!headingColor.replace(/\s+/g, '')) {
@@ -245,6 +258,7 @@ const AddEditOccasionCard = () => {
                 setLoader(false);
                 setCardName(data.cardName);
                 setStatus(data.status);
+                setOrder(data.displayOrder);
 
 
                 setHeadingText(data?.heading?.text);
@@ -300,6 +314,7 @@ const AddEditOccasionCard = () => {
             let createObj = {
                 cardIdentifier: "systemOccasionCard",
                 cardName: cardName,
+                displayOrder: order,
                 visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
@@ -354,6 +369,7 @@ const AddEditOccasionCard = () => {
             let createObj = {
                 cardIdentifier: "systemOccasionCard",
                 cardName: cardName,
+                displayOrder: order,
                 visibility: visibility.map(a => a.value),
                 heading: {
                     text: headingText,
@@ -450,6 +466,22 @@ const AddEditOccasionCard = () => {
 
                         </div>
 
+                        <div className="col">
+                            <label>Order</label>
+                            <input
+                                type='number'
+                                className="form-control"
+                                keyboardType='phone-pad'
+                                value={order}
+                                name="order"
+                                onChange={(e) => (
+                                    setOrder(e.target.value), setOrderErr("")
+                                )}
+                            />
+                            {orderErr && (
+                                <div className="inlineerror">{orderErr} </div>
+                            )}
+                        </div>
                     </div>
                     <div className='rounded-sm pb-3 bgcolor'>
                         <label className="pl-1 "># Visibility</label>

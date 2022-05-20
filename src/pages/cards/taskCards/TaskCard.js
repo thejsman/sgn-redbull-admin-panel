@@ -132,8 +132,9 @@ const TaskCard = () => {
               <tr>
                 <th>S.No</th>
                 <th>Card Name</th>
+                <th>Display Order</th>
                 <th>Heading</th>
-                <th>Content</th>
+                {/* <th>Content</th> */}
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -146,6 +147,7 @@ const TaskCard = () => {
                     <td>
                       <span className=''>{item.cardName}</span>
                     </td>
+                    <td>{item.displayOrder} </td>
                     <td className="text-wrap">
                       <span style={{
                         color: item?.heading?.textColor,
@@ -154,14 +156,14 @@ const TaskCard = () => {
                       }}>{item?.heading?.text}</span>
                     </td>
 
-                    <td className="text-wrap">
+                    {/* <td className="text-wrap">
                       <span style={{
                         color: item?.content?.textColor,
                         transition: "ease all 500ms",
                         height: '10px'
                       }}> {item?.content?.text}</span>
 
-                    </td>
+                    </td> */}
 
                     <td>
                       {item.status == "true" || item.status == true ? "Activated" : "Deactivated"}
