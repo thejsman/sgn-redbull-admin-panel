@@ -48,11 +48,11 @@ export default {
 
 
   // vouchers Section
-  GET_VOUCHERS_LIST: siteSetting.api.voucher_url + "list",
-  CREATE_VOUCHERS: siteSetting.api.voucher_url + "create",
-  UPDATE_VOUCHERS: siteSetting.api.voucher_url + "update",
-  GET_COUPONLIST_BY_PRODUCTNAME: siteSetting.api.voucher_url + "/get",
-  GET_COUPONDETAIL_BY_COUPONID: siteSetting.api.voucher_url + "/getById",
+  GET_VOUCHERS_LIST: siteSetting.api.BaseUrl + "voucher/list",
+  CREATE_VOUCHERS: siteSetting.api.BaseUrl + "voucher/create",
+  UPDATE_VOUCHERS: siteSetting.api.BaseUrl + "voucher/update",
+  GET_COUPONLIST_BY_PRODUCTNAME: siteSetting.api.BaseUrl + "voucher/get",
+  GET_COUPONDETAIL_BY_COUPONID: siteSetting.api.BaseUrl + "voucher/getById",
 
   // Card Occasion Section
   GET_CARD_OCCASION_LIST: siteSetting.api.card_url + "cards/systemOccasionCard",
