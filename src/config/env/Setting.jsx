@@ -6,6 +6,7 @@
 //dev
 export const devSetting = {
   api: {
+    BaseUrl: "https://dev.sagoonlite.com/",
     url: "https://prdc113ea0.execute-api.us-east-1.amazonaws.com/dev/",
     AUTH: "Basic c29ydGVkX0F1dGg6TXpDWTd5S0ZubHl4dTdHdg==",
     mode: "cors",
