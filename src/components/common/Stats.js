@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import { Ticker } from './Ticker'
+import { Bar, Line } from 'react-chartjs-2';
+import 'chart.js/auto'
+
+
+export const Stats = React.memo((props) => {
+    console.log("user Stats prop", props)
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+                display: false
+            },
+        },
+    };
+
+    const labels = props.chartDetail.labels;
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Dataset 1',
+                data: props.chartDetail.data,
+                fill: true,
+                backgroundColor: "rgba(75,192,192,0.2)",
+                borderColor: "rgba(75,192,192,1)"
+            },
+        ],
+    };
+
+    return (
+        <>
+            <div className="col-sm-6 mt-3">
+                <div className="row">
+                    <div className="col-sm-6 dash_sm_card ">
+                        <Ticker title="Total User" start={props.totalUsers[0]} end={props.totalUsers[1]} />
+
+
+                    </div>
+                    <div className="col-sm-6 dash_sm_card">
+                        <Ticker title="Monthly User" start={props.monthUser[0]} end={props.monthUser[1]} />
+                    </div>
+                </div>
+
+            </div>
+            <div className="col-sm-6 mt-3">
+                <div className="card ">
+                    <div className="card-header btn-primary">Registered User's in Last 8 Days</div>
+                    <div className="card-body card_color">
+                        <p className="card-text"><Line data={data} options={options} /></p>
+                    </div>
+                </div>
+
+            </div>
+        </>
+    );
+});
+
+
