@@ -125,7 +125,7 @@ h1,
 h2,
 h3,
 h4,
-h5,
+h5 ,
 h6 {
   font-weight: 500;
 }
@@ -155,7 +155,7 @@ h4 {
   color: #3a3a3a;
 }
 h5 {
-  font-size: 36px;
+  font-size: 10px;
 }
 h6 {
   font-size: 18px;
@@ -933,6 +933,16 @@ form.form-controller.domain {
 }
 .bg-primary {
   background: $primary !important;
+}
+
+.card_color {
+  background-color: #a88fff2b;
+  color: $primary;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.1px;
+  font-weight: 500;
+  text-align: center;
 }
 
 // asker management end
