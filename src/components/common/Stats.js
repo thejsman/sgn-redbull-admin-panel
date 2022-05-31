@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ticker } from './Ticker'
 import { Bar, Line } from 'react-chartjs-2';
 import 'chart.js/auto'
 
 
+
 export const Stats = React.memo((props) => {
-    console.log("user Stats prop", props)
     const options = {
         responsive: true,
         plugins: {
@@ -36,12 +36,12 @@ export const Stats = React.memo((props) => {
             <div className="col-sm-6 mt-3">
                 <div className="row">
                     <div className="col-sm-6 dash_sm_card ">
-                        <Ticker title="Total User" start={props.totalUsers[0]} end={props.totalUsers[1]} />
+                        <Ticker title="Total User" start={props.arrUser[props.arrUser.length - 2]} end={props.totalUsers} />
 
 
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly User" start={props.monthUser[0]} end={props.monthUser[1]} />
+                        <Ticker title="Monthly User" start={props.arrMonthUser[props.arrMonthUser.length - 2]} end={props.monthUser} />
                     </div>
                 </div>
 
