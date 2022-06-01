@@ -10,12 +10,16 @@ import './styles/style.scss';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 // import store from './store';
 import Routes from './Routes';
+import store from "./store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
