@@ -39,11 +39,15 @@ const Coupons = () => {
     let data = arr.filter(item => item.page == pageno)
     if (data.length == 0) {
       setPage(pageno);
-      arr.push({ page: pageno, pk: pk, couponVoucherId: couponVoucherIdPage });
-      setPageState([...arr]);
-      let totCount = count + limit;
-      setCount(totCount)
-      getCouponList(id, pk, couponVoucherIdPage, pageno);
+      if (couponVoucherIdPage !== null) {
+        arr.push({ page: pageno, pk: pk, couponVoucherId: couponVoucherIdPage });
+        setPageState([...arr]);
+        let totCount = count + limit;
+        setCount(totCount)
+        getCouponList(id, pk, couponVoucherIdPage, pageno);
+      } else {
+        setCouponList([...[]])
+      }
     } else {
 
       setPage(pageno);
@@ -78,8 +82,13 @@ const Coupons = () => {
           }
 
         }
-        if (data.data.Items.length == 0) {
-          setCount(count - limit);
+        if (data.data.Items.length == 0 || !data.data.LastEvaluatedKey) {
+          setcouponVoucherIdPage(null)
+          //let pageCount = count - limit
+          //setCount(pageCount);
+          // // let pageCount = count - limit
+          // // setCount(pageCount);
+          // console.log(count, 'cccccccccccccccccc');
         }
       }
     })
