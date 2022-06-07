@@ -3,12 +3,10 @@ import { resHandle } from '../../components/util/utils';
 import { Bar } from 'react-chartjs-2';
 import { Stats } from '../../components/common/Stats';
 import { CreditDebitStats } from '../../components/common/CreditDebitStats';
-// import { useDispatch, useSelector } from "react-redux";
-// import { updateUserCount } from "../../action"
+import siteSetting from "../../config/env/Index";
+
 
 const Dashboard = () => {
-  //const dispatch = useDispatch();
-  // dispatch(updateUserCount({ totalUsers: [0, 10], monthUser: [0, 10], chartDetail: { labels: [], data: [] } }));
   const [userData, setUserData] = useState({ totalUsers: [0, 10], monthUser: [0, 10], chartDetail: { labels: [], data: [] } });
   const [creditData, setCreditData] = useState({ principalAmount: [0, 0], totalAmount: [0, 0], monthAmount: [0, 0], chartDetail: { labels: [], data: [] } });
   const [debitData, setDebitData] = useState({ totalAmount: [0, 0], monthAmount: [0, 0], chartDetail: { labels: [], data: [] } });
@@ -26,7 +24,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     //if (isMounted.current) {
-    const ws = new WebSocket('wss://pct2wzxhg8.execute-api.eu-central-1.amazonaws.com/dev');
+    const ws = new WebSocket(siteSetting.api.WebSocketUrl);
 
     ws.onopen = () => {
       console.log("connection open");
@@ -121,6 +119,7 @@ const Dashboard = () => {
       }
 
     };
+
     // return () => {
     //   isMounted.current = false;
     // };
