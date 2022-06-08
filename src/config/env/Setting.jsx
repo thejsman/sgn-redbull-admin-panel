@@ -6,21 +6,10 @@
 //dev
 export const devSetting = {
   api: {
-    // BaseUrl: "https://dev.sagoonlite.com/admin/",
-    url: "https://prdc113ea0.execute-api.us-east-1.amazonaws.com/dev/",
-    AUTH: "Basic c29ydGVkX0F1dGg6TXpDWTd5S0ZubHl4dTdHdg==",
-    mode: "cors",
-    s3_url: "https://devcdn.gosorted.com/",
-    url_Prod: "https://devapi.gosorted.com/Sagoon/api/v1/",
-    Sagoonlite_Url: "https://dev.sagoonlite.com/",
-    Occasion_url: "https://xe4rysdekl.execute-api.eu-central-1.amazonaws.com/dev/",
-    rozy_url: "https://6k0xfuii3e.execute-api.eu-central-1.amazonaws.com/dev/",
-    template_url: "https://dev.sagoonlite.com/templateAdmin/",
-    voucher_url: "https://dev.sagoonlite.com/adminVoucher/",
-    cardOccasion_url: "https://0maydym1ik.execute-api.eu-central-1.amazonaws.com/dev/",
-    card_url: "https://bwifznalf9.execute-api.eu-central-1.amazonaws.com/dev/"
-
-
+    BaseUrl: process.env.REACT_APP_API_BASE_URL,
+    mode: 'cors',
+    WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
+    Occasion_url: process.env.REACT_APP_API_BASE_URL + "/admin-occasion",
   },
   stripe_key: "",
 };
@@ -30,6 +19,8 @@ export const stagSetting = {
   api: {
     BaseUrl: process.env.REACT_APP_API_BASE_URL,
     mode: 'cors',
+    WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
+    Occasion_url: process.env.REACT_APP_API_BASE_URL + "/occasion",
   },
 };
 
