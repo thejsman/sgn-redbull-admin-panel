@@ -19,17 +19,17 @@ export default {
   GET_DOMAIN_LIST: siteSetting.api.BaseUrl + "/templateAdmin/notification-list",
 
   // Occasion Section
-  GET_OCCASION_LIST: siteSetting.api.BaseUrl + "/occasion/occasion",
-  CREATE_OCCASION: siteSetting.api.BaseUrl + "/occasion/occasion",
-  GET_OCCASION_BY_NAME: siteSetting.api.BaseUrl + "/occasion/occasion",
-  DELETE_OCCASION: siteSetting.api.BaseUrl + "/occasion/occasion",
+  GET_OCCASION_LIST: siteSetting.api.Occasion_url + "/occasion",
+  CREATE_OCCASION: siteSetting.api.Occasion_url + "/occasion",
+  GET_OCCASION_BY_NAME: siteSetting.api.Occasion_url + "/occasion",
+  DELETE_OCCASION: siteSetting.api.Occasion_url + "/occasion",
 
-  // Occasion Template Section
-  GET_OCCASION_TEMPLATE_LIST: siteSetting.api.BaseUrl + "/occasion/templates",
-  CREATE_OCCASION_TEMPLATE: siteSetting.api.BaseUrl + "/occasion/template",
-  GET_OCCASION_TEMPLATE_BY_NAME: siteSetting.api.BaseUrl + "/occasion/template",
-  DELETE_OCCASION_TEMPLATE: siteSetting.api.BaseUrl + "/occasion/template",
-  GET_OCCASION_TEMPLATE_LIST_BY_NAME: siteSetting.api.BaseUrl + "/occasion/templates/",
+  // Occasion Template Section 
+  GET_OCCASION_TEMPLATE_LIST: siteSetting.api.Occasion_url + "/templates",
+  CREATE_OCCASION_TEMPLATE: siteSetting.api.Occasion_url + "/template",
+  GET_OCCASION_TEMPLATE_BY_NAME: siteSetting.api.Occasion_url + "/template",
+  DELETE_OCCASION_TEMPLATE: siteSetting.api.Occasion_url + "/template",
+  GET_OCCASION_TEMPLATE_LIST_BY_NAME: siteSetting.api.Occasion_url + "/templates/",
 
 
   //Family Relationship
@@ -56,16 +56,16 @@ export default {
   GET_COUPONDETAIL_BY_COUPONID: siteSetting.api.BaseUrl + "/admin/voucher/getById",
 
   // Card Occasion Section
-  GET_CARD_OCCASION_LIST: siteSetting.api.BaseUrl + "/occasion/cards/systemOccasionCard",
-  CREATE_CARD_OCCASION: siteSetting.api.BaseUrl + "/occasion/create-card",
-  UPDATE_CARD_OCCASION: siteSetting.api.BaseUrl + "/occasion/create-card",
-  GET_CARD_OCCASION_BY_OCCASIONNAME: siteSetting.api.BaseUrl + "/occasion/card/",
-  DELETE_CARD_OCCASION: siteSetting.api.BaseUrl + "/occasion/delete-card",
+  GET_CARD_OCCASION_LIST: siteSetting.api.Occasion_url + "/cards/systemOccasionCard",
+  CREATE_CARD_OCCASION: siteSetting.api.Occasion_url + "/create-card",
+  UPDATE_CARD_OCCASION: siteSetting.api.Occasion_url + "/create-card",
+  GET_CARD_OCCASION_BY_OCCASIONNAME: siteSetting.api.Occasion_url + "/card/",
+  DELETE_CARD_OCCASION: siteSetting.api.Occasion_url + "/delete-card",
 
   // Task Occasion Section
-  GET_CARD_TASK_LIST: siteSetting.api.BaseUrl + "/occasion/cards/taskCard",
-  CREATE_CARD_TASK: siteSetting.api.BaseUrl + "/occasion/create-card",
-  UPDATE_CARD_TASK: siteSetting.api.BaseUrl + "/occasion/create-card",
-  GET_CARD_TASK_BY_TASKNAME: siteSetting.api.BaseUrl + "/occasion/card/occasion/",
-  DELETE_CARD_TASK: siteSetting.api.BaseUrl + "/occasion/delete-card",
+  GET_CARD_TASK_LIST: siteSetting.api.Occasion_url + "/cards/taskCard",
+  CREATE_CARD_TASK: siteSetting.api.Occasion_url + "/create-card",
+  UPDATE_CARD_TASK: siteSetting.api.Occasion_url + "/create-card",
+  GET_CARD_TASK_BY_TASKNAME: siteSetting.api.Occasion_url + "/card/",
+  DELETE_CARD_TASK: siteSetting.api.Occasion_url + "/delete-card",
 };
