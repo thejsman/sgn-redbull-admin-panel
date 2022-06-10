@@ -22,7 +22,7 @@ export const Stats = React.memo((props) => {
         labels,
         datasets: [
             {
-                label: 'Dataset 1',
+                label: 'user',
                 data: props.chartDetail.data,
                 fill: true,
                 backgroundColor: "rgba(75,192,192,0.2)",
