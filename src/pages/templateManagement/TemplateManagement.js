@@ -163,11 +163,12 @@ const TopicManagement = () => {
                       <span className=''>{item.body}</span>
                     </td> */}
                     <td>
-                      <img
+                      {(item.image && <img
                         src={item.image}
                         alt='Avatar'
                         className='user-avatar high'
-                      />
+                      />)}
+
                     </td>
                     {/* <td>
                       <span className=''>{item.message}</span>

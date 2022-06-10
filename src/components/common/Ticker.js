@@ -3,7 +3,6 @@ import CountUp from "react-countup";
 
 
 export const Ticker = React.memo(({ title, ...rest }) => {
-    console.log("rest", rest)
     const [viewPortEntered, setViewPortEntered] = useState(false);
 
     return (

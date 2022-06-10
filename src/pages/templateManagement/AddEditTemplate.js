@@ -121,19 +121,18 @@ const AddEditTemplate = () => {
     } else {
       setEventTypeErr('')
     }
-    if (!editCase && !base64) {
-      setImageErr('Image is required')
-      validate = false
-    } else {
-      setImageErr('')
-    }
+    // if (!editCase && !base64) {
+    //   setImageErr('Image is required')
+    //   validate = false
+    // } else {
+    //   setImageErr('')
+    // }
 
     return validate
   }
 
   const handleGetTopicById = id => {
     console.log('topicId', id)
-    let baseUrl = 'https://Sagoon-dev.s3.amazonaws.com/'
     let params = {
       accessToken,
       notificationName: id
