@@ -5,7 +5,6 @@ import 'chart.js/auto'
 
 
 export const CreditDebitStats = React.memo((props) => {
-    console.log("Credit  Debit Stats prop", props)
     const options = {
         responsive: true,
         plugins: {
