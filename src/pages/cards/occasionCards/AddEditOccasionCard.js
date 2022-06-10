@@ -101,12 +101,14 @@ const AddEditOccasionCard = () => {
         if (!cardName.replace(/\s+/g, '')) {
             setCardNameErr("Card name is required")
             validate = false
-        } else if (!albhaNumericRegEx.test(cardName)) {
-            setCardNameErr("Special characters and spaces are not allowed")
-            validate = false
         } else {
             setCardNameErr("")
         }
+        //  else if (!albhaNumericRegEx.test(cardName)) {
+        //     setCardNameErr("Special characters and spaces are not allowed")
+        //     validate = false
+        // } 
+
 
         if (!order) {
             setOrderErr("Order no is required")
