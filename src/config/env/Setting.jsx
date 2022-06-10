@@ -20,7 +20,7 @@ export const stagSetting = {
     BaseUrl: process.env.REACT_APP_API_BASE_URL,
     mode: 'cors',
     WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
-    Occasion_url: process.env.REACT_APP_API_BASE_URL + "/occasion",
+    Occasion_url: process.env.REACT_APP_API_BASE_URL + "/admin-occasion",
   },
 };
 
