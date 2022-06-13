@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Breadcrumb from "../../../components/common/Breadcrumb";
 import { resHandle } from "../../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";

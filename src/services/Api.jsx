@@ -2,10 +2,22 @@
  * @about
  * This file conatins api end points
  */
-
+import axios from "axios";
 import siteSetting from "../config/env/Index";
 
+export const awsAxios = axios.create({
+  transformRequest: (data, headers) => {
+    // Remove all shared headers
+    delete headers.common["AccessToken"];
+    // or just the auth header
+    delete headers.common["Access-Control-Allow-Origin"];
+  }
+});
+
 export default {
+
+
+
   ///Authorization
   //AUTH: siteSetting.api.AUTH,
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Ticker } from './Ticker'
-import { Bar, Line } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'
 
 
