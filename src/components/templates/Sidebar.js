@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import logo_svg from "../../assets/img/bluelogo.svg";
 import { LogoSymbol } from "../../assets/svg";
@@ -7,7 +7,7 @@ import { LogoSymbol } from "../../assets/svg";
 const Sidebar = () => {
   const location = useLocation();
   console.log("-----location", location);
-  const history = useHistory();
+  //const history = useHistory();
   return (
     <div className="cm_sidebar">
       <h3>
