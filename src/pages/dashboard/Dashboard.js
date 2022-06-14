@@ -51,7 +51,7 @@ const Dashboard = () => {
       };
 
       client.onclose = () => {
-        debugger;
+        //debugger;
         console.log('ws closed by server');
         if (clientRef.current) {
           // Connection failed
