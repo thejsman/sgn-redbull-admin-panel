@@ -1,4 +1,5 @@
-import Api, { awsAxios } from "./Api";
+import Api from "./Api";
+import axios from "axios";
 
 export {
     createCardTask,
@@ -11,33 +12,33 @@ export {
 const headersApplicationJson = {
 };
 function createCardTask(params) {
-    return awsAxios.post(Api.CREATE_CARD_TASK, params, {
+    return axios.post(Api.CREATE_CARD_TASK, params, {
         headers: headersApplicationJson,
     });
 }
 
 function getCardTaskByName(params) {
     console.log("params", params);
-    return awsAxios.get(`${Api.GET_CARD_TASK_BY_TASKNAME}taskCard/${params.cardTaskName}`, {
+    return axios.get(`${Api.GET_CARD_TASK_BY_TASKNAME}taskCard/${params.cardTaskName}`, {
         headers: headersApplicationJson,
     });
 }
 
 function updateCardTask(params) {
-    return awsAxios.post(Api.UPDATE_CARD_TASK, params, {
+    return axios.post(Api.UPDATE_CARD_TASK, params, {
         headers: headersApplicationJson,
     });
 }
 
 function deleteCardTask(params) {
-    return awsAxios.delete(Api.DELETE_CARD_TASK, {
+    return axios.delete(Api.DELETE_CARD_TASK, {
         headers: headersApplicationJson,
         data: params
     });
 }
 
 function cardTaskList(params) {
-    return awsAxios.get(
+    return axios.get(
         Api.GET_CARD_TASK_LIST, {
         headers: headersApplicationJson,
     });

@@ -433,6 +433,7 @@ const AddEditTaskCard = () => {
                             <input
                                 type='text'
                                 className='form-control'
+                                readOnly={isAddCard ? '' : 'readonly'}
                                 name='cardName'
                                 value={cardName}
                                 onChange={e => (
