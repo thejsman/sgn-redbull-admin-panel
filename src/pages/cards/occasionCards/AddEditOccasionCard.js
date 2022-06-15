@@ -436,6 +436,7 @@ const AddEditOccasionCard = () => {
                             <label>Card Name</label>
                             <input
                                 type='text'
+                                readOnly={isAddCard ? '' : 'readonly'}
                                 className='form-control'
                                 name='cardName'
                                 autocapitalize="none"

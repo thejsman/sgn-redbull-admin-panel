@@ -46,10 +46,10 @@ const PublicRoute = ({ component: Component, loggedIn, ...rest }) => (
   />
 );
 
-if (localStorage.getItem("accessToken")) {
-  axios.defaults.headers.common["AccessToken"] =
-    localStorage.getItem("accessToken");
-}
+// if (localStorage.getItem("accessToken")) {
+//   axios.defaults.headers.common["AccessToken"] =
+//     localStorage.getItem("accessToken");
+// }
 
 const Routes = (props) => {
   const history = useHistory();
