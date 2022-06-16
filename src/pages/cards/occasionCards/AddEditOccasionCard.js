@@ -95,19 +95,19 @@ const AddEditOccasionCard = () => {
     const albhaRegEx = /^[a-zA-z]+$/;
     const numberRegEx = /^[0-9\b]+$/;
     const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
+    var albhaNumericSpaceRegEx = /^[a-zA-Z0-9-_]+$/;
     const handleValidate = () => {
         let validate = true
 
         if (!cardName.replace(/\s+/g, '')) {
             setCardNameErr("Card name is required")
             validate = false
+        } else if (!albhaNumericSpaceRegEx.test(cardName)) {
+            setCardNameErr("Alphanumeric and underscore are allowed")
+            validate = false
         } else {
             setCardNameErr("")
         }
-        //  else if (!albhaNumericRegEx.test(cardName)) {
-        //     setCardNameErr("Special characters and spaces are not allowed")
-        //     validate = false
-        // } 
 
 
         if (!order) {
