@@ -4,7 +4,8 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'
 
 
-export const CreditDebitStats = React.memo((props) => {
+
+export const GiftStats = React.memo((props) => {
     const options = {
         responsive: true,
         plugins: {
@@ -15,22 +16,22 @@ export const CreditDebitStats = React.memo((props) => {
         },
     };
 
-    const labels = props.creditData.chartDetail.labels;
+    const labels = props.chartDetail.labels;
 
 
     const data = {
         labels,
         datasets: [
             {
-                label: 'Credit',
-                data: props.creditData.chartDetail.data,
+                label: 'Amount',
+                data: props.chartDetail.data,
                 fill: true,
                 backgroundColor: "rgba(75,192,192,0.2)",
                 borderColor: "rgba(75,192,192,1)"
             },
             {
-                label: 'Debit',
-                data: props.debitData.chartDetail.data,
+                label: 'No Of Order',
+                data: props.chartDetail.numOfOrder,
                 fill: true,
                 backgroundColor: "#9e9ce7",
                 borderColor: "#4644d1"
@@ -38,33 +39,32 @@ export const CreditDebitStats = React.memo((props) => {
         ],
     };
 
+
     return (
         <>
             <div className="col-sm-6 mt-3">
                 <div className="row">
-                    <div className="col-sm-12 dash_sm_card ">
-                        <Ticker title="Total Principal Amount" prefix="₹ " start={props.principalAmount[props.principalAmount.length - 2]} end={props.creditData.principalAmount} />
-                    </div>
-                </div>
-                <div className="row">
+                    <div className="col-sm-6 dash_sm_card ">
+                        <Ticker title="Total Gift Amount" start={props.tolGiftAmount[props.tolGiftAmount.length - 2]} end={props.totalAmount} />
 
-                    <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Total Credit Amount" prefix="₹ " start={props.tolCreditAmount[props.tolCreditAmount.length - 2]} end={props.creditData.totalAmount} />
+
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly Credit Amount" prefix="₹ " start={props.tolMonthCreditAmount[props.tolMonthCreditAmount.length - 2]} end={props.creditData.monthAmount} />
+                        <Ticker title="Monthly Gift Amount" start={props.tolMonthGiftAmount[props.tolMonthGiftAmount.length - 2]} end={props.monthAmount} />
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Total Debit Amount" prefix="₹ " start={props.tolDebitAmount[props.tolDebitAmount.length - 2]} end={props.debitData.totalAmount} />
+                    <div className="col-sm-6 dash_sm_card ">
+                        <Ticker title="Total Gift Order" start={props.tolGiftOrder[props.tolGiftOrder.length - 2]} end={props.totalOrder} />
+
+
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly Debit Amount" prefix="₹ " start={props.tolMonthDebitAmount[props.tolMonthDebitAmount.length - 2]} end={props.debitData.monthAmount} />
+                        <Ticker title="Monthly  Gift Order" start={props.tolMonthGiftOrder[props.tolMonthGiftOrder.length - 2]} end={props.monthOrder} />
                     </div>
                 </div>
+
             </div>
-
             <div className="col-sm-6 mt-3">
                 <div className="card ">
                     <div className="card-header btn-primary">Transaction List of Last 8 Days</div>
@@ -77,3 +77,5 @@ export const CreditDebitStats = React.memo((props) => {
         </>
     );
 });
+
+
