@@ -42,8 +42,6 @@ function deleteFamilyRelationship(params) {
 }
 
 function familyRelationshipList(params) {
-  console.log("api call", axios.defaults.headers.common);
-
   return axios.get(
     Api.GET_FAMILY_RELATIONSHI_LIST + '&limit=' + params.limit + '&sOrder=' + params.sOrder + '&eOrder=' + params.eOrder + '&scanOrder=' + params.scanOrder, {
     headers: headersApplicationJson,

@@ -40,13 +40,14 @@ const AddVoucher = () => {
 	const numberRegEx = /^[0-9\b]+$/;
 	const albhaRegEx = /^[a-zA-z]+$/;
 	const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
+	var albhaNumericSpaceRegEx = /^[a-zA-Z0-9-_]+$/;
 	const handleValidate = () => {
 		let validate = true;
 		if (!productName.replace(/\s+/g, "")) {
 			setProductNameErr("Product Name is required");
 			validate = false;
-		} else if (!albhaNumericRegEx.test(productName)) {
-			setProductNameErr("Special characters and spaces are not allowed");
+		} else if (!albhaNumericSpaceRegEx.test(productName)) {
+			setProductNameErr("Alphanumeric and underscore are allowed");
 			validate = false;
 		} else {
 			setProductNameErr("");
