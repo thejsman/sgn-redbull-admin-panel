@@ -3,6 +3,8 @@ import { resHandle } from '../../components/util/utils';
 import { Bar } from 'react-chartjs-2';
 import { Stats } from '../../components/common/Stats';
 import { CreditDebitStats } from '../../components/common/CreditDebitStats';
+import { GiftStats } from '../../components/common/GiftStats';
+import { DealStats } from '../../components/common/DealStats';
 import siteSetting from "../../config/env/Index";
 const URL = siteSetting.api.WebSocketUrl;
 
@@ -11,6 +13,9 @@ const Dashboard = () => {
   const [userData, setUserData] = useState({ totalUsers: [0, 10], monthUser: [0, 10], chartDetail: { labels: [], data: [] } });
   const [creditData, setCreditData] = useState({ principalAmount: [0, 0], totalAmount: [0, 0], monthAmount: [0, 0], chartDetail: { labels: [], data: [] } });
   const [debitData, setDebitData] = useState({ totalAmount: [0, 0], monthAmount: [0, 0], chartDetail: { labels: [], data: [] } });
+  const [giftData, setGiftData] = useState({ totalAmount: [0, 0], monthAmount: [0, 0], totalOrder: [0, 0], monthOrder: [0, 0], chartDetail: { labels: [], data: [], numOfOrder: [] } });
+  const [dealsData, setDealsData] = useState({ totalAmount: [0, 0], monthAmount: [0, 0], totalOrder: [0, 0], monthOrder: [0, 0], chartDetail: { labels: [], data: [], numOfOrder: [] } });
+
   const isMounted = React.useRef(true);
   const [arrUser, setArrUser] = useState([0]);
   const [arrMonthUser, setArrMonthUser] = useState([0]);
@@ -21,6 +26,16 @@ const Dashboard = () => {
 
   const [tolDebitAmount, setTolDebitAmount] = useState([0]);
   const [tolMonthDebitAmount, setTolMonthDebitAmount] = useState([0]);
+
+  const [tolGiftAmount, setTolGiftAmount] = useState([0]);
+  const [tolMonthGiftAmount, setTolMonthGiftAmount] = useState([0]);
+  const [tolGiftOrder, setTolGiftOrder] = useState([0]);
+  const [tolMonthGiftOrder, setTolMonthGiftOrder] = useState([0]);
+
+  const [tolDealAmount, setTolDealAmount] = useState([0]);
+  const [tolMonthDealAmount, setTolMonthDealAmount] = useState([0]);
+  const [tolDealOrder, setTolDealOrder] = useState([0]);
+  const [tolMonthDealOrder, setTolMonthDealOrder] = useState([0]);
 
 
   const clientRef = useRef(null);
@@ -83,6 +98,7 @@ const Dashboard = () => {
 
       client.onmessage = message => {
         console.log('received message', message);
+        debugger;
         addMessage(message.data);
       };
 
@@ -189,6 +205,89 @@ const Dashboard = () => {
       setDebitData(debitObj);
     }
 
+
+    if (response.giftStats) {
+
+      let dates = response.giftStats.analysis.map(function (i) {
+        return i.date;
+      });
+      let amount = response.giftStats.analysis.map(function (i) {
+        return i.amount;
+      });
+      let numOfOrder = response.giftStats.analysis.map(function (i) {
+        return i.numOfOrder;
+      });
+
+
+
+      let arrtotGiftAmt = [tolGiftAmount.pop()];
+      arrtotGiftAmt.push(response.giftStats["totalAmount"]);
+      setTolGiftAmount([...arrtotGiftAmt]);
+
+      let arrtotMonthGiftAmt = [tolMonthGiftAmount.pop()];
+      arrtotMonthGiftAmt.push(response.giftStats["monthAmount"]);
+      setTolMonthGiftAmount([...arrtotMonthGiftAmt]);
+
+      let arrtotGiftOrder = [tolGiftOrder.pop()];
+      arrtotGiftOrder.push(response.giftStats["totalOrder"]);
+      setTolGiftAmount([...arrtotGiftOrder]);
+
+      let arrtotMonthGiftOrder = [tolMonthGiftAmount.pop()];
+      arrtotMonthGiftOrder.push(response.giftStats["monthOrder"]);
+      setTolMonthGiftAmount([...arrtotMonthGiftOrder]);
+
+
+      let giftObj = {
+        totalAmount: response.giftStats["totalAmount"],
+        monthAmount: response.giftStats["monthAmount"],
+        totalOrder: response.giftStats["totalOrder"],
+        monthOrder: response.giftStats["monthOrder"],
+        chartDetail: { labels: dates, data: amount, numOfOrder: numOfOrder }
+      }
+      setGiftData(giftObj);
+    }
+
+    if (response.dealStats) {
+
+      let dates = response.dealStats.analysis.map(function (i) {
+        return i.date;
+      });
+      let amount = response.dealStats.analysis.map(function (i) {
+        return i.amount;
+      });
+      let numOfOrder = response.dealStats.analysis.map(function (i) {
+        return i.numOfOrder;
+      });
+
+
+
+      let arrtotDealAmt = [tolDealAmount.pop()];
+      arrtotDealAmt.push(response.dealStats["totalAmount"]);
+      setTolDealAmount([...arrtotDealAmt]);
+
+      let arrtotMonthDealAmt = [tolMonthDealAmount.pop()];
+      arrtotMonthDealAmt.push(response.dealStats["monthAmount"]);
+      setTolMonthDealAmount([...arrtotMonthDealAmt]);
+
+      let arrtotDealOrder = [tolDealOrder.pop()];
+      arrtotDealOrder.push(response.dealStats["totalOrder"]);
+      setTolDealAmount([...arrtotDealOrder]);
+
+      let arrtotMonthDealOrder = [tolMonthDealAmount.pop()];
+      arrtotMonthDealOrder.push(response.dealStats["monthOrder"]);
+      setTolMonthDealAmount([...arrtotMonthDealOrder]);
+
+
+      let dealObj = {
+        totalAmount: response.dealStats["totalAmount"],
+        monthAmount: response.dealStats["monthAmount"],
+        totalOrder: response.dealStats["totalOrder"],
+        monthOrder: response.dealStats["monthOrder"],
+        chartDetail: { labels: dates, data: amount, numOfOrder: numOfOrder }
+      }
+      setDealsData(dealObj);
+    }
+
   };
 
 
@@ -213,6 +312,20 @@ const Dashboard = () => {
           tolDebitAmount={tolDebitAmount}
           tolMonthDebitAmount={tolMonthDebitAmount}
           debitData={debitData} ></CreditDebitStats>
+      </div>
+
+
+      <div className="row">
+
+        <GiftStats {...giftData} tolGiftAmount={tolGiftAmount} tolMonthGiftAmount={tolMonthGiftAmount}
+          tolGiftOrder={tolGiftOrder} tolMonthGiftOrder={tolMonthGiftOrder} ></GiftStats>
+
+      </div>
+      <div className="row">
+
+        <DealStats {...dealsData} tolDealAmount={tolDealAmount} tolMonthDealAmount={tolMonthDealAmount}
+          tolDealOrder={tolDealOrder} tolMonthDealOrder={tolMonthDealOrder} ></DealStats>
+
       </div>
     </div>
   )
