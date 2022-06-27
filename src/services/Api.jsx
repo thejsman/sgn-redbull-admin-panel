@@ -88,4 +88,7 @@ export default {
 	UPDATE_CARD_TASK: siteSetting.api.Occasion_url + "/create-card",
 	GET_CARD_TASK_BY_TASKNAME: siteSetting.api.Occasion_url + "/card/",
 	DELETE_CARD_TASK: siteSetting.api.Occasion_url + "/delete-card",
+
+	//Redis Section
+	REDIS_CLEAR_CACHE: siteSetting.api.redis_url,
 };

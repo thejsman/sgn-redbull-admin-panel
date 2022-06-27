@@ -129,6 +129,12 @@ const Sidebar = () => {
             <span className="menu_text">Voucher</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/redis"  >
+            <i className="fas fa-align-justify"></i>{" "}
+            <span className="menu_text">Redis</span>
+          </NavLink>
+        </li>
       </ul>
     </div>
   );
