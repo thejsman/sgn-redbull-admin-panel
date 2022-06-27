@@ -23,6 +23,7 @@ import EditCoupon from "./pages/voucher/editCoupon";
 import OccasionCard from "./pages/cards/occasionCards/OccasionCard";
 import AddEditTaskCard from "./pages/cards/taskCards/AddEdiTaskCard";
 import TaskCard from "./pages/cards/taskCards/TaskCard";
+import Redis from "./pages/redis/redis";
 
 
 const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
@@ -116,6 +117,8 @@ const Routes = (props) => {
             <PrivateRoute exact path="/voucher/create" {...props} component={AddVoucher} />
             <PrivateRoute exact path="/coupon/edit/:id" {...props} component={EditCoupon} />
 
+            {/* Redis Routes */}
+            <PrivateRoute exact path="/redis" {...props} component={Redis} />
           </Switch>
         </Router>
       </div>
