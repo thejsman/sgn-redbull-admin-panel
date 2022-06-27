@@ -10,6 +10,7 @@ export const devSetting = {
     mode: 'cors',
     WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
     Occasion_url: process.env.REACT_APP_API_BASE_URL + "/admin-occasion",
+    redis_url: process.env.REACT_APP_API_BASE_URL + "/redis/deleteItem/",
   },
   stripe_key: "",
 };
@@ -21,6 +22,7 @@ export const stagSetting = {
     mode: 'cors',
     WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
     Occasion_url: process.env.REACT_APP_API_BASE_URL + "/admin-occasion",
+    redis_url: process.env.REACT_APP_API_BASE_URL + "/redis/deleteItem/",
   },
 };
 
@@ -31,6 +33,7 @@ export const prodSetting = {
     mode: 'cors',
     WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
     Occasion_url: process.env.REACT_APP_API_BASE_URL + "/admin-occasion",
+    redis_url: process.env.REACT_APP_API_BASE_URL + "/redis/deleteItem/",
   },
 };
 
@@ -41,5 +44,6 @@ export const localhostSetting = {
     mode: 'cors',
     WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
     Occasion_url: process.env.REACT_APP_API_BASE_URL + "/admin-occasion",
+    redis_url: process.env.REACT_APP_API_BASE_URL + "/redis/deleteItem/",
   },
 };

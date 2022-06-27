@@ -98,7 +98,6 @@ const Dashboard = () => {
 
       client.onmessage = message => {
         console.log('received message', message);
-        debugger;
         addMessage(message.data);
       };
 
