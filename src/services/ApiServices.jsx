@@ -17,7 +17,8 @@ export {
   occasionList,
   createOccasion,
   getOccasionByName,
-  deleteOccasion
+  deleteOccasion,
+  redisCacheClear
 };
 
 
@@ -88,6 +89,15 @@ function createOccasion(params) {
 function getOccasionByName(params) {
   return axios.get(
     `${Api.GET_OCCASION_BY_NAME}/${params.occasionName}`, {
+    headers: headersApplicationJson,
+  });
+}
+
+
+function redisCacheClear(params) {
+  debugger;
+  return axios.get(
+    `${Api.REDIS_CLEAR_CACHE}${params}`, {
     headers: headersApplicationJson,
   });
 }

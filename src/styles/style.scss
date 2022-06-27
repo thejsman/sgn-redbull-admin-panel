@@ -212,11 +212,13 @@ svg path {
   background-color: #603be1;
   border-color: #603be1;
   color: #fff;
+  cursor: pointer;
   &:focus .spinner-border {
     color: #fff;
   }
   &:hover {
-    color: $primary;
+    color: #fff;
+    background-color: #603be1;
   }
 }
 .btn {
