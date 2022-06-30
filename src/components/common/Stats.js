@@ -36,12 +36,12 @@ export const Stats = React.memo((props) => {
             <div className="col-sm-6 mt-3">
                 <div className="row">
                     <div className="col-sm-6 dash_sm_card ">
-                        <Ticker title="Total User" start={props.arrUser[props.arrUser.length - 2]} end={props.totalUsers} />
+                        <Ticker title="Total User" start={props.arrUser[1]} end={props.totalUsers} />
 
 
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly User" start={props.arrMonthUser[props.arrMonthUser.length - 2]} end={props.monthUser} />
+                        <Ticker title="Monthly User" start={props.arrMonthUser[1]} end={props.monthUser} />
                     </div>
                 </div>
 
