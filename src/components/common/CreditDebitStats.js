@@ -43,24 +43,24 @@ export const CreditDebitStats = React.memo((props) => {
             <div className="col-sm-6 mt-3">
                 <div className="row">
                     <div className="col-sm-12 dash_sm_card ">
-                        <Ticker title="Total Principal Amount" prefix="₹ " start={props.principalAmount[props.principalAmount.length - 2]} end={props.creditData.principalAmount} />
+                        <Ticker title="Total Principal Amount" prefix="₹ " start={props.principalAmount[1]} end={props.creditData.principalAmount} />
                     </div>
                 </div>
                 <div className="row">
 
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Total Credit Amount" prefix="₹ " start={props.tolCreditAmount[props.tolCreditAmount.length - 2]} end={props.creditData.totalAmount} />
+                        <Ticker title="Total Credit Amount" prefix="₹ " start={props.tolCreditAmount[1]} end={props.creditData.totalAmount} />
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly Credit Amount" prefix="₹ " start={props.tolMonthCreditAmount[props.tolMonthCreditAmount.length - 2]} end={props.creditData.monthAmount} />
+                        <Ticker title="Monthly Credit Amount" prefix="₹ " start={props.tolMonthCreditAmount[1]} end={props.creditData.monthAmount} />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Total Debit Amount" prefix="₹ " start={props.tolDebitAmount[props.tolDebitAmount.length - 2]} end={props.debitData.totalAmount} />
+                        <Ticker title="Total Debit Amount" prefix="₹ " start={props.tolDebitAmount[1]} end={props.debitData.totalAmount} />
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly Debit Amount" prefix="₹ " start={props.tolMonthDebitAmount[props.tolMonthDebitAmount.length - 2]} end={props.debitData.monthAmount} />
+                        <Ticker title="Monthly Debit Amount" prefix="₹ " start={props.tolMonthDebitAmount[1]} end={props.debitData.monthAmount} />
                     </div>
                 </div>
             </div>

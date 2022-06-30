@@ -239,6 +239,16 @@ svg path {
     background: $secondary;
   }
 }
+
+.btn-gradient-grey {
+  background: linear-gradient(312.31deg, #3e7199 -2.56%, #3e7199 42.07%);
+  border-color: $gradient;
+  color: #fff;
+  transition: all 0.3s ease;
+  &:hover {
+    background: linear-gradient(312.31deg, #3e7199 -2.56%, #3e7199 42.07%);
+  }
+}
 .btn-primary:hover .spinner-border {
   color: $primary;
 }
