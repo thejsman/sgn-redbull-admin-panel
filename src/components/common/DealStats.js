@@ -45,22 +45,22 @@ export const DealStats = React.memo((props) => {
             <div className="col-sm-6 mt-3">
                 <div className="row">
                     <div className="col-sm-6 dash_sm_card ">
-                        <Ticker title="Total Deal Amount" start={props.tolDealAmount[props.tolDealAmount.length - 2]} end={props.totalAmount} />
+                        <Ticker title="Total Deal Amount" start={props.tolDealAmount[1]} end={props.totalAmount} />
 
 
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly Deal Amount" start={props.tolMonthDealAmount[props.tolMonthDealAmount.length - 2]} end={props.monthAmount} />
+                        <Ticker title="Monthly Deal Amount" start={props.tolMonthDealAmount[1]} end={props.monthAmount} />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-6 dash_sm_card ">
-                        <Ticker title="Total Deal Order" start={props.tolDealOrder[props.tolDealOrder.length - 2]} end={props.totalOrder} />
+                        <Ticker title="Total Deal Order" start={props.tolDealOrder[1]} end={props.totalOrder} />
 
 
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly  Deal Order" start={props.tolMonthDealOrder[props.tolMonthDealOrder.length - 2]} end={props.monthOrder} />
+                        <Ticker title="Monthly  Deal Order" start={props.tolMonthDealOrder[1]} end={props.monthOrder} />
                     </div>
                 </div>
 

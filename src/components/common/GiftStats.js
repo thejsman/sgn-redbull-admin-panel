@@ -45,22 +45,22 @@ export const GiftStats = React.memo((props) => {
             <div className="col-sm-6 mt-3">
                 <div className="row">
                     <div className="col-sm-6 dash_sm_card ">
-                        <Ticker title="Total Gift Amount" start={props.tolGiftAmount[props.tolGiftAmount.length - 2]} end={props.totalAmount} />
+                        <Ticker title="Total Gift Amount" start={props.tolGiftAmount[1]} end={props.totalAmount} />
 
 
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly Gift Amount" start={props.tolMonthGiftAmount[props.tolMonthGiftAmount.length - 2]} end={props.monthAmount} />
+                        <Ticker title="Monthly Gift Amount" start={props.tolMonthGiftAmount[1]} end={props.monthAmount} />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-6 dash_sm_card ">
-                        <Ticker title="Total Gift Order" start={props.tolGiftOrder[props.tolGiftOrder.length - 2]} end={props.totalOrder} />
+                        <Ticker title="Total Gift Order" start={props.tolGiftOrder[1]} end={props.totalOrder} />
 
 
                     </div>
                     <div className="col-sm-6 dash_sm_card">
-                        <Ticker title="Monthly  Gift Order" start={props.tolMonthGiftOrder[props.tolMonthGiftOrder.length - 2]} end={props.monthOrder} />
+                        <Ticker title="Monthly  Gift Order" start={props.tolMonthGiftOrder[1]} end={props.monthOrder} />
                     </div>
                 </div>
 

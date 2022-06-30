@@ -5,6 +5,7 @@ import { Stats } from '../../components/common/Stats';
 import { CreditDebitStats } from '../../components/common/CreditDebitStats';
 import { GiftStats } from '../../components/common/GiftStats';
 import { DealStats } from '../../components/common/DealStats';
+import { OccasionStats } from '../../components/common/ocassionStats'
 import siteSetting from "../../config/env/Index";
 const URL = siteSetting.api.WebSocketUrl;
 
@@ -15,7 +16,7 @@ const Dashboard = () => {
   const [debitData, setDebitData] = useState({ totalAmount: [0, 0], monthAmount: [0, 0], chartDetail: { labels: [], data: [] } });
   const [giftData, setGiftData] = useState({ totalAmount: [0, 0], monthAmount: [0, 0], totalOrder: [0, 0], monthOrder: [0, 0], chartDetail: { labels: [], data: [], numOfOrder: [] } });
   const [dealsData, setDealsData] = useState({ totalAmount: [0, 0], monthAmount: [0, 0], totalOrder: [0, 0], monthOrder: [0, 0], chartDetail: { labels: [], data: [], numOfOrder: [] } });
-
+  const [occassionData, setOccassionData] = useState({ totalOccasion: 0, monthOccasion: 0, giftOccasion: 0, sharedOccasion: 0, occasionPeroccasion: [], chartDetail: { labels: [], data: [] } });
   const isMounted = React.useRef(true);
   const [arrUser, setArrUser] = useState([0]);
   const [arrMonthUser, setArrMonthUser] = useState([0]);
@@ -37,6 +38,11 @@ const Dashboard = () => {
   const [tolDealOrder, setTolDealOrder] = useState([0]);
   const [tolMonthDealOrder, setTolMonthDealOrder] = useState([0]);
 
+  const [totOccasion, setTotOccasion] = useState([0]);
+  const [monthOccasion, setMonthOccasion] = useState([0]);
+  const [giftOccasion, setGiftOccasion] = useState([0]);
+  const [sharedOccasion, setSharedOccasion] = useState([0]);
+  const [occasionPeroccasion, setOccasionPeroccasion] = useState([0]);
 
   const clientRef = useRef(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState(null);
@@ -97,7 +103,7 @@ const Dashboard = () => {
 
 
       client.onmessage = message => {
-        console.log('received message', message);
+        console.log('received message', message, JSON.parse(message.data));
         addMessage(message.data);
       };
 
@@ -126,11 +132,11 @@ const Dashboard = () => {
       let userCounts = response.userStats.analysis.map(function (i) {
         return i.userCount;
       });
-      let arr = arrUser;
+      let arr = [arrUser.pop()];
       arr.push(response.userStats["totalUsers"]);
       setArrUser([...arr]);
 
-      let arrMonth = arrMonthUser;
+      let arrMonth = [arrMonthUser.pop()];
       arrMonth.push(response.userStats["monthUser"]);
       setArrMonthUser([...arrMonth]);
 
@@ -153,15 +159,15 @@ const Dashboard = () => {
       });
       let principalAmt = parseInt(response.creditStats["principalAmount"]) - (response.creditStats["totalAmount"]);
 
-      let arrPriAmt = principalAmount;
+      let arrPriAmt = [principalAmount.pop()];
       arrPriAmt.push(principalAmt);
       setPrincipalAmount([...arrPriAmt]);
 
-      let arrtotAmt = tolCreditAmount;
+      let arrtotAmt = [tolCreditAmount.pop()];
       arrtotAmt.push(response.creditStats["totalAmount"]);
       setTolCreditAmount([...arrtotAmt]);
 
-      let arrtotMonthAmt = tolMonthCreditAmount;
+      let arrtotMonthAmt = [tolMonthCreditAmount.pop()];
       arrtotMonthAmt.push(response.creditStats["monthAmount"]);
       setTolMonthCreditAmount([...arrtotMonthAmt]);
 
@@ -187,11 +193,11 @@ const Dashboard = () => {
 
 
 
-      let arrtotDebAmt = tolDebitAmount;
+      let arrtotDebAmt = [tolDebitAmount.pop()];
       arrtotDebAmt.push(response.debitStats["totalAmount"]);
       setTolDebitAmount([...arrtotDebAmt]);
 
-      let arrtotMonthDebAmt = tolMonthDebitAmount;
+      let arrtotMonthDebAmt = [tolMonthDebitAmount.pop()];
       arrtotMonthDebAmt.push(response.debitStats["monthAmount"]);
       setTolMonthDebitAmount([...arrtotMonthDebAmt]);
 
@@ -287,6 +293,47 @@ const Dashboard = () => {
       setDealsData(dealObj);
     }
 
+    if (response.occasionStats) {
+      debugger;
+      let dates = response.occasionStats.analysis.map(function (i) {
+        return i.date;
+      });
+      let occasionCount = response.occasionStats.analysis.map(function (i) {
+        return i.occasionCount;
+      });
+
+      let arrtotalOccasion = [totOccasion.pop()];
+      arrtotalOccasion.push(response.occasionStats["totalOccasion"]);
+      setTotOccasion([...arrtotalOccasion]);
+
+      let arrMonthOccasion = [monthOccasion.pop()];
+      arrMonthOccasion.push(response.occasionStats["monthOccasion"]);
+      setMonthOccasion([...arrMonthOccasion]);
+
+      let arrGiftOccasion = [giftOccasion.pop()];
+      arrGiftOccasion.push(response.occasionStats["giftOccasion"]);
+      setGiftOccasion([...arrGiftOccasion]);
+
+      let arrSharedOccasion = [sharedOccasion.pop()];
+      arrSharedOccasion.push(response.occasionStats["sharedOccasion"]);
+      setSharedOccasion([...arrSharedOccasion]);
+
+
+      let occasionObj = {
+        totalOccasion: response.occasionStats["totalOccasion"],
+        monthOccasion: response.occasionStats["monthOccasion"],
+        giftOccasion: response.occasionStats["giftOccasion"],
+        sharedOccasion: response.occasionStats["sharedOccasion"],
+        chartDetail: { labels: dates, data: occasionCount },
+        occasionPeroccasion: response.occasionStats["occasionPeroccasion"]
+
+      }
+      setOccassionData(occasionObj);
+
+
+
+    }
+
   };
 
 
@@ -324,6 +371,13 @@ const Dashboard = () => {
 
         <DealStats {...dealsData} tolDealAmount={tolDealAmount} tolMonthDealAmount={tolMonthDealAmount}
           tolDealOrder={tolDealOrder} tolMonthDealOrder={tolMonthDealOrder} ></DealStats>
+
+      </div>
+
+      <div className="row">
+
+        <OccasionStats {...occassionData} arrTotalOccasionData={totOccasion} arrMonthOccasion={monthOccasion}
+          arrGiftOccasion={giftOccasion} arrSharedOccasion={sharedOccasion} ></OccasionStats>
 
       </div>
     </div>
