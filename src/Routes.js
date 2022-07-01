@@ -58,7 +58,7 @@ const Routes = (props) => {
   return (
     <>
       <div className="site_wrapper">
-        {localStorage.getItem("accessToken") ? (
+        {localStorage.getItem("accessToken") && history.location.pathname.indexOf("login") == -1 ? (
           <>
             <Header />
             <Sidebar />
