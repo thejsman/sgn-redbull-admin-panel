@@ -39,6 +39,22 @@ const AddEditOccasion = () => {
   const [imageErr, setImageErr] = useState('')
   const [isSubmit, setIsSubmit] = useState(false)
   const [loader, setLoader] = useState(false)
+  const visibilityData = [{ label: "Universal", value: 0 }, { label: "India", value: 91 }, { label: "Nepal", value: 977 }];
+
+  const [visibility, setVisibility] = useState([]);
+  const [visibilityErr, setVisibilityErr] = useState('');
+
+  const onChangeCheckbox = (e, item) => {
+    let temp = visibility;
+    if (e.target.checked == false) {
+      temp = temp.filter((v) => v.value !== item.value);
+    } else {
+      if (temp.findIndex((i) => i.value == item.value) == -1) {
+        temp.push(item);
+      }
+    }
+    setVisibility([...temp]);
+  }
 
   const breadcrumb = [
     { link: "/occasion-management/occasion", linkText: "Occasion Management" },
@@ -75,6 +91,10 @@ const AddEditOccasion = () => {
       validate = false;
     } else {
       setOccasionOrderErr("");
+    }
+
+    if (visibility.length == 0) {
+      setVisibilityErr("Please select visibility option");
     }
     // if (!occasionDesc.replace(/\s+/g, "")) {
     //   setOccasionDescErr("Occasion describtion is required");
@@ -115,6 +135,15 @@ const AddEditOccasion = () => {
         setOccasionDesc(data.occasionDescription);
         setBase64(data.occasionIcon);
         setOccasionType(data.occasionType ? data.occasionType : 'private');
+        let arr = [];
+        if (data.visibility) {
+          arr = data.visibility.map(e => {
+            let index = visibilityData.findIndex((item) => item.value == e);
+            return visibilityData[index];
+          })
+        }
+
+        setVisibility(arr);
       } else {
       }
     }).catch((err) => {
@@ -136,7 +165,8 @@ const AddEditOccasion = () => {
           occasionType: occasionType,
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
           occasionIcon: occasionIcon,
-          fileName: fileName
+          fileName: fileName,
+          visibility: visibility.map(a => a.value),
         },
       };
 
@@ -202,7 +232,8 @@ const AddEditOccasion = () => {
           occasionDescription: occasionDesc,
           occasionType: occasionType,
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
-          fileName: fileName
+          fileName: fileName,
+          visibility: visibility.map(a => a.value),
         },
       };
       console.log("createOccasionObj---", createOccasionObj);
@@ -269,6 +300,7 @@ const AddEditOccasion = () => {
               )}
             </div>
           </div>
+
           <div className="form-group row">
             <div className="col">
               <label>Order</label>
@@ -282,6 +314,7 @@ const AddEditOccasion = () => {
                   setOccasionOrder(e.target.value), setOccasionOrderErr("")
                 )}
               />
+
               {occasionOrderErr && (
                 <div className="inlineerror">{occasionOrderErr} </div>
               )}
@@ -342,6 +375,42 @@ const AddEditOccasion = () => {
               )}
             </div>
             <div className='col'>
+              <div className='rounded-sm pb-3'>
+                <label className="pl-1 ">Visibility</label>
+                <div className="form-group row">
+                  {visibilityData.map((item, index) => {
+                    return (
+                      <div className="col" key={index}>
+                        <div className="form-check">
+                          <input type="checkbox"
+                            id={`custom-checkbox-${index}`}
+                            className="form-check-input"
+                            checked={visibility?.some((d) => d.value == item.value)}
+                            value={visibility}
+                            onChange={(e) => {
+                              onChangeCheckbox(e, item);
+                            }}
+                          />
+                          <label htmlFor={`custom-checkbox-${index}`} className="form-check-label"  > {item.label} ({item.value})
+                          </label>
+                        </div>
+                      </div>
+                    )
+                  })}
+
+                </div>
+                {visibilityErr && (
+                  <div className="inlineerror">{visibilityErr} </div>
+                )}
+              </div>
+
+            </div>
+
+
+          </div>
+
+          <div className="form-group row">
+            <div className='col'>
               <label>Icon</label>
               <input
                 type='file'
@@ -349,15 +418,12 @@ const AddEditOccasion = () => {
                 value=''
                 onChange={handleFileChange}
               />
-              {imageErr && (
-                <div className='inlineerror'>{imageErr} </div>
-              )}
             </div>
-
-
+            <div className='col'>
+              {base64 ? <img className='iconImg' src={base64} alt='icon' /> : ''}
+            </div>
           </div>
 
-          {base64 ? <img className='iconImg' src={base64} alt='icon' /> : ''}
 
 
           <div className="button300">

@@ -20,7 +20,7 @@ export default {
 
 
 	///Authorization
-	//AUTH: siteSetting.api.AUTH,
+	AUTH: process.env.REACT_APP_API_AUTH_BASE_URL + "auth",
 
 
 	// Topic Section
