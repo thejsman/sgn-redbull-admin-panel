@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Logo, Eye, EyeClose } from '../../assets/svg/index';
@@ -6,6 +6,8 @@ import LogoImg from '../../assets/img/logo.svg';
 import AuthBg from '../../assets/img/auth-bg.png';
 import { handleLogin } from '../../services/ApiServices'
 import { resHandle } from '../../components/util/utils'
+import { ToastContainer, toast } from "react-toastify";
+import { Spinner } from "react-bootstrap"
 
 const Login = () => {
     const history = useHistory();
@@ -16,7 +18,7 @@ const Login = () => {
     const [passwordErr, setPasswordErr] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [adminLogin, setAdminLogin] = useState(true);
-
+    const [isSubmit, setIsSubmit] = useState(false);
 
 
     const handleValidate = () => {
@@ -36,35 +38,59 @@ const Login = () => {
         }
         return validate;
     }
+    useEffect(() => {
+        localStorage.clear();
+
+    })
 
 
     const handleSubmit = e => {
         e.preventDefault();
+
         if (handleValidate()) {
             let params = {
-                deviceId: 'admin',
-                deviceTypeID: 4,
-                deviceToken: 'admin',
                 email,
                 password,
-                adminLogin
             }
-            // handleLogin(params).then(res => {
-            //     let { status, data } = resHandle(res);
-            //     console.log("statusstatusstatusstatus", res.data);
-            //     if (status) {
-            //         localStorage.setItem("accessToken", data.accessToken);
-            //         // history.push("/")
-            //         window.location.href = "/";
-            //     }
-            //     else {
+            setIsSubmit(true);
+            console.log('process.env.REACT_APP_CHECK_LOGIN_CREDENTIAL_WITH_DB', process.env.REACT_APP_CHECK_LOGIN_CREDENTIAL_WITH_DB)
+            if (process.env.REACT_APP_CHECK_LOGIN_CREDENTIAL_WITH_DB == 1) {
+                handleLogin(params).then(res => {
+                    setIsSubmit(false);
+                    let { status, data } = resHandle(res);
+                    console.log("statusstatusstatusstatus", res.data);
+                    if (status == 200) {
+                        console.log('headers', res.data.token);
+                        localStorage.setItem("accessToken", res.data.detail.token);
+                        //history.push("/")
+                        window.location.href = "/";
+                    }
+                    else {
+                        setPasswordErr(res.data.message)
+                    }
+                }).catch((error) => {
+                    setIsSubmit(false);
+                    if (error.response.status == 400) {
+                        setPasswordErr(error.response.data.message)
+                    } else {
+                        toast.error("Sorry, a technical error occurred! Please try again later")
+                    }
 
-            //         // setEmailErr(data.responseMessage)
-            //         setPasswordErr(data.responseMessage)
-            //     }
-            // })
-            localStorage.setItem("accessToken", "data.accessToken");
+                });
+            } else {
+                if (email == process.env.REACT_APP_SUPERADMIN_USERNAME && password == process.env.REACT_APP_SUPERADMIN_PWD) {
+                    setIsSubmit(false);
+                    localStorage.setItem("accessToken", "tokenSagoonSuperaadmin37285723582sjhhjkfahf76786");
+                    //history.push("/")
                     window.location.href = "/";
+                } else {
+                    setIsSubmit(false);
+                    setPasswordErr('Invalid Credentials');
+                }
+            }
+
+            //localStorage.setItem("accessToken", "data.accessToken");
+            //  window.location.href = "/";
 
 
         }
@@ -80,7 +106,7 @@ const Login = () => {
                         <div className="form-group text-center">
                             {/* <Logo /> */}
                         </div>
-                        <form onSubmit={handleSubmit}>
+                        <form>
                             <div className="form-group">
                                 <label>Email</label>
                                 <input
@@ -121,8 +147,30 @@ const Login = () => {
                                 </div> */}
                             </div>
 
-                            <div className="text-center mt-3">
-                                <button type="submit" className="btn btn-primary rounded-pill pl-5 pr-5">Sign in</button>
+                            <div className='button300'>
+                                <button
+                                    type='button'
+                                    className='btn btn-primary rounded-pill'
+                                    onClick={handleSubmit}
+                                    disabled={isSubmit ? 'disabled' : ''}
+
+                                >
+                                    {isSubmit ? (
+                                        <Spinner
+                                            as="span"
+                                            animation="border"
+                                            size="sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        />
+                                    )
+                                        : ('')
+                                    }
+                                    {isSubmit ? ' Submitting..' : 'Sign in'}
+
+
+                                </button>
+                                {/* <button type="submit" className="btn btn-primary rounded-pill pl-5 pr-5">Sign in</button> */}
                             </div>
                         </form>
                     </div>

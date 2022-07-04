@@ -27,7 +27,7 @@ const headersApplicationJson = {
 
 
 function handleLogin(params) {
-  return axios.post(Api.USER_LOGIN, params);
+  return axios.post(Api.AUTH, params);
 }
 
 
