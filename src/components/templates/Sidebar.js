@@ -135,6 +135,19 @@ const Sidebar = () => {
             <span className="menu_text">Redis</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/invitation"  >
+            <i className="fas fa-file-alt"></i>{" "}
+            <span className="menu_text">Invitation Form</span>
+          </NavLink>
+        </li>
+        {/* <li>
+          <NavLink to="/orders"  >
+            <i className="fas fa-dollar-sign"></i>{" "}
+            <span className="menu_text">Orders</span>
+          </NavLink>
+        </li> */}
+
       </ul>
     </div>
   );
