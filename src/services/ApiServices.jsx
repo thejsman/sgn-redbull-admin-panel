@@ -18,7 +18,8 @@ export {
   createOccasion,
   getOccasionByName,
   deleteOccasion,
-  redisCacheClear
+  redisCacheClear,
+  sendInvitation
 };
 
 
@@ -64,8 +65,6 @@ function templateList(params) {
 }
 
 function occasionList(params) {
-  debugger;
-  console.log('-----------axios.defaults.headers', axios.defaults.headers);
   return axios.get(
     `${Api.GET_OCCASION_LIST}?limit=100`, params, {
     headers: headersApplicationJson,
@@ -95,9 +94,17 @@ function getOccasionByName(params) {
 
 
 function redisCacheClear(params) {
-  debugger;
   return axios.get(
     `${Api.REDIS_CLEAR_CACHE}${params}`, {
     headers: headersApplicationJson,
   });
 }
+
+function sendInvitation(params) {
+  return axios.post(
+    Api.SEND_INVITATION, params, {
+    headers: headersApplicationJson
+  })
+}
+
+
