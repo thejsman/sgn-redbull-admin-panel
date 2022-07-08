@@ -72,7 +72,6 @@ const Dashboard = () => {
       };
 
       client.onclose = () => {
-        //debugger;
         console.log('ws closed by server');
         if (clientRef.current) {
           // Connection failed
@@ -294,7 +293,6 @@ const Dashboard = () => {
     }
 
     if (response.occasionStats) {
-      debugger;
       let dates = response.occasionStats.analysis.map(function (i) {
         return i.date;
       });

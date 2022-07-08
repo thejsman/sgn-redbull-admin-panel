@@ -24,6 +24,8 @@ import OccasionCard from "./pages/cards/occasionCards/OccasionCard";
 import AddEditTaskCard from "./pages/cards/taskCards/AddEdiTaskCard";
 import TaskCard from "./pages/cards/taskCards/TaskCard";
 import Redis from "./pages/redis/redis";
+import InvitationForm from "./pages/invitation/InvitationForm";
+import Orders from "./pages/orders/Orders";
 
 
 const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
@@ -119,6 +121,14 @@ const Routes = (props) => {
 
             {/* Redis Routes */}
             <PrivateRoute exact path="/redis" {...props} component={Redis} />
+
+
+            {/* Invitation  Routes */}
+            <PrivateRoute exact path="/invitation" {...props} component={InvitationForm} />
+
+            {/* Orders  Routes */}
+            <PrivateRoute exact path="/orders" {...props} component={Orders} />
+
           </Switch>
         </Router>
       </div>
