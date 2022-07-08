@@ -91,4 +91,7 @@ export default {
 
 	//Redis Section
 	REDIS_CLEAR_CACHE: siteSetting.api.redis_url,
+
+	//Invitation Section
+	SEND_INVITATION: siteSetting.api.BaseUrl + "/invitationAdmin/invitation/create",
 };

@@ -39,8 +39,6 @@ function deleteRozy(params) {
 }
 
 function rozyList(params) {
-  debugger;
-  console.log('-----------axios.defaults.headers', axios.defaults.headers);
   return axios.get(
     Api.GET_ROZY_LIST, {
     headers: headersApplicationJson,

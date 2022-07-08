@@ -17,7 +17,6 @@ export const OccasionStats = React.memo((props) => {
     };
     const labels = props.chartDetail.labels;
 
-    debugger
     const data = {
         labels,
         datasets: [
