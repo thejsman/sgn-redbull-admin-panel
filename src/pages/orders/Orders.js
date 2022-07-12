@@ -7,6 +7,7 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader } from "../../components/common/loader";
+import moment from 'moment'
 
 
 const Orders = () => {
@@ -20,6 +21,10 @@ const Orders = () => {
   const [loader, setLoader] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [index, setIndex] = useState(-1);
+  const [status, setStatus] = useState("");
+  const [userId, setUserId] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const [dateErr, setDateErr] = useState("");
 
   useEffect(() => {
     var utc = new Date().toJSON().slice(0, 10).toString();
@@ -28,13 +33,55 @@ const Orders = () => {
     getOrderList()
   }, [])
 
+  const handleValidate = () => {
+    let validate = true;
+
+    if (!date.replace(/\s+/g, "")) {
+      setDateErr("Date is required");
+      validate = false;
+    } else {
+      let dt = moment(date);
+      let ck = dt.isValid();
+      if (ck) {
+        setDateErr("");
+      } else {
+        setDateErr("Invalid date formate ('DD-MM-YYYY')");
+        validate = false
+      }
+
+    }
+
+    return validate;
+  };
+
+  const getList = () => {
+    if (handleValidate()) {
+      getOrderList();
+    }
+  }
+
+  const resetData = () => {
+    setStatus("");
+    setOrderId("");
+    setUserId("");
+    setDate(new Date().toJSON().slice(0, 10).toString())
+  }
+
   const getOrderList = () => {
     setLoader(true)
-    let params = { date: (date ? date : new Date().toJSON().slice(0, 10).toString()) }
-
+    let dt = (date ? date : new Date().toJSON().slice(0, 10).toString());
+    let params = `transactionDate=${dt}`;
+    if (status) {
+      params += `&status=${status}`
+    }
+    if (orderId) {
+      params += `&orderId=${orderId}`
+    }
+    if (userId) {
+      params += `&userId=${userId}`
+    }
     orderListByDate(params).then((res) => {
       let { status, data } = resHandle(res);
-      debugger;
       if (status === 200) {
         setLoader(false)
         setOrderList([...data.data.Items])
@@ -46,6 +93,7 @@ const Orders = () => {
       setLoader(false)
       setOrderList([])
     });
+
   };
   const handleClose = () => {
     setConfirmModal(false);
@@ -214,21 +262,76 @@ const Orders = () => {
       </div>
 
       <div className="form-group row">
-        <div className="col-2 mt-3"> <label>Select Date :</label></div>
-        <div className="col-5">
+        <div className="col-4">
+          <label>Select Date :</label>
           <input
             type='date'
             className="form-control"
             name="date"
             value={date}
+            onChange={(e) => (
+              setDate(e.target.value), setDateErr("")
+            )}
+          />
+          {dateErr && (
+            <div className="inlineerror">{dateErr} </div>
+          )}
+
+        </div>
+        <div className="col-4">
+          <label>Status</label>
+          <select
+            className="form-control"
+            name="status"
+            value={status}
+            onChange={(e) => (
+              setStatus(e.target.value)
+            )}
+          >
+            <option value="">Select Status</option>
+            <option value="SUCCESS">SUCCESS</option>
+            <option value="PENDING">PENDING</option>
+            <option value="FAILED">FAILED</option>
+
+          </select>
+
+        </div>
+        <div className="col-4">
+          <label>Order Id :</label>
+          <input
+            type='text'
+            className="form-control"
+            name="orderId"
+            value={orderId}
             onChange={(e) => {
-              setDate(e.target.value)
-              console.log(e, 'iiiiiiiiiiii')
+              setOrderId(e.target.value)
+            }}
+          />
+
+
+        </div>
+
+      </div>
+      <div className="form-group  row mb-4">
+
+        <div className="col-4">
+          <label>User Id :</label>
+          <input
+            type='text'
+            className="form-control"
+            name="userId"
+            value={userId}
+            onChange={(e) => {
+              setUserId(e.target.value)
             }}
           />
 
         </div>
-        <div className="col-4 p-0">  <button className="btn btn-primary" onClick={getOrderList}>Search</button></div>
+        <div className="col-8 mt-4 pt-2">
+          <button className="btn btn-primary" onClick={getList}>Search</button>
+          <button className="btn btn-secondary ml-2" onClick={resetData}>Reset</button>
+        </div>
+
       </div>
       <div className="table-responsive cm_card p-0">
 

@@ -111,7 +111,7 @@ function sendInvitation(params) {
 
 function orderListByDate(params) {
   return axios.get(
-    `${Api.GET_ORDERS}?transactionDate=${params.date}&createdAt`, params, {
+    `${Api.GET_ORDERS}?${params}&createdAt`, {
     headers: headersApplicationJson,
   });
 }
