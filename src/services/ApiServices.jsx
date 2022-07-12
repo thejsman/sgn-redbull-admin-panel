@@ -19,7 +19,8 @@ export {
   getOccasionByName,
   deleteOccasion,
   redisCacheClear,
-  sendInvitation
+  sendInvitation,
+  orderListByDate
 };
 
 
@@ -105,6 +106,14 @@ function sendInvitation(params) {
     Api.SEND_INVITATION, params, {
     headers: headersApplicationJson
   })
+}
+
+
+function orderListByDate(params) {
+  return axios.get(
+    `${Api.GET_ORDERS}?transactionDate=${params.date}&createdAt`, params, {
+    headers: headersApplicationJson,
+  });
 }
 
 
