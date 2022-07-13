@@ -20,7 +20,8 @@ export {
   deleteOccasion,
   redisCacheClear,
   sendInvitation,
-  orderListByDate
+  orderListByDate,
+  userAnalytics
 };
 
 
@@ -116,4 +117,10 @@ function orderListByDate(params) {
   });
 }
 
+function userAnalytics() {
+  return axios.get(
+    Api.USER_ANALYTICS, {
+    headers: headersApplicationJson,
+  });
 
+}
