@@ -7,6 +7,7 @@ import { GiftStats } from '../../components/common/GiftStats';
 import { DealStats } from '../../components/common/DealStats';
 import { OccasionStats } from '../../components/common/ocassionStats'
 import siteSetting from "../../config/env/Index";
+import { userAnalytics } from "../../services/ApiServices";
 const URL = siteSetting.api.WebSocketUrl;
 
 
@@ -23,6 +24,8 @@ const Dashboard = () => {
   const [principalAmount, setPrincipalAmount] = useState([0]);
   const [tolCreditAmount, setTolCreditAmount] = useState([0]);
   const [tolMonthCreditAmount, setTolMonthCreditAmount] = useState([0]);
+  const [liveUserCount, setLiveUserCount] = useState([{ currentUsers: 0, totalUsers: 0 }, { currentUsers: 0, totalUsers: 0 }]);
+
 
 
   const [tolDebitAmount, setTolDebitAmount] = useState([0]);
@@ -51,6 +54,19 @@ const Dashboard = () => {
   const URL = siteSetting.api.WebSocketUrl;
 
   useEffect(() => {
+
+    getLiveUserCount();
+    console.log(`initializing interval11`);
+    const interval = setInterval(() => {
+      //updateTime();
+      console.log('call api', new Date());
+      getLiveUserCount();
+    }, 300000);
+
+    // return () => {
+    //   console.log(`clearing interval`);
+    //   clearInterval(interval);
+    // };
 
     if (waitingToReconnect) {
       return;
@@ -107,15 +123,17 @@ const Dashboard = () => {
       };
 
 
-      // return () => {
+      return () => {
 
-      //   console.log('Cleanup');
-      //   // Dereference, so it will set up next time
-      //   clientRef.current = null;
+        console.log('Cleanup');
+        // Dereference, so it will set up next time
+        clientRef.current = null;
 
-      //   client.close();
-      // }
+        client.close();
+      }
     }
+
+
 
   }, [waitingToReconnect]);
 
@@ -334,7 +352,27 @@ const Dashboard = () => {
 
   };
 
+  const getLiveUserCount = () => {
+    debugger;
+    userAnalytics().then((res) => {
+      let { status, data } = resHandle(res);
+      if (status === 200) {
+        let obj = liveUserCount[liveUserCount.length - 1];
+        let dt = [obj];
+        dt.push({ currentUsers: parseInt(data.currentUsers), totalUsers: parseInt(data.totalUsers) });
+        console.log(dt, 'dttttttttttt')
 
+
+        setLiveUserCount(dt);
+
+      } else {
+        console.log('error', status, data)
+      }
+    }).catch((err) => {
+      console.log('error', err)
+    });
+
+  };
 
 
 
@@ -345,7 +383,7 @@ const Dashboard = () => {
 
       <div className="row">
 
-        <Stats {...userData} arrUser={arrUser} arrMonthUser={arrMonthUser} ></Stats>
+        <Stats {...userData} arrUser={arrUser} arrMonthUser={arrMonthUser} liveUser={liveUserCount}></Stats>
 
       </div>
       <div className="row">

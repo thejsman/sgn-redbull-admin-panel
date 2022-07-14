@@ -97,4 +97,7 @@ export default {
 
 	//Orders Section
 	GET_ORDERS: siteSetting.api.BaseUrl + "/shopAdmin/transaction/getByDate",
+
+	//user Analytics
+	USER_ANALYTICS: siteSetting.api.BaseUrl + "/statistics/userAnalytics",
 };
