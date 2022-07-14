@@ -141,12 +141,12 @@ const Sidebar = () => {
             <span className="menu_text">Invitation Form</span>
           </NavLink>
         </li>
-        {/* <li>
+        <li>
           <NavLink to="/orders"  >
             <i className="fas fa-dollar-sign"></i>{" "}
             <span className="menu_text">Orders</span>
           </NavLink>
-        </li> */}
+        </li>
 
       </ul>
     </div>

@@ -2,248 +2,379 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
 import Pagination from "react-js-pagination";
-import {
-  occasionList
-} from "../../services/ApiServices";
+import { orderListByDate } from "../../services/ApiServices";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import {
-  deleteOccasionTemplate,
-  OccasionTemplateListByOccasionName,
-} from "../../services/ApiOccasionTemplate";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader } from "../../components/common/loader";
-import { templateList } from "../../services/ApiServices";
+import moment from 'moment'
 
 
 const Orders = () => {
   const history = useHistory();
-  const breadcrumb = [{ link: "", linkText: "Templates" }];
-
-  const [confirmModal, setConfirmModal] = useState(false);
-  //const [confirmTopic, setConfirmTopic] = useState("");
-  const [occasionSelectName, setOccasionSelectName] = useState("");
-  const [occasionName, setOccasionName] = useState([]);
-  const [templateName, setTemplateName] = useState([]);
-  const [tempalateList, setTemplateList] = useState([]);
+  const breadcrumb = [{ link: "", linkText: "Orders" }];
+  const [orderList, setOrderList] = useState([]);
+  const [date, setDate] = useState('');
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [search, setSearch] = useState("");
   const [count, setCount] = useState(10);
   const [loader, setLoader] = useState(false);
-  const [occasionArrList, setOccasionList] = useState([]);
-  // all handler start
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [index, setIndex] = useState(-1);
+  const [status, setStatus] = useState("");
+  const [userId, setUserId] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const [dateErr, setDateErr] = useState("");
+
   useEffect(() => {
-    // getTemplateList();
-    getOccasionList();
+    var utc = new Date().toJSON().slice(0, 10).toString();
+    setDate(utc);
+    console.log('date', utc)
+    getOrderList()
+  }, [])
 
-  }, []);
+  const handleValidate = () => {
+    let validate = true;
 
-  const editPages = (occasionName, templateName) => {
-    history.push("/template/edit/" + occasionName + "/" + templateName);
+    if (!date.replace(/\s+/g, "")) {
+      setDateErr("Date is required");
+      validate = false;
+    } else {
+      let dt = moment(date);
+      let ck = dt.isValid();
+      if (ck) {
+        setDateErr("");
+      } else {
+        setDateErr("Invalid date formate ('DD-MM-YYYY')");
+        validate = false
+      }
+
+    }
+
+    return validate;
   };
-  const handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
-  };
-  const getTemplateList = (occasionName) => {
+
+  const getList = () => {
+    if (handleValidate()) {
+      getOrderList();
+    }
+  }
+
+  const resetData = () => {
+    setStatus("");
+    setOrderId("");
+    setUserId("");
+    setDate(new Date().toJSON().slice(0, 10).toString())
+  }
+
+  const getOrderList = () => {
     setLoader(true)
-    let params = {
-      limit: 200,
-      LastEvaluatedKey: "null",
-      occasionName: occasionName
-    };
-    OccasionTemplateListByOccasionName(params).then((res) => {
+    let dt = (date ? date : new Date().toJSON().slice(0, 10).toString());
+    let params = `transactionDate=${dt}`;
+    if (status) {
+      params += `&status=${status}`
+    }
+    if (orderId) {
+      params += `&orderId=${orderId}`
+    }
+    if (userId) {
+      params += `&userId=${userId}`
+    }
+    orderListByDate(params).then((res) => {
       let { status, data } = resHandle(res);
       if (status === 200) {
         setLoader(false)
-        setTemplateList([...data.templateList]);
+        setOrderList([...data.data.Items])
       } else {
         setLoader(false)
-        setTemplateList([])
+        setOrderList([])
       }
     }).catch((err) => {
       setLoader(false)
-      setTemplateList([])
+      setOrderList([])
     });
+
   };
-
-  const handleDeleteTemplate = () => {
-    let params = {
-      occasionName,
-      templateName
-    };
-    handleClose();
-    setLoader(true)
-    deleteOccasionTemplate(params).then((res) => {
-      let { status, data } = resHandle(res);
-      if (status === 200) {
-        setLoader(false)
-        toast.success(data.message)
-        getTemplateList(occasionName);
-      } else {
-        toast.error(data.message);
-      }
-    }).catch((err) => {
-      setLoader(false);
-      toast.error("Sorry, a technical error occurred! Please try again later")
-    });
-  };
-
-  const getOccasionList = () => {
-    setLoader(true)
-    let params = {
-      limit: 500,
-      LastEvaluatedKey: "null",
-    };
-    occasionList(params).then((res) => {
-      let { status, data } = resHandle(res);
-      if (status === 200) {
-        let occasionList = data.occasionList.sort((a, b) => {
-          return a.displayTitle.localeCompare(b.displayTitle)
-        });
-        setOccasionList(occasionList);
-        if (occasionList.length > 0) {
-          getTemplateList(occasionList[0].occasionName)
-          setOccasionSelectName(occasionList[0].occasionName);
-        }
-
-        setLoader(false)
-      }
-    }).catch((err) => {
-      setOccasionList([]);
-      setLoader(false)
-    });
-  };
-
   const handleClose = () => {
     setConfirmModal(false);
-    // setConfirmTopic("");
   };
 
-  // all handler end
+
+
+
   return (
     <div className="page_wrapper">
-      <Modal show={confirmModal} onHide={handleClose} centered>
+      <Modal size="lg" show={confirmModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmation</Modal.Title>
+          <Modal.Title >Order No :  {orderList[index]?.orderId} <br />
+            User Id: {orderList[index]?.userId}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="text-center">
-            Are you sure you want to delete this Template?
-          </p>
-          <div className="d-flex justify-content-center pb-4">
-            <button
-              onClick={handleClose}
-              className="btn btn-dark btn-sm pl-5 pr-5"
-            >
-              No
-            </button>
-            <button
-              onClick={handleDeleteTemplate}
-              className="btn btn-danger btn-sm ml-3 pl-5 pr-5"
-            >
-              Yes
-            </button>
+          <div className="row">
+            <div className="col font-weight-bold" >Occasion Title :</div>
+            <div className="col" >{orderList[index]?.occasionTitle}</div>
+            <div className="col  font-weight-bold" >Transaction Type</div>
+            <div className="col" >{orderList[index]?.transactionType}</div>
           </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Occasion Name :</div>
+            <div className="col" >{orderList[index]?.occasionName}</div>
+            <div className="col  font-weight-bold" >Transaction Text</div>
+            <div className="col" >{orderList[index]?.transactionText}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Amount:</div>
+            <div className="col" >{orderList[index]?.amount}</div>
+            <div className="col  font-weight-bold" >Transaction Date</div>
+            <div className="col" >{orderList[index]?.transactionDate}</div>
+          </div>
+
+          <div className="row">
+            <div className="col font-weight-bold" >Quantity :</div>
+            <div className="col" >{orderList[index]?.quantity}</div>
+            <div className="col  font-weight-bold" >Occasion Status</div>
+            <div className="col" >{orderList[index]?.occasionStatus == false ? "False" : "True"}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Trans Status :</div>
+            <div className="col" >{orderList[index]?.transactionStatus}</div>
+            <div className="col  font-weight-bold" >Order Detail Id</div>
+            <div className="col" >{orderList[index]?.orderDetailId ? orderList[index]?.orderDetailId : "--N/A--"}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Occasion Title :</div>
+            <div className="col" >{orderList[index]?.occasionTitle}</div>
+            <div className="col  font-weight-bold" >Transaction Type</div>
+            <div className="col" >{orderList[index]?.transactionType}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Item Id :</div>
+            <div className="col" >{orderList[index]?.itemId}</div>
+            <div className="col  font-weight-bold" >Wallet Bal Used</div>
+            <div className="col" >{orderList[index]?.walletBalanceUsed}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Currency Symbol :</div>
+            <div className="col" >{orderList[index]?.currencySymbol}</div>
+            <div className="col  font-weight-bold" >Amount</div>
+            <div className="col" >{orderList[index]?.amount}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Currency Code :</div>
+            <div className="col" >{orderList[index]?.currencyCode}</div>
+            <div className="col  font-weight-bold" >Payment Method</div>
+            <div className="col" >{orderList[index]?.paymentMethod}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold" >Variant Id:</div>
+            <div className="col" >{orderList[index]?.variantId}</div>
+            <div className="col  font-weight-bold" >Product Name</div>
+            <div className="col" >{orderList[index]?.productName ? orderList[index]?.productName : "--N/A--"}</div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <hr />
+              <p className="text-primary">Gift With</p>
+            </div>
+          </div>
+          <div className="row" key={"gift"}>
+            <div className="col-2 font-weight-bold">Image</div>
+            <div className="col-7 font-weight-bold" >User Id</div>
+            <div className="col-3 font-weight-bold" >Screen Name</div>
+          </div>
+          {orderList[index]?.giftWith.length ? (
+            orderList[index]?.giftWith?.map((item, i) => (
+
+              <div className="row" key={"gift" + i}>
+                <div className="col-2" >{item?.profileImage ? <img src={item?.profileImage} style={{ width: '50%' }} /> : ""}</div>
+                <div className="col-7" >{item?.userId}</div>
+                <div className="col-3" >{item?.screenName}</div>
+              </div>
+            ))) : (
+            <div className="row">
+              <div className="col text-center" >--N/A--</div>
+            </div>
+          )}
+          <div className="row">
+            <div className="col">
+              <hr />
+              <p className="text-primary">Gift Card Details</p>
+            </div>
+          </div>
+          <div className="row" key={"giftcard"}>
+            <div className="col-3 font-weight-bold" >Gift Card Code</div>
+            <div className="col-6 font-weight-bold" >Voucher Id</div>
+            <div className="col-3 font-weight-bold">Valid Till</div>
+
+          </div>
+          {orderList[index]?.giftCardDetails.length ? (
+            orderList[index]?.giftCardDetails?.map((giftcard, j) => (
+
+              <div className="row" key={"giftcard" + j}>
+                <div className="col-3" >{giftcard?.giftCardCode}</div>
+                <div className="col-6" >{giftcard?.voucherId}</div>
+                <div className="col-3" >{giftcard?.validTill}</div>
+              </div>
+            ))) : (
+            <div className="row">
+              <div className="col text-center" >--N/A--</div>
+            </div>
+          )}
+          <div className="row">
+            <div className="col">
+              <hr />
+              <p className="text-primary">Order Details</p>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-2">
+              {orderList[index]?.orderDetails?.source ? <img src={orderList[index]?.orderDetails?.source} style={{ width: '70%' }} /> : ""}
+            </div>
+            <div className="col-10">
+              <div className="row">
+                <div className="col-2 font-weight-bold" >Name :</div>
+                <div className="col-5" >{orderList[index]?.orderDetails?.name}</div>
+                <div className="col-3 font-weight-bold">Currency Symbol :</div>
+                <div className="col-2" >{orderList[index]?.orderDetails?.currencySymbol}</div>
+
+              </div>
+              <div className="row">
+                <div className="col-2 font-weight-bold" >Amount :</div>
+                <div className="col-5" >{orderList[index]?.orderDetails?.amount}</div>
+                <div className="col-3 font-weight-bold">Quantity :</div>
+                <div className="col-2" >{orderList[index]?.orderDetails?.quantity}</div>
+
+              </div>
+            </div>
+
+          </div>
+
+
+
         </Modal.Body>
       </Modal>
-
-      {/* <div className="search_bar">
-                <i className="fa fa-search" />
-                <input type="text" className="form-control" placeholder="Search Topic" value={search} name="search" onChange={handlerOnChange} />
-            </div> */}
-
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className="twocol sb page_header">
-        <h2>Occasion Template Management</h2>
-        <Link to="/template/create" className="btn btn-primary btn-sm">
-          Add Template
-        </Link>
+        <h2>Orders</h2>
+
       </div>
-      <div className="twocol sb page_header">
-        <div className="headerinner left"></div>
-      </div>
-      <div className="form-group row m-4">
-        <div className="col-6">
-          <label>Occasion Name</label>
+
+      <div className="form-group row">
+        <div className="col-4">
+          <label>Select Date :</label>
+          <input
+            type='date'
+            className="form-control"
+            name="date"
+            value={date}
+            onChange={(e) => (
+              setDate(e.target.value), setDateErr("")
+            )}
+          />
+          {dateErr && (
+            <div className="inlineerror">{dateErr} </div>
+          )}
+
+        </div>
+        <div className="col-4">
+          <label>Status</label>
           <select
             className="form-control"
-            name="language"
-            value={occasionSelectName}
+            name="status"
+            value={status}
             onChange={(e) => (
-              setOccasionSelectName(e.target.value),
-              getTemplateList(e.target.value)
+              setStatus(e.target.value)
             )}
           >
-            <option key="k_1" value="">
-              Select Occasion Name
-            </option>
-            {occasionArrList.map((item, index) => (
-              <option key={"k" + index} value={item.occasionName}>
-                {item.displayTitle}
-
-              </option>
-            ))}
+            <option value="">Select Status</option>
+            <option value="SUCCESS">SUCCESS</option>
+            <option value="PENDING">PENDING</option>
+            <option value="FAILED">FAILED</option>
 
           </select>
+
         </div>
+        <div className="col-4">
+          <label>Order Id :</label>
+          <input
+            type='text'
+            className="form-control"
+            name="orderId"
+            value={orderId}
+            onChange={(e) => {
+              setOrderId(e.target.value)
+            }}
+          />
+
+
+        </div>
+
+      </div>
+      <div className="form-group  row mb-4">
+
+        <div className="col-4">
+          <label>User Id :</label>
+          <input
+            type='text'
+            className="form-control"
+            name="userId"
+            value={userId}
+            onChange={(e) => {
+              setUserId(e.target.value)
+            }}
+          />
+
+        </div>
+        <div className="col-8 mt-4 pt-2">
+          <button className="btn btn-primary" onClick={getList}>Search</button>
+          <button className="btn btn-secondary ml-2" onClick={resetData}>Reset</button>
+        </div>
+
       </div>
       <div className="table-responsive cm_card p-0">
 
         {loader ? (
           <Loader />
         ) : (
-          <table className="table table-bordered user-table table-hover align-items-center table-fixed" style={{ "tableLayout": "fixed" }} >
+          <table className="table table-bordered user-table table-hover align-items-center table-fixed tablecollapse"  >
             <thead>
               <tr>
-                <th>Occasion Name</th>
-                <th>Template Name</th>
-                <th>Icon</th>
-                <th>Order</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>Order Id</th>
+                <th>Occasion Title</th>
+                <th>Trans. Type</th>
+                <th>Trans. Text</th>
+                <th>Amount</th>
+                <th>User Id</th>
+
               </tr>
             </thead>
             <tbody>
-              {tempalateList.length ? (
-                tempalateList?.map((item, i) => (
-                  <tr key={i}>
-                    <td>
-                      <span className="">{item.occasionName}</span>
+              {orderList.length ? (
+                orderList?.map((item, i) => (
+
+                  <tr key={i} onClick={() => (
+                    setConfirmModal(true),
+                    setIndex(i)
+
+                  )}>
+                    <td className="text-wrap">
+                      <span className="text-primary"> {item.orderId}</span>
                     </td>
                     <td>
-                      <span className="">{item.templateName}</span>
+                      <span className="">{item.occasionTitle}</span>
                     </td>
                     <td  >
-                      <img
-                        src={item.templateImage}
-                        alt="Avatar"
-                        className="user-avatar high"
-                        style={{ width: '50px' }}
-                      />
+                      <span className="">{item.transactionType}</span>
                     </td>
 
 
-                    <td>{item.displayOrder}</td>
-                    <td>{item.status ? "Activated" : "Deactivated"}</td>
+                    <td>{item.transactionText}</td>
+                    <td>{item.amount}</td>
+                    <td className="text-wrap"> <span className="">{item.userId}</span></td>
 
-                    <td>
-                      <div className="action">
-                        <span onClick={() => editPages(item.occasionName, item.templateName)}>
-                          <i className="fas fa-edit"></i>
-                        </span>
 
-                        <span
-                          onClick={() => (
-                            setConfirmModal(true),
-                            setOccasionName(item.occasionName),
-                            setTemplateName(item.templateName)
-                          )}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                        </span>
-                      </div>
-                    </td>
                   </tr>
                 ))
               ) : (
@@ -260,7 +391,7 @@ const Orders = () => {
         )}
       </div>
 
-      {
+      {/* {
         templateList.length ? (
           <div className="text-center">
             <Pagination
@@ -273,7 +404,7 @@ const Orders = () => {
         ) : (
           ""
         )
-      }
+      } */}
 
       <ToastContainer />
     </div >
