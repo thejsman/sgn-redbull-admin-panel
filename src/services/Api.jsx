@@ -94,4 +94,10 @@ export default {
 
 	//Invitation Section
 	SEND_INVITATION: siteSetting.api.BaseUrl + "/invitationAdmin/invitation/create",
+
+	//Orders Section
+	GET_ORDERS: siteSetting.api.BaseUrl + "/shopAdmin/transaction/getByDate",
+
+	//user Analytics
+	USER_ANALYTICS: siteSetting.api.BaseUrl + "/statistics/userAnalytics",
 };

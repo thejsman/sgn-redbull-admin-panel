@@ -6,6 +6,7 @@ import 'chart.js/auto'
 
 
 export const Stats = React.memo((props) => {
+    console.log('prpos', props)
     const options = {
         responsive: true,
         plugins: {
@@ -42,6 +43,16 @@ export const Stats = React.memo((props) => {
                     </div>
                     <div className="col-sm-6 dash_sm_card">
                         <Ticker title="Monthly User" start={props.arrMonthUser[1]} end={props.monthUser} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-6 dash_sm_card ">
+                        <Ticker title="Live Total User" start={props.liveUser[0].totalUsers} end={props.liveUser[1].totalUsers} />
+
+
+                    </div>
+                    <div className="col-sm-6 dash_sm_card">
+                        <Ticker title="Live Current User" start={props.liveUser[0].currentUsers} end={props.liveUser[1].currentUsers} />
                     </div>
                 </div>
 
