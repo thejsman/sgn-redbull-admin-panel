@@ -36,7 +36,7 @@ export const Stats = React.memo((props) => {
 				<div className="row">
 					<div className="col-sm-6 dash_sm_card ">
 						<Ticker
-							title="Total User"
+							title="Total Users"
 							start={props.arrUser[1]}
 							end={props.totalUsers}
 						/>
@@ -52,7 +52,7 @@ export const Stats = React.memo((props) => {
 				<div className="row">
 					<div className="col-sm-6 dash_sm_card ">
 						<Ticker
-							title="Total User (Today)"
+							title="Total Users (Today)"
 							start={props.liveUser[0].totalUsers}
 							end={props.liveUser[1].totalUsers}
 						/>
