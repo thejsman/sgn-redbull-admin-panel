@@ -342,7 +342,7 @@ const Orders = () => {
             <div className="col-7 font-weight-bold" >User Id</div>
             <div className="col-3 font-weight-bold" >Screen Name</div>
           </div>
-          {orderList[index]?.giftWith.length ? (
+          {(orderList[index]?.giftWith && orderList[index]?.giftWith.length > 0) ? (
             orderList[index]?.giftWith?.map((item, i) => (
 
               <div className="row" key={"gift" + i}>
@@ -352,7 +352,10 @@ const Orders = () => {
               </div>
             ))) : (
             <div className="row">
-              <div className="col text-center" >--N/A--</div>
+              <div className="col-2" >--N/A--</div>
+              <div className="col-7" >--N/A--</div>
+              <div className="col-3" >--N/A--</div>
+
             </div>
           )}
           <div className="row">
@@ -367,7 +370,7 @@ const Orders = () => {
             <div className="col-3 font-weight-bold">Valid Till</div>
 
           </div>
-          {orderList[index]?.giftCardDetails.length ? (
+          {(orderList[index]?.giftCardDetails && orderList[index]?.giftCardDetails.length) ? (
             orderList[index]?.giftCardDetails?.map((giftcard, j) => (
 
               <div className="row" key={"giftcard" + j}>
@@ -377,7 +380,9 @@ const Orders = () => {
               </div>
             ))) : (
             <div className="row">
-              <div className="col text-center" >--N/A--</div>
+              <div className="col-3" >--N/A--</div>
+              <div className="col-6" >--N/A--</div>
+              <div className="col-3" >--N/A--</div>
             </div>
           )}
           <div className="row">
