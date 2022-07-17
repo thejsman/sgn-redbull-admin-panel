@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
 import Pagination from "react-js-pagination";
-import { orderListByDate } from "../../services/ApiServices";
+import { orderListByDate, orderListByMobileno } from "../../services/ApiServices";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,22 +16,75 @@ const Orders = () => {
   const [orderList, setOrderList] = useState([]);
   const [date, setDate] = useState('');
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const [count, setCount] = useState(10);
+  const [limit, setLimit] = useState(5);
+  const [count, setCount] = useState(6);
   const [loader, setLoader] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [index, setIndex] = useState(-1);
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("PENDING");
+  const [mobileNo, setMobileNo] = useState("");
+  const [transactionId, setTransactionId] = useState("");
+  const [transactionDate, setTransactionDate] = useState("");
+  const [transactionStatus, setTransactionStatus] = useState("");
   const [userId, setUserId] = useState("");
-  const [orderId, setOrderId] = useState("");
   const [dateErr, setDateErr] = useState("");
+  const [mobileNoErr, setMobileNoErr] = useState("");
+  const [orderIdPage, setOrderIdPage] = useState(null);
+  const [isMobileSearch, setIsMobileSearch] = useState(false);
+  const [pageState, setPageState] = useState([{ page: 1, transactionDate: null, transactionId: null, transactionStatus: null, userId: null }])
 
   useEffect(() => {
     var utc = new Date().toJSON().slice(0, 10).toString();
     setDate(utc);
     console.log('date', utc)
-    getOrderList()
+    getOrderList(null, null, null, null, page)
   }, [])
+
+  const handlePageChange = pageNumber => {
+    console.log(`active page is ${pageNumber}`)
+    let pageno = parseInt(pageNumber);
+    let arr = pageState;
+    let data = arr.filter(item => item.page == pageno);
+    if (isMobileSearch) {
+      if (data.length == 0) {
+        setPage(pageno);
+        if (transactionId !== null) {
+          arr.push({ page: pageno, userId: userId, transactionId: transactionId });
+          setPageState([...arr]);
+          let totCount = count + limit;
+          setCount(totCount)
+          getOrderListByMobile(userId, transactionId, pageno);
+        } else {
+          setOrderList([...[]])
+        }
+      } else {
+        setPage(pageno);
+        setUserId(data[0].userId);
+        setTransactionId(data[0].transactionId);
+        getOrderListByMobile(data[0].userId, data[0].transactionId, pageno);
+      }
+    } else {
+      if (data.length == 0) {
+        setPage(pageno);
+        if (transactionId !== null) {
+          arr.push({ page: pageno, userId: userId, transactionDate: transactionDate, transactionStatus: transactionStatus, transactionId: transactionId });
+          setPageState([...arr]);
+          let totCount = count + limit;
+          setCount(totCount)
+          getOrderList(userId, transactionDate, transactionStatus, transactionId, pageno);
+        } else {
+          setOrderList([...[]])
+        }
+      } else {
+        setPage(pageno);
+        setUserId(data[0].userId);
+        setTransactionDate(data[0].transactionDate);
+        setTransactionStatus(data[0].transactionStatus);
+        setTransactionId(data[0].transactionId);
+        getOrderList(data[0].userId, data[0].transactionDate, data[0].transactionStatus, data[0].transactionId, pageno);
+      }
+    }
+  }
 
   const handleValidate = () => {
     let validate = true;
@@ -54,47 +107,153 @@ const Orders = () => {
     return validate;
   };
 
+  const handleMobileNoValidate = () => {
+    let validate = true;
+    const mobileNoRegEx = /^[0-9]$/;
+    if (!mobileNo.replace(/\s+/g, "")) {
+      setMobileNoErr("Mobile no is required");
+      validate = false;
+    } else {
+      setMobileNoErr("");
+    }
+
+    return validate;
+  };
+
   const getList = () => {
     if (handleValidate()) {
-      getOrderList();
+      setIsMobileSearch(false);
+      if (count < limit) {
+        let totCount = count + limit;
+        setCount(totCount);
+      }
+      let obj = { page: 1, transactionDate: null, transactionId: null, transactionStatus: null, userId: null };
+      let array = [obj]
+      setPageState(...[array])
+
+
+      setTransactionId(null);
+      setTransactionDate(null);
+      setTransactionStatus(null);
+      setUserId(null);
+      setPage(1);
+      setCount(6);
+      getOrderList(null, null, null, null, 1)
+    }
+  }
+
+  const getOrderListByMobileNo = () => {
+    if (handleMobileNoValidate()) {
+      setIsMobileSearch(true);
+      if (count < limit) {
+        let totCount = count + limit;
+        setCount(totCount);
+      }
+      let obj = { page: 1, transactionId: null, userId: null };
+      let array = [obj]
+      setPageState(...[array])
+      setTransactionId(null);
+      setUserId(null);
+      setPage(1);
+      setCount(6);
+      getOrderListByMobile(null, null, 1)
     }
   }
 
   const resetData = () => {
-    setStatus("");
-    setOrderId("");
-    setUserId("");
+    setStatus("PENDING");
+    setMobileNo("");
     setDate(new Date().toJSON().slice(0, 10).toString())
   }
 
-  const getOrderList = () => {
+  const getOrderListByMobile = (userId, transactionId, nextPage) => {
+    setLoader(true)
+    let params = `mobileNo=${mobileNo}`;
+
+    if (userId) {
+      params += `&userId=${userId}`
+    }
+    if (transactionId) {
+      params += `&transactionId=${transactionId}`
+    }
+    params += `&limit=${limit}`
+
+    orderListByMobileno(params).then((res) => {
+      let { status, data } = resHandle(res);
+      if (status === 200) {
+        setLoader(false);
+        setOrderList([...data.data.Items]);
+        if (data.data.LastEvaluatedKey && (Object.keys(data.data.LastEvaluatedKey).length > 0)) {
+          let arr = pageState;
+          if (arr.findIndex(item => item.page == (nextPage + 1)) == -1) {
+            setTransactionId(data.data.LastEvaluatedKey.transactionId);
+            setUserId(data.data.LastEvaluatedKey.userId)
+          }
+        }
+        if (data.data.Items.length == 0 || !data.data.LastEvaluatedKey) {
+          setTransactionId(null)
+        }
+      } else {
+        setLoader(false)
+        setOrderList([])
+        toast.error("Sorry, a technical error occurred! Please try again later")
+      }
+    }).catch((err) => {
+      toast.error("Sorry, a technical error occurred! Please try again later")
+      setLoader(false)
+      setOrderList([])
+    });
+
+  };
+
+
+
+
+  const getOrderList = (userId, transactionDate, transactionStatus, transactionId, nextPage) => {
     setLoader(true)
     let dt = (date ? date : new Date().toJSON().slice(0, 10).toString());
     let params = `transactionDate=${dt}`;
     if (status) {
       params += `&status=${status}`
     }
-    if (orderId) {
-      params += `&orderId=${orderId}`
-    }
     if (userId) {
       params += `&userId=${userId}`
     }
+    if (transactionId) {
+      params += `&transactionId=${transactionId}`
+    }
+    params += `&limit=${limit}`
+
     orderListByDate(params).then((res) => {
       let { status, data } = resHandle(res);
       if (status === 200) {
-        setLoader(false)
-        setOrderList([...data.data.Items])
+        setLoader(false);
+        setOrderList([...data.data.Items]);
+        if (data.data.LastEvaluatedKey && (Object.keys(data.data.LastEvaluatedKey).length > 0)) {
+          let arr = pageState;
+          if (arr.findIndex(item => item.page == (nextPage + 1)) == -1) {
+            setTransactionId(data.data.LastEvaluatedKey.transactionId);
+            setTransactionDate(data.data.LastEvaluatedKey.transactionDate)
+            setTransactionStatus(data.data.LastEvaluatedKey.transactionStatus)
+            setUserId(data.data.LastEvaluatedKey.userId)
+          }
+        }
+        if (data.data.Items.length == 0 || !data.data.LastEvaluatedKey) {
+          setTransactionId(null)
+        }
       } else {
         setLoader(false)
         setOrderList([])
+        toast.error("Sorry, a technical error occurred! Please try again later")
       }
     }).catch((err) => {
+      toast.error("Sorry, a technical error occurred! Please try again later")
       setLoader(false)
       setOrderList([])
     });
 
   };
+
   const handleClose = () => {
     setConfirmModal(false);
   };
@@ -288,7 +447,6 @@ const Orders = () => {
               setStatus(e.target.value)
             )}
           >
-            <option value="">Select Status</option>
             <option value="SUCCESS">SUCCESS</option>
             <option value="PENDING">PENDING</option>
             <option value="FAILED">FAILED</option>
@@ -296,39 +454,33 @@ const Orders = () => {
           </select>
 
         </div>
-        <div className="col-4">
-          <label>Order Id :</label>
-          <input
-            type='text'
-            className="form-control"
-            name="orderId"
-            value={orderId}
-            onChange={(e) => {
-              setOrderId(e.target.value)
-            }}
-          />
-
-
+        <div className="col-4 mt-4 pt-2">
+          <button className="btn btn-primary" onClick={getList}>Search</button>
         </div>
 
       </div>
       <div className="form-group  row mb-4">
 
         <div className="col-4">
-          <label>User Id :</label>
+          <label>Mobile :</label>
           <input
-            type='text'
+            type='number'
             className="form-control"
             name="userId"
-            value={userId}
-            onChange={(e) => {
-              setUserId(e.target.value)
-            }}
+            value={mobileNo}
+            onChange={(e) => (
+              setMobileNo(e.target.value),
+              setMobileNoErr("")
+            )
+            }
           />
+          {mobileNoErr && (
+            <div className="inlineerror">{mobileNoErr} </div>
+          )}
 
         </div>
         <div className="col-8 mt-4 pt-2">
-          <button className="btn btn-primary" onClick={getList}>Search</button>
+          <button className="btn btn-primary" onClick={getOrderListByMobileNo}>Search</button>
           <button className="btn btn-secondary ml-2" onClick={resetData}>Reset</button>
         </div>
 
@@ -391,20 +543,20 @@ const Orders = () => {
         )}
       </div>
 
-      {/* {
-        templateList.length ? (
-          <div className="text-center">
-            <Pagination
-              activePage={page}
-              itemsCountPerPage={limit}
-              totalItemsCount={count}
-              onChange={(e) => handlePageChange(e)}
-            />
-          </div>
-        ) : (
-          ""
-        )
-      } */}
+      {
+        // orderList.length ? (
+        <div className="text-center">
+          <Pagination
+            activePage={page}
+            itemsCountPerPage={limit}
+            totalItemsCount={count}
+            onChange={e => handlePageChange(e)}
+          />
+        </div>
+        // ) : (
+        //   ""
+        // )
+      }
 
       <ToastContainer />
     </div >
