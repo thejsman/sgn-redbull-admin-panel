@@ -69,7 +69,7 @@ const Coupons = () => {
       couponVoucherId: couponVoucherIdValue
 
     }
-    couponList(params).then(res => {
+    couponList(params).then((res) => {
       let { status, data } = resHandle(res)
       if (status === 200) {
         setLoader(false)
@@ -90,7 +90,15 @@ const Coupons = () => {
           // // setCount(pageCount);
           // console.log(count, 'cccccccccccccccccc');
         }
+      } else {
+        toast.error("Sorry, a technical error occurred! Please try again later")
+        setLoader(false)
+        setCouponList([])
       }
+    }).catch((err) => {
+      toast.error("Sorry, a technical error occurred! Please try again later")
+      setLoader(false)
+      setCouponList([])
     })
   }
 

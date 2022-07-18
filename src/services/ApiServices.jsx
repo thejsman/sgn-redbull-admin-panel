@@ -21,7 +21,8 @@ export {
   redisCacheClear,
   sendInvitation,
   orderListByDate,
-  userAnalytics
+  userAnalytics,
+  orderListByMobileno
 };
 
 
@@ -112,10 +113,18 @@ function sendInvitation(params) {
 
 function orderListByDate(params) {
   return axios.get(
-    `${Api.GET_ORDERS}?${params}&createdAt`, {
+    `${Api.GET_ORDERS}getByDate?${params}`, {
     headers: headersApplicationJson,
   });
 }
+
+function orderListByMobileno(params) {
+  return axios.get(
+    `${Api.GET_ORDERS}byUserId?${params}`, {
+    headers: headersApplicationJson,
+  });
+}
+
 
 function userAnalytics() {
   return axios.get(
