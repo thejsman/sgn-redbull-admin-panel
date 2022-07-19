@@ -22,7 +22,8 @@ export {
   sendInvitation,
   orderListByDate,
   userAnalytics,
-  orderListByMobileno
+  orderListByMobileno,
+  orderListByOrderId
 };
 
 
@@ -125,6 +126,12 @@ function orderListByMobileno(params) {
   });
 }
 
+function orderListByOrderId(params) {
+  return axios.get(
+    `${Api.GET_ORDERS}transactionId?${params}`, {
+    headers: headersApplicationJson,
+  });
+}
 
 function userAnalytics() {
   return axios.get(
