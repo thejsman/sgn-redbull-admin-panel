@@ -55,6 +55,19 @@ export const Stats = React.memo((props) => {
                         <Ticker title="Live Current User" start={props.liveUser[0].currentUsers} end={props.liveUser[1].currentUsers} />
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-sm-4 dash_sm_card ">
+                        <Ticker title="DAU" start={props.cleverTapLiveUserCount[0].dailyUsers} end={props.cleverTapLiveUserCount[1].dailyUsers} />
+
+
+                    </div>
+                    <div className="col-sm-4 dash_sm_card">
+                        <Ticker title="WAU" start={props.cleverTapLiveUserCount[0].weeklyUsers} end={props.cleverTapLiveUserCount[1].weeklyUsers} />
+                    </div>
+                    <div className="col-sm-4 dash_sm_card">
+                        <Ticker title="MAU" start={props.cleverTapLiveUserCount[0].monthlyUsers} end={props.cleverTapLiveUserCount[1].monthlyUsers} />
+                    </div>
+                </div>
 
             </div>
             <div className="col-sm-6 mt-3">

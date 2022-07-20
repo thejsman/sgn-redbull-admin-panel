@@ -7,7 +7,7 @@ import { GiftStats } from '../../components/common/GiftStats';
 import { DealStats } from '../../components/common/DealStats';
 import { OccasionStats } from '../../components/common/ocassionStats'
 import siteSetting from "../../config/env/Index";
-import { userAnalytics } from "../../services/ApiServices";
+import { userAnalytics, userCleverTapLiveCount } from "../../services/ApiServices";
 const URL = siteSetting.api.WebSocketUrl;
 
 
@@ -25,6 +25,7 @@ const Dashboard = () => {
   const [tolCreditAmount, setTolCreditAmount] = useState([0]);
   const [tolMonthCreditAmount, setTolMonthCreditAmount] = useState([0]);
   const [liveUserCount, setLiveUserCount] = useState([{ currentUsers: 0, totalUsers: 0 }, { currentUsers: 0, totalUsers: 0 }]);
+  const [cleverTapLiveUserCount, setCleverTapLiveUserCount] = useState([{ dailyUsers: 0, weeklyUsers: 0, monthlyUsers: 0 }, { dailyUsers: 0, weeklyUsers: 0, monthlyUsers: 0 }]);
 
 
 
@@ -56,11 +57,19 @@ const Dashboard = () => {
   useEffect(() => {
 
     getLiveUserCount();
-    console.log(`initializing interval11`);
+    getCleverTapUserLiveCount();
+    console.log(`initializing interval`);
     const interval = setInterval(() => {
       //updateTime();
       console.log('call api', new Date());
       getLiveUserCount();
+    }, 30000);
+
+    console.log(`initializing interval11`);
+    const interval2 = setInterval(() => {
+      //updateTime();
+      console.log('call api 2', new Date());
+      getCleverTapUserLiveCount();
     }, 300000);
 
     // return () => {
@@ -353,17 +362,38 @@ const Dashboard = () => {
   };
 
   const getLiveUserCount = () => {
-    debugger;
     userAnalytics().then((res) => {
       let { status, data } = resHandle(res);
       if (status === 200) {
         let obj = liveUserCount[liveUserCount.length - 1];
         let dt = [obj];
         dt.push({ currentUsers: parseInt(data.currentUsers), totalUsers: parseInt(data.totalUsers) });
-        console.log(dt, 'dttttttttttt')
-
-
         setLiveUserCount(dt);
+
+      } else {
+        console.log('error', status, data)
+      }
+    }).catch((err) => {
+      console.log('error', err)
+    });
+
+  };
+
+  const getCleverTapUserLiveCount = () => {
+    let date = new Date().toJSON().slice(0, 10).toString();
+    debugger;
+    userCleverTapLiveCount(date).then((res) => {
+      let { status, data } = resHandle(res);
+      if (status === 200) {
+        if (Object.keys(data).length > 0) {
+          let obj = cleverTapLiveUserCount[cleverTapLiveUserCount.length - 1];
+          let dt = [obj];
+          dt.push({ dailyUsers: parseInt(data.dailyUsers), weeklyUsers: parseInt(data.weeklyUsers), monthlyUsers: parseInt(data.monthlyUsers) });
+          setCleverTapLiveUserCount(dt);
+        } else {
+          getCleverTapUserLiveCount();
+        }
+
 
       } else {
         console.log('error', status, data)
@@ -383,7 +413,7 @@ const Dashboard = () => {
 
       <div className="row">
 
-        <Stats {...userData} arrUser={arrUser} arrMonthUser={arrMonthUser} liveUser={liveUserCount}></Stats>
+        <Stats {...userData} arrUser={arrUser} arrMonthUser={arrMonthUser} cleverTapLiveUserCount={cleverTapLiveUserCount} liveUser={liveUserCount}></Stats>
 
       </div>
       <div className="row">

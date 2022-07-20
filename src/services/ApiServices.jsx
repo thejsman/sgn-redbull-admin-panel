@@ -23,7 +23,8 @@ export {
   orderListByDate,
   userAnalytics,
   orderListByMobileno,
-  orderListByOrderId
+  orderListByOrderId,
+  userCleverTapLiveCount
 };
 
 
@@ -135,8 +136,14 @@ function orderListByOrderId(params) {
 
 function userAnalytics() {
   return axios.get(
-    Api.USER_ANALYTICS, {
+    `${Api.USER_ANALYTICS}userAnalytics`, {
     headers: headersApplicationJson,
   });
+}
 
+function userCleverTapLiveCount(date) {
+  return axios.get(
+    `${Api.USER_ANALYTICS}clevertapData/${date}`, {
+    headers: headersApplicationJson,
+  });
 }
