@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
 import Pagination from "react-js-pagination";
-import { orderListByDate, orderListByMobileno } from "../../services/ApiServices";
+import { orderListByDate, orderListByMobileno, orderListByOrderId } from "../../services/ApiServices";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -30,7 +30,9 @@ const Orders = () => {
   const [dateErr, setDateErr] = useState("");
   const [mobileNoErr, setMobileNoErr] = useState("");
   const [orderIdPage, setOrderIdPage] = useState(null);
-  const [isMobileSearch, setIsMobileSearch] = useState(false);
+  const [isSearch, setIsSearch] = useState(1);
+  const [orderId, setOrderId] = useState("");
+  const [orderIdErr, setOrderIdErr] = useState("");
   const [pageState, setPageState] = useState([{ page: 1, transactionDate: null, transactionId: null, transactionStatus: null, userId: null }])
 
   useEffect(() => {
@@ -45,7 +47,8 @@ const Orders = () => {
     let pageno = parseInt(pageNumber);
     let arr = pageState;
     let data = arr.filter(item => item.page == pageno);
-    if (isMobileSearch) {
+    debugger;
+    if (isSearch == 2) {
       if (data.length == 0) {
         setPage(pageno);
         if (transactionId !== null) {
@@ -63,7 +66,7 @@ const Orders = () => {
         setTransactionId(data[0].transactionId);
         getOrderListByMobile(data[0].userId, data[0].transactionId, pageno);
       }
-    } else {
+    } else if (isSearch == 1) {
       if (data.length == 0) {
         setPage(pageno);
         if (transactionId !== null) {
@@ -73,6 +76,7 @@ const Orders = () => {
           setCount(totCount)
           getOrderList(userId, transactionDate, transactionStatus, transactionId, pageno);
         } else {
+
           setOrderList([...[]])
         }
       } else {
@@ -120,9 +124,21 @@ const Orders = () => {
     return validate;
   };
 
+  const handleOrderIDValidate = () => {
+    let validate = true;
+    if (!orderId.replace(/\s+/g, "")) {
+      setOrderIdErr("Order ID is required");
+      validate = false;
+    } else {
+      setOrderIdErr("");
+    }
+
+    return validate;
+  };
+
   const getList = () => {
     if (handleValidate()) {
-      setIsMobileSearch(false);
+      setIsSearch(1);
       if (count < limit) {
         let totCount = count + limit;
         setCount(totCount);
@@ -144,7 +160,7 @@ const Orders = () => {
 
   const getOrderListByMobileNo = () => {
     if (handleMobileNoValidate()) {
-      setIsMobileSearch(true);
+      setIsSearch(2);
       if (count < limit) {
         let totCount = count + limit;
         setCount(totCount);
@@ -159,6 +175,48 @@ const Orders = () => {
       getOrderListByMobile(null, null, 1)
     }
   }
+
+  const getOrderListByOrderId = () => {
+    if (handleOrderIDValidate()) {
+      let obj = [{ page: 1, transactionDate: null, transactionId: null, transactionStatus: null, userId: null }];
+      setPageState([...obj])
+      setIsSearch(3);
+      setPage(1);
+      setCount(5);
+      getOrderListByOrderNo()
+    }
+  }
+
+  const getOrderListByOrderNo = () => {
+    setLoader(true)
+    let params = `transactionId=${orderId.trim()}`;
+
+    orderListByOrderId(params).then((res) => {
+      let { status, data } = resHandle(res);
+      if (status === 200) {
+        setLoader(false);
+        if (Object.keys(data.data).length > 0) {
+          let arr = [data.data]
+          setOrderList([...arr]);
+        } else {
+          setOrderList([]);
+        }
+      } else {
+        setLoader(false)
+        setOrderList([])
+        toast.error("Sorry, a technical error occurred! Please try again later")
+      }
+    }).catch((err) => {
+      setLoader(false)
+      setOrderList([])
+      if (err.response.status !== 400) {
+        toast.error("Sorry, a technical error occurred! Please try again later")
+      }
+
+
+    });
+
+  };
 
   const resetData = () => {
     setStatus("PENDING");
@@ -199,18 +257,19 @@ const Orders = () => {
         toast.error("Sorry, a technical error occurred! Please try again later")
       }
     }).catch((err) => {
-      toast.error("Sorry, a technical error occurred! Please try again later")
       setLoader(false)
       setOrderList([])
+      if (err.response.status !== 400) {
+        toast.error("Sorry, a technical error occurred! Please try again later")
+      }
     });
 
   };
 
 
-
-
   const getOrderList = (userId, transactionDate, transactionStatus, transactionId, nextPage) => {
-    setLoader(true)
+    setLoader(true);
+    debugger;
     let dt = (date ? date : new Date().toJSON().slice(0, 10).toString());
     let params = `transactionDate=${dt}`;
     if (status) {
@@ -247,9 +306,11 @@ const Orders = () => {
         toast.error("Sorry, a technical error occurred! Please try again later")
       }
     }).catch((err) => {
-      toast.error("Sorry, a technical error occurred! Please try again later")
       setLoader(false)
       setOrderList([])
+      if (err.response.status !== 400) {
+        toast.error("Sorry, a technical error occurred! Please try again later")
+      }
     });
 
   };
@@ -257,8 +318,6 @@ const Orders = () => {
   const handleClose = () => {
     setConfirmModal(false);
   };
-
-
 
 
   return (
@@ -424,73 +483,141 @@ const Orders = () => {
         <h2>Orders</h2>
 
       </div>
+      <div id="main">
+        <div class="container">
+          <div class="accordion" id="faq">
+            <div class="card">
+              <div class="card-header" id="faqhead1">
+                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+                  aria-expanded="true" aria-controls="faq1">Search By Date & Status</a>
+              </div>
 
-      <div className="form-group row">
-        <div className="col-4">
-          <label>Select Date :</label>
-          <input
-            type='date'
-            className="form-control"
-            name="date"
-            value={date}
-            onChange={(e) => (
-              setDate(e.target.value), setDateErr("")
-            )}
-          />
-          {dateErr && (
-            <div className="inlineerror">{dateErr} </div>
-          )}
+              <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                <div class="card-body">
+                  <div className="form-group row">
+                    <div className="col-4">
+                      <label>Select Date :</label>
+                      <input
+                        type='date'
+                        className="form-control"
+                        name="date"
+                        value={date}
+                        onChange={(e) => (
+                          setDate(e.target.value), setDateErr("")
+                        )}
+                      />
+                      {dateErr && (
+                        <div className="inlineerror">{dateErr} </div>
+                      )}
 
+                    </div>
+                    <div className="col-4">
+                      <label>Status</label>
+                      <select
+                        className="form-control"
+                        name="status"
+                        value={status}
+                        onChange={(e) => (
+                          setStatus(e.target.value)
+                        )}
+                      >
+                        <option value="SUCCESS">SUCCESS</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="FAILED">FAILED</option>
+
+                      </select>
+
+                    </div>
+                    <div className="col-4 mt-4 pt-3">
+                      <button className="btn btn-primary" onClick={getList}>Search</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="faqhead2">
+                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq2"
+                  aria-expanded="true" aria-controls="faq2">Search By Mobile No</a>
+              </div>
+
+              <div id="faq2" class="collapse" aria-labelledby="faqhead2" data-parent="#faq">
+                <div class="card-body">
+                  <div className="form-group  row mb-4">
+
+                    <div className="col-6">
+                      <label>Mobile :</label>
+                      <input
+                        type='number'
+                        className="form-control"
+                        name="userId"
+                        placeholder="Enter Mobile No with Country Code like : 919999999999"
+                        value={mobileNo}
+                        onChange={(e) => (
+                          setMobileNo(e.target.value),
+                          setMobileNoErr("")
+                        )
+                        }
+                      />
+                      {mobileNoErr && (
+                        <div className="inlineerror">{mobileNoErr} </div>
+                      )}
+
+                    </div>
+                    <div className="col-6 mt-4 pt-3">
+                      <button className="btn btn-primary" onClick={getOrderListByMobileNo}>Search</button>
+                      {/* <button className="btn btn-secondary ml-2" onClick={resetData}>Reset</button> */}
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="faqhead3">
+                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq3"
+                  aria-expanded="true" aria-controls="faq3">Search By Order ID</a>
+              </div>
+
+              <div id="faq3" class="collapse" aria-labelledby="faqhead3" data-parent="#faq">
+                <div class="card-body">
+                  <div className="form-group  row mb-4">
+
+                    <div className="col-4">
+                      <label>Order Id :</label>
+                      <input
+                        type='text'
+                        className="form-control"
+                        name="orderId"
+                        value={orderId}
+                        onChange={(e) => (
+                          setOrderId(e.target.value),
+                          setOrderIdErr("")
+                        )
+                        }
+                      />
+                      {orderIdErr && (
+                        <div className="inlineerror">{orderIdErr} </div>
+                      )}
+
+                    </div>
+                    <div className="col-8 mt-4 pt-3">
+                      <button className="btn btn-primary" onClick={getOrderListByOrderId}>Search</button>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="col-4">
-          <label>Status</label>
-          <select
-            className="form-control"
-            name="status"
-            value={status}
-            onChange={(e) => (
-              setStatus(e.target.value)
-            )}
-          >
-            <option value="SUCCESS">SUCCESS</option>
-            <option value="PENDING">PENDING</option>
-            <option value="FAILED">FAILED</option>
-
-          </select>
-
-        </div>
-        <div className="col-4 mt-4 pt-2">
-          <button className="btn btn-primary" onClick={getList}>Search</button>
-        </div>
-
       </div>
-      <div className="form-group  row mb-4">
 
-        <div className="col-4">
-          <label>Mobile :</label>
-          <input
-            type='number'
-            className="form-control"
-            name="userId"
-            value={mobileNo}
-            onChange={(e) => (
-              setMobileNo(e.target.value),
-              setMobileNoErr("")
-            )
-            }
-          />
-          {mobileNoErr && (
-            <div className="inlineerror">{mobileNoErr} </div>
-          )}
 
-        </div>
-        <div className="col-8 mt-4 pt-2">
-          <button className="btn btn-primary" onClick={getOrderListByMobileNo}>Search</button>
-          <button className="btn btn-secondary ml-2" onClick={resetData}>Reset</button>
-        </div>
 
-      </div>
-      <div className="table-responsive cm_card p-0">
+      <div className="table-responsive cm_card p-0 mt-5">
 
         {loader ? (
           <Loader />
@@ -503,7 +630,7 @@ const Orders = () => {
                 <th>Trans. Type</th>
                 <th>Trans. Text</th>
                 <th>Amount</th>
-                <th>User Id</th>
+                <th>Date</th>
 
               </tr>
             </thead>
@@ -529,7 +656,7 @@ const Orders = () => {
 
                     <td>{item.transactionText}</td>
                     <td>{item.amount}</td>
-                    <td className="text-wrap"> <span className="">{item.userId}</span></td>
+                    <td className="text-wrap"> <span className=""> {moment(item.createdAt).format("DD, MMM YYYY")}</span></td>
 
 
                   </tr>

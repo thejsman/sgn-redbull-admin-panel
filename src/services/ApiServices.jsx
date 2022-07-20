@@ -22,7 +22,9 @@ export {
   sendInvitation,
   orderListByDate,
   userAnalytics,
-  orderListByMobileno
+  orderListByMobileno,
+  orderListByOrderId,
+  userCleverTapLiveCount
 };
 
 
@@ -125,11 +127,23 @@ function orderListByMobileno(params) {
   });
 }
 
+function orderListByOrderId(params) {
+  return axios.get(
+    `${Api.GET_ORDERS}transactionId?${params}`, {
+    headers: headersApplicationJson,
+  });
+}
 
 function userAnalytics() {
   return axios.get(
-    Api.USER_ANALYTICS, {
+    `${Api.USER_ANALYTICS}userAnalytics`, {
     headers: headersApplicationJson,
   });
+}
 
+function userCleverTapLiveCount(date) {
+  return axios.get(
+    `${Api.USER_ANALYTICS}clevertapData/${date}`, {
+    headers: headersApplicationJson,
+  });
 }
