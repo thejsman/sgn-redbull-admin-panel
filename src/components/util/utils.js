@@ -11,7 +11,7 @@ export const resHandle = (res) => {
   let data;
   let error = res.data.error;
   if (error && error.errorCode === 2) {
-    localStorage.removeItem("accessToken");
+    // localStorage.removeItem("accessToken");
     window.location.href = "/login";
     return;
   } else {

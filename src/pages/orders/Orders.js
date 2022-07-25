@@ -47,7 +47,6 @@ const Orders = () => {
     let pageno = parseInt(pageNumber);
     let arr = pageState;
     let data = arr.filter(item => item.page == pageno);
-    debugger;
     if (isSearch == 2) {
       if (data.length == 0) {
         setPage(pageno);
@@ -269,7 +268,6 @@ const Orders = () => {
 
   const getOrderList = (userId, transactionDate, transactionStatus, transactionId, nextPage) => {
     setLoader(true);
-    debugger;
     let dt = (date ? date : new Date().toJSON().slice(0, 10).toString());
     let params = `transactionDate=${dt}`;
     if (status) {

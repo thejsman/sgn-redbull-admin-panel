@@ -39,7 +39,7 @@ const Login = () => {
         return validate;
     }
     useEffect(() => {
-        localStorage.clear();
+        // localStorage.clear();
 
     })
 
@@ -58,14 +58,15 @@ const Login = () => {
                 handleLogin(params).then(res => {
                     setIsSubmit(false);
                     let { status, data } = resHandle(res);
-                    console.log("statusstatusstatusstatus", res.data);
+                    console.log("statusstatusstatusstatus", data);
                     if (status == 200) {
-                        console.log('headers', res.data.token);
-                        localStorage.setItem("accessToken", res.data.detail.token);
+                        console.log('headers', res.token);
+                        localStorage.setItem("accessToken", data.token);
+                        console.log("data.detaildata.detaildata.detail", data.detail)
+                        localStorage.setItem("userDetail", JSON.stringify(data.detail));
                         //history.push("/")
                         window.location.href = "/";
-                    }
-                    else {
+                    } else {
                         setPasswordErr(res.data.message)
                     }
                 }).catch((error) => {
@@ -89,8 +90,6 @@ const Login = () => {
                 }
             }
 
-            //localStorage.setItem("accessToken", "data.accessToken");
-            //  window.location.href = "/";
 
 
         }
