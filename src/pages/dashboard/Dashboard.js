@@ -144,7 +144,7 @@ const Dashboard = () => {
 
 
 
-  }, [waitingToReconnect]);
+  }, []);
 
 
 
@@ -381,7 +381,6 @@ const Dashboard = () => {
 
   const getCleverTapUserLiveCount = () => {
     let date = new Date().toJSON().slice(0, 10).toString();
-    debugger;
     userCleverTapLiveCount(date).then((res) => {
       let { status, data } = resHandle(res);
       if (status === 200) {

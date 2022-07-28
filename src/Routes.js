@@ -26,17 +26,25 @@ import TaskCard from "./pages/cards/taskCards/TaskCard";
 import Redis from "./pages/redis/redis";
 import InvitationForm from "./pages/invitation/InvitationForm";
 import Orders from "./pages/orders/Orders";
+import AddEditUsers from "./pages/users/AddEditUsers";
+import Users from "./pages/users/Users";
+import { checkPermission } from './utils'
+import UnAuthorized from './pages/unAuthorized/Unauthorized'
 
 
-const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
+const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
   loggedIn = localStorage.getItem("accessToken");
+  userDetail = localStorage.getItem("userDetail");
   return (
     <Route
       {...rest}
       render={(props) =>
-        loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+        (loggedIn && userDetail) ?
+          (checkPermission(module) !== -1 ? <Component {...props} /> : <Redirect to="/unauthorized" />) : <Redirect to="/login" />
       }
     />
+
+
   );
 };
 
@@ -60,7 +68,7 @@ const Routes = (props) => {
   return (
     <>
       <div className="site_wrapper">
-        {localStorage.getItem("accessToken") && history.location.pathname.indexOf("login") == -1 ? (
+        {(localStorage.getItem("accessToken") && localStorage.getItem("userDetail") && history.location.pathname.indexOf("login") == "-1") ? (
           <>
             <Header />
             <Sidebar />
@@ -71,64 +79,70 @@ const Routes = (props) => {
         <Router history={history}>
           <Switch>
             <PublicRoute exact path="/login" {...props} component={Login} />
-            <PrivateRoute exact path="/" {...props} component={Dashboard} />
+            <PrivateRoute exact module="dashboard" path="/" {...props} component={Dashboard} />
+
+            <PublicRoute exact path="/unauthorized" {...props} component={UnAuthorized} />
 
             {/* Notifications Routes */}
-            <PrivateRoute exact path="/notifications" {...props} component={TopicManagement} />
-            <PrivateRoute exact path="/add-notification" {...props} component={AddEditTopic} />
-            <PrivateRoute exact path="/edit-notification/:id" {...props} component={AddEditTopic} />
+            <PrivateRoute exact module="notifications" path="/notifications" {...props} component={TopicManagement} />
+            <PrivateRoute exact module="notifications" path="/add-notification" {...props} component={AddEditTopic} />
+            <PrivateRoute exact module="notifications" path="/edit-notification/:id" {...props} component={AddEditTopic} />
 
             {/* Occasion Management Routes */}
-            <PrivateRoute exact path="/occasion-management/occasion" {...props} component={Occasions} />
-            <PrivateRoute exact path="/occasion/create" {...props} component={AddEditOccasion} />
-            <PrivateRoute exact path="/occasion/edit/:id" {...props} component={AddEditOccasion} />
+            <PrivateRoute exact module="occasion-management" path="/occasion-management/occasion" {...props} component={Occasions} />
+            <PrivateRoute exact module="occasion-management" path="/occasion/create" {...props} component={AddEditOccasion} />
+            <PrivateRoute exact module="occasion-management" path="/occasion/edit/:id" {...props} component={AddEditOccasion} />
 
 
             {/* Template Management Routes */}
-            <PrivateRoute exact path="/occasion-management/templates" {...props} component={Templates} />
-            <PrivateRoute exact path="/template/create" {...props} component={AddEditTemplate} />
-            <PrivateRoute exact path="/template/edit/:oname/:tname" {...props} component={AddEditTemplate} />
+            <PrivateRoute exact module="occasion-management" path="/occasion-management/templates" {...props} component={Templates} />
+            <PrivateRoute exact module="occasion-management" path="/template/create" {...props} component={AddEditTemplate} />
+            <PrivateRoute exact module="occasion-management" path="/template/edit/:oname/:tname" {...props} component={AddEditTemplate} />
 
 
             {/* Family Relation Routes */}
-            <PrivateRoute exact path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
-            <PrivateRoute exact path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
-            <PrivateRoute exact path='/family-relationship'         {...props} component={FamilyRelationManagement} />
+            <PrivateRoute exact module="relationship-management" path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
+            <PrivateRoute exact module="relationship-management" path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
+            <PrivateRoute exact module="relationship-management" path='/family-relationship'         {...props} component={FamilyRelationManagement} />
 
 
             {/* Rozy Routes */}
-            <PrivateRoute exact path='/rozy'            {...props} component={Rozy} />
-            <PrivateRoute exact path='/rozy/create'     {...props} component={AddRozy} />
-            <PrivateRoute exact path='/rozy/edit/:id'   {...props} component={AddRozy} />
+            <PrivateRoute exact module="rozy" path='/rozy'            {...props} component={Rozy} />
+            <PrivateRoute exact module="rozy" path='/rozy/create'     {...props} component={AddRozy} />
+            <PrivateRoute exact module="rozy" path='/rozy/edit/:id'   {...props} component={AddRozy} />
 
 
             {/* Occasion Card Routes */}
-            <PrivateRoute exact path="/card/occasions/create" {...props} component={AddEditOccasionCard} />
-            <PrivateRoute exact path="/card/occasions" {...props} component={OccasionCard} />
-            <PrivateRoute exact path="/card/occasions/edit/:id" {...props} component={AddEditOccasionCard} />
+            <PrivateRoute exact module="cards-management" path="/card/occasions/create" {...props} component={AddEditOccasionCard} />
+            <PrivateRoute exact module="cards-management" path="/card/occasions" {...props} component={OccasionCard} />
+            <PrivateRoute exact module="cards-management" path="/card/occasions/edit/:id" {...props} component={AddEditOccasionCard} />
 
             {/* Task Card Routes */}
-            <PrivateRoute exact path="/card/tasks/create" {...props} component={AddEditTaskCard} />
-            <PrivateRoute exact path="/card/tasks" {...props} component={TaskCard} />
-            <PrivateRoute exact path="/card/tasks/edit/:id" {...props} component={AddEditTaskCard} />
+            <PrivateRoute exact module="cards-management" path="/card/tasks/create" {...props} component={AddEditTaskCard} />
+            <PrivateRoute exact module="cards-management" path="/card/tasks" {...props} component={TaskCard} />
+            <PrivateRoute exact module="cards-management" path="/card/tasks/edit/:id" {...props} component={AddEditTaskCard} />
 
 
             {/* Voucher Routes */}
-            <PrivateRoute exact path="/voucher" {...props} component={Voucher} />
-            <PrivateRoute exact path="/coupons/:id" {...props} component={Coupons} />
-            <PrivateRoute exact path="/voucher/create" {...props} component={AddVoucher} />
-            <PrivateRoute exact path="/coupon/edit/:id" {...props} component={EditCoupon} />
+            <PrivateRoute exact module="voucher" path="/voucher" {...props} component={Voucher} />
+            <PrivateRoute exact module="voucher" path="/coupons/:id" {...props} component={Coupons} />
+            <PrivateRoute exact module="voucher" path="/voucher/create" {...props} component={AddVoucher} />
+            <PrivateRoute exact module="voucher" path="/coupon/edit/:id" {...props} component={EditCoupon} />
 
             {/* Redis Routes */}
-            <PrivateRoute exact path="/redis" {...props} component={Redis} />
+            <PrivateRoute exact module="redis" path="/redis" {...props} component={Redis} />
 
 
             {/* Invitation  Routes */}
-            <PrivateRoute exact path="/invitation" {...props} component={InvitationForm} />
+            <PrivateRoute exact module="invitation-form" path="/invitation" {...props} component={InvitationForm} />
 
             {/* Orders  Routes */}
-            <PrivateRoute exact path="/orders" {...props} component={Orders} />
+            <PrivateRoute exact module="orders" path="/orders" {...props} component={Orders} />
 
+            {/* User  Routes */}
+            <PrivateRoute exact module="users" path="/user/create" {...props} component={AddEditUsers} />
+            <PrivateRoute exact module="users" path="/users" {...props} component={Users} />
+            <PrivateRoute exact module="users" path="/user/edit/:id" {...props} component={AddEditUsers} />
           </Switch>
         </Router>
       </div>
