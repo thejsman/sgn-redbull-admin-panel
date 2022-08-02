@@ -173,7 +173,7 @@ const Sidebar = () => {
         {((getPermission('orders') !== -1) && (
           <li>
             <NavLink to="/orders"  >
-              <i class="fas fa-shopping-bag"></i>{" "}
+              <i className="fas fa-shopping-bag"></i>{" "}
               <span className="menu_text">Orders</span>
             </NavLink>
           </li>

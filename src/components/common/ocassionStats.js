@@ -52,7 +52,7 @@ export const OccasionStats = React.memo((props) => {
 
                             </div>
                             <div className="col-sm-6 dash_sm_card">
-                                <Ticker title="Shared Occasion" start={props.arrSharedOccasion[1]} end={props.sharedOccasion} />
+                                <Ticker title="Current Month Occasions With Gift" start={props.arrSharedOccasion[1]} end={props.sharedOccasion} />
                             </div>
                         </div>
 
@@ -68,25 +68,7 @@ export const OccasionStats = React.memo((props) => {
 
                     </div>
                 </div>
-                <div className="row">
-                    {
 
-                        props.occasionPeroccasion.length > 0 && (
-                            props.occasionPeroccasion?.map((item, i) => (
-                                <div className="col-3  dash_sm_card">
-                                    <div className="card ">
-                                        <div className="card-header btn-gradient-grey"> {item.occasionName}</div>
-                                        <div className="card-body card_color">
-                                            <p className="card-text"> {item.count}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                            )
-                        )
-                    }
-
-                </div>
 
             </div>
 
