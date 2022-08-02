@@ -6,8 +6,11 @@ import { CreditDebitStats } from '../../components/common/CreditDebitStats';
 import { GiftStats } from '../../components/common/GiftStats';
 import { DealStats } from '../../components/common/DealStats';
 import { OccasionStats } from '../../components/common/ocassionStats'
+import { OcassionCategoryStats } from '../../components/common/ocassionCategoryStats';
 import siteSetting from "../../config/env/Index";
 import { userAnalytics, userCleverTapLiveCount } from "../../services/ApiServices";
+import moment from 'moment'
+
 const URL = siteSetting.api.WebSocketUrl;
 
 
@@ -47,6 +50,7 @@ const Dashboard = () => {
   const [giftOccasion, setGiftOccasion] = useState([0]);
   const [sharedOccasion, setSharedOccasion] = useState([0]);
   const [occasionPeroccasion, setOccasionPeroccasion] = useState([0]);
+  const [occasionCatgeory, setOccasionCatgeory] = useState({});
 
   const clientRef = useRef(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState(null);
@@ -153,11 +157,13 @@ const Dashboard = () => {
     if (response.userStats) {
       console.log('Receive Data', (response.userStats))
       let dates = response.userStats.analysis.map(function (i) {
-        return i.date;
+        return moment(i.date).format('DD-MM-YY');
       });
+      dates = dates.reverse();
       let userCounts = response.userStats.analysis.map(function (i) {
         return i.userCount;
       });
+      userCounts = userCounts.reverse();
       let arr = [arrUser.pop()];
       arr.push(response.userStats["totalUsers"]);
       setArrUser([...arr]);
@@ -178,11 +184,13 @@ const Dashboard = () => {
     if (response.creditStats) {
 
       let dates = response.creditStats.analysis.map(function (i) {
-        return i.date;
+        return moment(i.date).format('DD-MM-YY');
       });
+      dates = dates.reverse();
       let amount = response.creditStats.analysis.map(function (i) {
         return i.amount;
       });
+      amount = amount.reverse();
       let principalAmt = parseInt(response.creditStats["principalAmount"]) - (response.creditStats["totalAmount"]);
 
       let arrPriAmt = [principalAmount.pop()];
@@ -211,12 +219,13 @@ const Dashboard = () => {
     if (response.debitStats) {
 
       let dates = response.debitStats.analysis.map(function (i) {
-        return i.date;
+        return moment(i.date).format('DD-MM-YY');
       });
+      dates = dates.reverse();
       let amount = response.debitStats.analysis.map(function (i) {
         return i.amount;
       });
-
+      amount = amount.reverse();
 
 
       let arrtotDebAmt = [tolDebitAmount.pop()];
@@ -240,11 +249,13 @@ const Dashboard = () => {
     if (response.giftStats) {
 
       let dates = response.giftStats.analysis.map(function (i) {
-        return i.date;
+        return moment(i.date).format('DD-MM-YY');
       });
+      dates = dates.reverse();
       let amount = response.giftStats.analysis.map(function (i) {
         return i.amount;
       });
+      amount = amount.reverse();
       let numOfOrder = response.giftStats.analysis.map(function (i) {
         return i.numOfOrder;
       });
@@ -281,14 +292,17 @@ const Dashboard = () => {
     if (response.dealStats) {
 
       let dates = response.dealStats.analysis.map(function (i) {
-        return i.date;
+        return moment(i.date).format('DD-MM-YY');
       });
+      dates = dates.reverse();
       let amount = response.dealStats.analysis.map(function (i) {
         return i.amount;
       });
+      amount = amount.reverse();
       let numOfOrder = response.dealStats.analysis.map(function (i) {
         return i.numOfOrder;
       });
+      numOfOrder = numOfOrder.reverse();
 
 
 
@@ -318,45 +332,49 @@ const Dashboard = () => {
       }
       setDealsData(dealObj);
     }
-
+    let dates = [];
+    let occasionCount = [];
     if (response.occasionStats) {
-      let dates = response.occasionStats.analysis.map(function (i) {
-        return i.date;
-      });
-      let occasionCount = response.occasionStats.analysis.map(function (i) {
-        return i.occasionCount;
-      });
+      if (Object.keys(response.occasionStats.occasionsByDates).length > 0) {
+        dates = response.occasionStats.occasionsByDates.map(function (i) {
+          return moment(i.date).format('DD-MM-YY');
+        });
+        dates = dates.reverse();
+        occasionCount = response.occasionStats.occasionsByDates.map(function (i) {
+          return i.total;
+        });
+        occasionCount = occasionCount.reverse();
+
+      }
+
 
       let arrtotalOccasion = [totOccasion.pop()];
-      arrtotalOccasion.push(response.occasionStats["totalOccasion"]);
+      arrtotalOccasion.push(response.occasionStats["totalOccasions"]);
       setTotOccasion([...arrtotalOccasion]);
 
       let arrMonthOccasion = [monthOccasion.pop()];
-      arrMonthOccasion.push(response.occasionStats["monthOccasion"]);
+      arrMonthOccasion.push(response.occasionStats["currentMonthOccasions"]);
       setMonthOccasion([...arrMonthOccasion]);
 
       let arrGiftOccasion = [giftOccasion.pop()];
-      arrGiftOccasion.push(response.occasionStats["giftOccasion"]);
+      arrGiftOccasion.push(response.occasionStats["totalOccasionsWithGift"]);
       setGiftOccasion([...arrGiftOccasion]);
 
       let arrSharedOccasion = [sharedOccasion.pop()];
-      arrSharedOccasion.push(response.occasionStats["sharedOccasion"]);
+      arrSharedOccasion.push(response.occasionStats["currentMonthOccasionsWithGift"]);
       setSharedOccasion([...arrSharedOccasion]);
 
 
       let occasionObj = {
-        totalOccasion: response.occasionStats["totalOccasion"],
-        monthOccasion: response.occasionStats["monthOccasion"],
-        giftOccasion: response.occasionStats["giftOccasion"],
-        sharedOccasion: response.occasionStats["sharedOccasion"],
+        totalOccasion: response.occasionStats["totalOccasions"],
+        monthOccasion: response.occasionStats["currentMonthOccasions"],
+        giftOccasion: response.occasionStats["totalOccasionsWithGift"],
+        sharedOccasion: response.occasionStats["currentMonthOccasionsWithGift"],
         chartDetail: { labels: dates, data: occasionCount },
-        occasionPeroccasion: response.occasionStats["occasionPeroccasion"]
 
       }
       setOccassionData(occasionObj);
-
-
-
+      setOccasionCatgeory(response.occasionStats["occasionByCategory"])
     }
 
   };
@@ -445,6 +463,15 @@ const Dashboard = () => {
           arrGiftOccasion={giftOccasion} arrSharedOccasion={sharedOccasion} ></OccasionStats>
 
       </div>
+
+      {Object.keys(occasionCatgeory).length > 0 && (
+        Object.keys(occasionCatgeory)?.map((item, i) => (
+
+          <div className='row'>
+            <OcassionCategoryStats occassionName={item} {...occasionCatgeory[item]} ></OcassionCategoryStats>
+
+          </div>
+        )))}
     </div>
   )
 }

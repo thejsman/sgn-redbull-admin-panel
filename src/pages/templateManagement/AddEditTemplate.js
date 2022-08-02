@@ -153,6 +153,7 @@ const AddEditTemplate = () => {
         setSound(data.data.sound)
         setBase64(data.data.image)
         setBadge(data.data.badge)
+        setIsPushToShow(data.data.isPushToShow)
 
       } else {
       }
@@ -180,7 +181,7 @@ const AddEditTemplate = () => {
           event,
           event_type,
           fileName,
-          isPushToShow
+          isPushToShow: (isPushToShow == "true" || isPushToShow == true ? true : false)
         }
       }
       else {
@@ -248,7 +249,7 @@ const AddEditTemplate = () => {
         event_type,
         base64,
         fileName,
-        isPushToShow
+        isPushToShow: (isPushToShow == "true" || isPushToShow == true ? true : false)
       }
       createTemplate(createTopicObj).then(res => {
         let { status, data } = resHandle(res)
@@ -448,8 +449,8 @@ const AddEditTemplate = () => {
                   setIsPushToShow(e.target.value)
                 )}
               >
-                <option value={true}>Yes</option>
-                <option value={false}>No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
               </select>
 
             </div>
