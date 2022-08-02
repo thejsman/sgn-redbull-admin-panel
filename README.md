@@ -1,2 +1,1 @@
-RedBull Admin Panel
 
