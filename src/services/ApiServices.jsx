@@ -24,7 +24,8 @@ export {
   userAnalytics,
   orderListByMobileno,
   orderListByOrderId,
-  userCleverTapLiveCount
+  userCleverTapLiveCount,
+  waitlistedUsers
 };
 
 
@@ -144,6 +145,13 @@ function userAnalytics() {
 function userCleverTapLiveCount(date) {
   return axios.get(
     `${Api.USER_ANALYTICS}clevertapData/${date}`, {
+    headers: headersApplicationJson,
+  });
+}
+
+function waitlistedUsers(data) {
+  return axios.get(
+    `${Api.WAITLISTED_USERS}?${data}`, {
     headers: headersApplicationJson,
   });
 }

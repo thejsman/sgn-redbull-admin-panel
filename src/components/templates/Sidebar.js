@@ -178,6 +178,14 @@ const Sidebar = () => {
             </NavLink>
           </li>
         ))}
+        {((getPermission('waitlisted') !== -1) && (
+          <li>
+            <NavLink to="/waitlisted/users"  >
+              <i className="fas fa-user-friends"></i>{" "}
+              <span className="menu_text">Waitlisted Users</span>
+            </NavLink>
+          </li>
+        ))}
         {((getPermission('users') !== -1) && (
           <li>
             <NavLink to="/users"  >
