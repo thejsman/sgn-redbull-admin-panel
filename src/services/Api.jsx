@@ -102,5 +102,8 @@ export default {
 	USER_ANALYTICS: siteSetting.api.BaseUrl + "/statistics/",
 
 	//User Management
-	USER_MANGEMENT: process.env.REACT_APP_API_AUTH_BASE_URL + "users"
+	USER_MANGEMENT: process.env.REACT_APP_API_AUTH_BASE_URL + "users",
+
+	//Waitlisted Users
+	WAITLISTED_USERS: siteSetting.api.BaseUrl + "/invitationAdmin/fetchWaitListedUsers"
 };

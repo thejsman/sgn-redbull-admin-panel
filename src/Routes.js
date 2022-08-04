@@ -30,6 +30,7 @@ import AddEditUsers from "./pages/users/AddEditUsers";
 import Users from "./pages/users/Users";
 import { checkPermission } from './utils'
 import UnAuthorized from './pages/unAuthorized/Unauthorized'
+import WaitlistedUsers from "./pages/waitlistedUsers/WaitlistedUsers";
 
 
 const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
@@ -143,6 +144,10 @@ const Routes = (props) => {
             <PrivateRoute exact module="users" path="/user/create" {...props} component={AddEditUsers} />
             <PrivateRoute exact module="users" path="/users" {...props} component={Users} />
             <PrivateRoute exact module="users" path="/user/edit/:id" {...props} component={AddEditUsers} />
+
+            {/* Waitlisted Users  Routes */}
+            <PrivateRoute exact module="waitlisted" path="/waitlisted/users" {...props} component={WaitlistedUsers} />
+
           </Switch>
         </Router>
       </div>
