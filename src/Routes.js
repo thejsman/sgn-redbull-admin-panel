@@ -31,6 +31,8 @@ import Users from "./pages/users/Users";
 import { checkPermission } from './utils'
 import UnAuthorized from './pages/unAuthorized/Unauthorized'
 import WaitlistedUsers from "./pages/waitlistedUsers/WaitlistedUsers";
+import AddEditOnBoardingCards from "./pages/cards/onBoardingCards/AddEditOnBoardingCards";
+import OnBoardingCards from "./pages/cards/onBoardingCards/OnBoardingCards";
 
 
 const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
@@ -122,6 +124,12 @@ const Routes = (props) => {
             <PrivateRoute exact module="cards-management" path="/card/tasks/create" {...props} component={AddEditTaskCard} />
             <PrivateRoute exact module="cards-management" path="/card/tasks" {...props} component={TaskCard} />
             <PrivateRoute exact module="cards-management" path="/card/tasks/edit/:id" {...props} component={AddEditTaskCard} />
+
+
+            {/* Onboarding Card Routes */}
+            <PrivateRoute exact module="cards-management" path="/card/onboarding/create" {...props} component={AddEditOnBoardingCards} />
+            <PrivateRoute exact module="cards-management" path="/card/onboarding" {...props} component={OnBoardingCards} />
+            <PrivateRoute exact module="cards-management" path="/card/onboarding/edit/:id" {...props} component={AddEditOnBoardingCards} />
 
 
             {/* Voucher Routes */}

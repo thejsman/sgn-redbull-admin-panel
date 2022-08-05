@@ -10,7 +10,7 @@ import { createCardTask, getCardTaskByName, updateCardTask } from '../../../serv
 
 
 
-const AddEditTaskCard = () => {
+const AddEditOnBoardingCards = () => {
     const history = useHistory();
     const { id } = useParams();
 
@@ -76,8 +76,8 @@ const AddEditTaskCard = () => {
 
 
     const breadcrumb = [
-        { link: '/card/tasks/', linkText: 'Task cards' },
-        { link: '', linkText: isAddCard ? 'Add Task Card' : 'Edit Task Card' }
+        { link: '/card/onboarding/', linkText: 'Onboarding cards' },
+        { link: '', linkText: isAddCard ? 'Add Onboarding Card' : 'Edit Onboarding Card' }
     ]
 
     const onChangeCheckbox = (e, item) => {
@@ -232,10 +232,10 @@ const AddEditTaskCard = () => {
 
 
     useEffect(() => {
-        if (window.location.pathname == "/card/tasks/create") {
+        if (window.location.pathname == "/card/onboarding/create") {
             setIsAddCard(true);
         }
-        if (window.location.pathname !== "/card/tasks/create") {
+        if (window.location.pathname !== "/card/onboarding/create") {
             setLoader(true);
             handleGetCardDetailById(id);
 
@@ -247,7 +247,7 @@ const AddEditTaskCard = () => {
     const handleGetCardDetailById = (id) => {
         let params = {
             cardTaskName: id,
-            card: "taskCard"
+            card: "onBoardingCard"
         };
         getCardTaskByName(params).then((res) => {
             let { status, data } = resHandle(res);
@@ -309,7 +309,7 @@ const AddEditTaskCard = () => {
         if (handleValidate()) {
             setIsSubmit(true);
             let createObj = {
-                cardIdentifier: "taskCard",
+                cardIdentifier: "onBoardingCard",
                 cardName: cardName,
                 displayOrder: order,
                 visibility: visibility.map(a => a.value),
@@ -345,7 +345,7 @@ const AddEditTaskCard = () => {
                 setIsSubmit(false);
                 if (status === 200) {
                     toast.success(data.message);
-                    history.push("/card/tasks/");
+                    history.push("/card/onboarding/");
                 } else {
                     toast.success(data.message);
                 }
@@ -363,7 +363,7 @@ const AddEditTaskCard = () => {
         if (handleValidate()) {
             setIsSubmit(true);
             let createObj = {
-                cardIdentifier: "taskCard",
+                cardIdentifier: "onBoardingCard",
                 cardName: cardName,
                 displayOrder: order,
                 visibility: visibility.map(a => a.value),
@@ -396,7 +396,7 @@ const AddEditTaskCard = () => {
                 setIsSubmit(false);
                 if (status === 200) {
                     toast.success(data.message);
-                    history.push("/card/tasks/");
+                    history.push("/card/onboarding/");
                 } else {
                     toast.success(data.message);
                 }
@@ -921,4 +921,4 @@ const AddEditTaskCard = () => {
     )
 }
 
-export default AddEditTaskCard
+export default AddEditOnBoardingCards

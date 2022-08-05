@@ -134,6 +134,13 @@ const Sidebar = () => {
                       : ""
                   }
                 ><i className="fas fa-calendar-week"></i>{" "}Task Card</NavLink>
+                <NavLink to="/card/onboarding"
+                  className={
+                    (location.pathname.includes("/card/onboarding"))
+                      ? "active"
+                      : ""
+                  }
+                ><i className="fas fa-calendar-week"></i>{" "}Onboarding Card</NavLink>
               </div>
             </div>
           </li>
