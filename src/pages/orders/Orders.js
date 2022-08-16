@@ -24,7 +24,7 @@ const Orders = () => {
 	const [loader, setLoader] = useState(false);
 	const [confirmModal, setConfirmModal] = useState(false);
 	const [index, setIndex] = useState(-1);
-	const [status, setStatus] = useState("PENDING");
+	const [status, setStatus] = useState("SUCCESS");
 	const [mobileNo, setMobileNo] = useState("");
 	const [transactionId, setTransactionId] = useState("");
 	const [transactionDate, setTransactionDate] = useState("");
@@ -265,7 +265,7 @@ const Orders = () => {
 	};
 
 	const resetData = () => {
-		setStatus("PENDING");
+		setStatus("SUCCESS");
 		setMobileNo("");
 		setDate(new Date().toJSON().slice(0, 10).toString());
 	};
@@ -749,7 +749,7 @@ const Orders = () => {
 								<th>Order Id</th>
 								<th>Occasion Title</th>
 								<th>Trans. Type</th>
-								<th>Trans. Text</th>
+								<th>Trans. Status</th>
 								<th>Amount</th>
 								<th>Date</th>
 							</tr>
