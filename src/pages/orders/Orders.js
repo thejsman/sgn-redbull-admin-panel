@@ -468,39 +468,38 @@ const Orders = () => {
 								: "--N/A--"}
 						</div>
 					</div>
-					<div className="row">
-						<div className="col">
-							<hr />
-							<p className="text-primary">Gift With</p>
-						</div>
-					</div>
-					<div className="row" key={"gift"}>
-						<div className="col-2 font-weight-bold">Image</div>
-						<div className="col-7 font-weight-bold">User Id</div>
-						<div className="col-3 font-weight-bold">Screen Name</div>
-					</div>
 					{orderList[index]?.giftWith &&
 					orderList[index]?.giftWith.length > 0 ? (
-						orderList[index]?.giftWith?.map((item, i) => (
-							<div className="row" key={"gift" + i}>
-								<div className="col-2">
-									{item?.profileImage ? (
-										<img src={item?.profileImage} style={{ width: "50%" }} />
-									) : (
-										""
-									)}
+						<>
+							<div className="row">
+								<div className="col">
+									<hr />
+									<p className="text-primary">Gift With</p>
 								</div>
-								<div className="col-7">{item?.userId}</div>
-								<div className="col-3">{item?.screenName}</div>
 							</div>
-						))
-					) : (
-						<div className="row">
-							<div className="col-2">--N/A--</div>
-							<div className="col-7">--N/A--</div>
-							<div className="col-3">--N/A--</div>
-						</div>
-					)}
+							<div className="row" key={"gift"}>
+								<div className="col-2 font-weight-bold">Image</div>
+								<div className="col-7 font-weight-bold">User Id</div>
+								<div className="col-3 font-weight-bold">Screen Name</div>
+							</div>
+						</>
+					) : null}
+
+					{orderList[index]?.giftWith && orderList[index]?.giftWith.length > 0
+						? orderList[index]?.giftWith?.map((item, i) => (
+								<div className="row" key={"gift" + i}>
+									<div className="col-2">
+										{item?.profileImage ? (
+											<img src={item?.profileImage} style={{ width: "50%" }} />
+										) : (
+											""
+										)}
+									</div>
+									<div className="col-7">{item?.userId}</div>
+									<div className="col-3">{item?.screenName}</div>
+								</div>
+						  ))
+						: null}
 					<div className="row">
 						<div className="col">
 							<hr />
