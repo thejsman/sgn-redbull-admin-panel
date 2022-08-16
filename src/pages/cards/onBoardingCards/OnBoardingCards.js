@@ -9,9 +9,9 @@ import { ToastContainer, toast } from 'react-toastify'
 import { Loader } from '../../../components/common/loader'
 
 
-const TaskCard = () => {
+const OnBoardingCards = () => {
   const history = useHistory()
-  const breadcrumb = [{ link: '', linkText: 'Task Cards Management' }]
+  const breadcrumb = [{ link: '', linkText: 'Onboarding Cards Management' }]
 
   const [confirmModal, setConfirmModal] = useState(false)
   const [confirmMsg, setConfirmMsg] = useState('')
@@ -29,7 +29,7 @@ const TaskCard = () => {
   }, [])
 
   const editPages = _id => {
-    history.push('/card/tasks/edit/' + _id)
+    history.push('/card/onboarding/edit/' + _id)
   }
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`)
@@ -39,7 +39,7 @@ const TaskCard = () => {
     let params = {
       limit: 100,
       LastEvaluatedKey: 'null',
-      list: "taskCard"
+      list: "onBoardingCard"
     }
     cardTaskList(params).then(res => {
       let { status, data } = resHandle(res)
@@ -56,7 +56,7 @@ const TaskCard = () => {
   const handleDeleteCardOccasion = () => {
     let params = {
       cardName: cardName,
-      cardIdentifier: "taskCard"
+      cardIdentifier: "onBoardingCard"
     }
     handleClose();
     setLoader(true);
@@ -89,7 +89,7 @@ const TaskCard = () => {
         </Modal.Header>
         <Modal.Body>
           <p className='text-center'>
-            Are you sure you want to delete this task card?
+            Are you sure you want to delete this Onboarding card?
           </p>
           <div className='d-flex justify-content-center pb-4'>
             <button
@@ -115,9 +115,9 @@ const TaskCard = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className='twocol sb page_header'>
-        <h2>Task Cards Management</h2>
-        <Link to='/card/tasks/create' className='btn btn-primary btn-sm'>
-          Add Task Card
+        <h2>Onboarding Cards Management</h2>
+        <Link to='/card/onboarding/create' className='btn btn-primary btn-sm'>
+          Add Onboarding Card
         </Link>
       </div>
       <div className='twocol sb page_header'>
@@ -219,4 +219,4 @@ const TaskCard = () => {
     </div>
   )
 }
-export default TaskCard
+export default OnBoardingCards

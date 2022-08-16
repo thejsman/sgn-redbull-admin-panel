@@ -31,7 +31,7 @@ const AddEditUsers = () => {
   const [loader, setLoader] = useState(false)
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const modules = ["notifications", "relationship-management", "occasion-management", "cards-management", "rozy", "voucher", "redis", "invitation-form", "orders"];
+  const modules = ["notifications", "relationship-management", "occasion-management", "cards-management", "rozy", "voucher", "redis", "invitation-form", "orders", "waitlisted"];
 
 
 

@@ -19,7 +19,7 @@ function createCardTask(params) {
 
 function getCardTaskByName(params) {
     console.log("params", params);
-    return axios.get(`${Api.GET_CARD_TASK_BY_TASKNAME}taskCard/${params.cardTaskName}`, {
+    return axios.get(`${Api.GET_CARD_TASK_BY_TASKNAME}${params.card}/${params.cardTaskName}`, {
         headers: headersApplicationJson,
     });
 }
@@ -39,7 +39,7 @@ function deleteCardTask(params) {
 
 function cardTaskList(params) {
     return axios.get(
-        Api.GET_CARD_TASK_LIST, {
+        Api.GET_CARD_TASK_LIST + params.list, {
         headers: headersApplicationJson,
     });
 }

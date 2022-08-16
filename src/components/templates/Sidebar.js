@@ -134,6 +134,13 @@ const Sidebar = () => {
                       : ""
                   }
                 ><i className="fas fa-calendar-week"></i>{" "}Task Card</NavLink>
+                <NavLink to="/card/onboarding"
+                  className={
+                    (location.pathname.includes("/card/onboarding"))
+                      ? "active"
+                      : ""
+                  }
+                ><i className="fas fa-calendar-week"></i>{" "}Onboarding Card</NavLink>
               </div>
             </div>
           </li>
@@ -175,6 +182,14 @@ const Sidebar = () => {
             <NavLink to="/orders"  >
               <i className="fas fa-shopping-bag"></i>{" "}
               <span className="menu_text">Orders</span>
+            </NavLink>
+          </li>
+        ))}
+        {((getPermission('waitlisted') !== -1) && (
+          <li>
+            <NavLink to="/waitlisted/users"  >
+              <i className="fas fa-user-friends"></i>{" "}
+              <span className="menu_text">Waitlisted Users</span>
             </NavLink>
           </li>
         ))}

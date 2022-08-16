@@ -30,6 +30,9 @@ import AddEditUsers from "./pages/users/AddEditUsers";
 import Users from "./pages/users/Users";
 import { checkPermission } from './utils'
 import UnAuthorized from './pages/unAuthorized/Unauthorized'
+import WaitlistedUsers from "./pages/waitlistedUsers/WaitlistedUsers";
+import AddEditOnBoardingCards from "./pages/cards/onBoardingCards/AddEditOnBoardingCards";
+import OnBoardingCards from "./pages/cards/onBoardingCards/OnBoardingCards";
 
 
 const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
@@ -123,6 +126,12 @@ const Routes = (props) => {
             <PrivateRoute exact module="cards-management" path="/card/tasks/edit/:id" {...props} component={AddEditTaskCard} />
 
 
+            {/* Onboarding Card Routes */}
+            <PrivateRoute exact module="cards-management" path="/card/onboarding/create" {...props} component={AddEditOnBoardingCards} />
+            <PrivateRoute exact module="cards-management" path="/card/onboarding" {...props} component={OnBoardingCards} />
+            <PrivateRoute exact module="cards-management" path="/card/onboarding/edit/:id" {...props} component={AddEditOnBoardingCards} />
+
+
             {/* Voucher Routes */}
             <PrivateRoute exact module="voucher" path="/voucher" {...props} component={Voucher} />
             <PrivateRoute exact module="voucher" path="/coupons/:id" {...props} component={Coupons} />
@@ -143,6 +152,10 @@ const Routes = (props) => {
             <PrivateRoute exact module="users" path="/user/create" {...props} component={AddEditUsers} />
             <PrivateRoute exact module="users" path="/users" {...props} component={Users} />
             <PrivateRoute exact module="users" path="/user/edit/:id" {...props} component={AddEditUsers} />
+
+            {/* Waitlisted Users  Routes */}
+            <PrivateRoute exact module="waitlisted" path="/waitlisted/users" {...props} component={WaitlistedUsers} />
+
           </Switch>
         </Router>
       </div>
