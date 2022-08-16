@@ -24,7 +24,7 @@ const EditCoupon = () => {
 	const [couponPin, setCouponPin] = useState("");
 	const [validTill, setValidTill] = useState("");
 	const [validTillErr, setValidTillErr] = useState("");
-	const [status, setStatus] = useState("free");
+	const [status, setStatus] = useState("FREE");
 	const [statusErr, setStatusErr] = useState("");
 	const [value, setValue] = useState("");
 	const [valueErr, setValueErr] = useState("");
@@ -67,30 +67,34 @@ const EditCoupon = () => {
 		let params = {
 			couponVoucherId: id,
 		};
-		couponDetailByCouponId(params).then((res) => {
-			let { status, data } = resHandle(res);
-			console.log(status, data, "datadatadatadatadata");
-			if (status === 200) {
-				setCouponVoucherId(data.data.Items[0].couponVoucherId);
-				setProductName(data.data.Items[0].productName);
-				setItemId(data.data.Items[0].itemId);
-				setVariantId(data.data.Items[0].variantId);
-				setCouponName(data.data.Items[0].coupon);
-				setCouponPin(data.data.Items[0].couponPin);
-				setValidTill(
-					moment.unix(data.data.Items[0].validTill).format("DD/MM/YYYY")
+		couponDetailByCouponId(params)
+			.then((res) => {
+				let { status, data } = resHandle(res);
+				console.log(status, data, "datadatadatadatadata");
+				if (status === 200) {
+					setCouponVoucherId(data.data.Items[0].couponVoucherId);
+					setProductName(data.data.Items[0].productName);
+					setItemId(data.data.Items[0].itemId);
+					setVariantId(data.data.Items[0].variantId);
+					setCouponName(data.data.Items[0].coupon);
+					setCouponPin(data.data.Items[0].couponPin);
+					setValidTill(
+						moment.unix(data.data.Items[0].validTill).format("DD/MM/YYYY")
+					);
+					setStatus(data.data.Items[0].status);
+					setValue(data.data.Items[0].value);
+					setPK(data.data.Items[0].pk);
+					setLoader(false);
+				} else {
+					setLoader(false);
+				}
+			})
+			.catch((err) => {
+				setLoader(false);
+				toast.error(
+					"Sorry, a technical error occurred! Please try again later"
 				);
-				setStatus(data.data.Items[0].status);
-				setValue(data.data.Items[0].value);
-				setPK(data.data.Items[0].pk);
-				setLoader(false);
-			} else {
-				setLoader(false);
-			}
-		}).catch((err) => {
-			setLoader(false);
-			toast.error("Sorry, a technical error occurred! Please try again later")
-		});
+			});
 	};
 	const handleUpdateCoupon = (e) => {
 		e.preventDefault();
@@ -104,19 +108,23 @@ const EditCoupon = () => {
 				value: parseInt(value),
 			};
 			console.log("createObj---", createObj);
-			updateVoucher(createObj).then((res) => {
-				let { status, data } = resHandle(res);
-				setIsSubmit(false);
-				if (status === 200) {
-					toast.success(data.message);
-					history.push("/coupons/" + productName);
-				} else {
-					toast.success(data.message);
-				}
-			}).catch((err) => {
-				setIsSubmit(false);
-				toast.error("Sorry, a technical error occurred! Please try again later")
-			});
+			updateVoucher(createObj)
+				.then((res) => {
+					let { status, data } = resHandle(res);
+					setIsSubmit(false);
+					if (status === 200) {
+						toast.success(data.message);
+						history.push("/coupons/" + productName);
+					} else {
+						toast.success(data.message);
+					}
+				})
+				.catch((err) => {
+					setIsSubmit(false);
+					toast.error(
+						"Sorry, a technical error occurred! Please try again later"
+					);
+				});
 		}
 	};
 	useEffect(() => {
@@ -232,9 +240,9 @@ const EditCoupon = () => {
 								value={status}
 								onChange={(e) => (setStatus(e.target.value), setStatusErr(""))}
 							>
-								<option value="free">FREE</option>
-								<option value="pending">PENDING</option>
-								<option value="assigned">ASSIGNED</option>
+								<option value="FREE">FREE</option>
+								<option value="PENDING">PENDING</option>
+								<option value="ASSIGNED">ASSIGNED</option>
 							</select>
 						</div>
 
