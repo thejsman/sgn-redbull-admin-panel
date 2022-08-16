@@ -19,8 +19,8 @@ const Orders = () => {
 	const [orderList, setOrderList] = useState([]);
 	const [date, setDate] = useState("");
 	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(5);
-	const [count, setCount] = useState(6);
+	const [limit, setLimit] = useState(50);
+	const [count, setCount] = useState(51);
 	const [loader, setLoader] = useState(false);
 	const [confirmModal, setConfirmModal] = useState(false);
 	const [index, setIndex] = useState(-1);
