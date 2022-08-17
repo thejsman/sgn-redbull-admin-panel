@@ -30,15 +30,105 @@ const Dashboard = () => {
   const [liveUserCount, setLiveUserCount] = useState([{ currentUsers: 0, totalUsers: 0 }, { currentUsers: 0, totalUsers: 0 }]);
   const [cleverTapLiveUserCount, setCleverTapLiveUserCount] = useState([{ dailyUsers: 0, weeklyUsers: 0, monthlyUsers: 0 }, { dailyUsers: 0, weeklyUsers: 0, monthlyUsers: 0 }]);
 
+  const [giftStatsData, setGiftStatsData] = useState([{
+    currentMonthDealsAmount: 0,
+    currentMonthDealsCount: 0,
+    currentMonthGiftsAmount: 0,
+    currentMonthGiftsCount: 0,
+    currentMonthOriginalDealsAmount: 0,
+    currentMonthOriginalGiftsAmount: 0,
+    historicDealsAmount: 0,
+    historicDealsCount: 0,
+    historicDealsCounts: 0,
+    historicGiftsAmount: 0,
+    historicGiftsCount: 0,
+    historicOriginalDealsAmount: 0,
+    historicOriginalGiftsAmount: 0,
+  },
+  {
+    currentMonthDealsAmount: 0,
+    currentMonthDealsCount: 0,
+    currentMonthGiftsAmount: 0,
+    currentMonthGiftsCount: 0,
+    currentMonthOriginalDealsAmount: 0,
+    currentMonthOriginalGiftsAmount: 0,
+    historicDealsAmount: 0,
+    historicDealsCount: 0,
+    historicDealsCounts: 0,
+    historicGiftsAmount: 0,
+    historicGiftsCount: 0,
+    historicOriginalDealsAmount: 0,
+    historicOriginalGiftsAmount: 0,
+  }]);
+
+  const [transactionsByCurrencyINR, setTransactionsByCurrencyINR] = useState([{
+    currentMonthDealsAmount: 0,
+    currentMonthDealsCount: 0,
+    currentMonthGiftsAmount: 0,
+    currentMonthGiftsCount: 0,
+    currentMonthOriginalDealsAmount: 0,
+    currentMonthOriginalGiftsAmount: 0,
+    historicDealsAmount: 0,
+    historicDealsCount: 0,
+    historicDealsCounts: 0,
+    historicGiftsAmount: 0,
+    historicGiftsCount: 0,
+    historicOriginalDealsAmount: 0,
+    historicOriginalGiftsAmount: 0,
+  },
+  {
+    currentMonthDealsAmount: 0,
+    currentMonthDealsCount: 0,
+    currentMonthGiftsAmount: 0,
+    currentMonthGiftsCount: 0,
+    currentMonthOriginalDealsAmount: 0,
+    currentMonthOriginalGiftsAmount: 0,
+    historicDealsAmount: 0,
+    historicDealsCount: 0,
+    historicDealsCounts: 0,
+    historicGiftsAmount: 0,
+    historicGiftsCount: 0,
+    historicOriginalDealsAmount: 0,
+    historicOriginalGiftsAmount: 0,
+  }]);
+
+  const [transactionsByCurrencyNPR, setTransactionsByCurrencyNPR] = useState([{
+    currentMonthDealsAmount: 0,
+    currentMonthDealsCount: 0,
+    currentMonthGiftsAmount: 0,
+    currentMonthGiftsCount: 0,
+    currentMonthOriginalDealsAmount: 0,
+    currentMonthOriginalGiftsAmount: 0,
+    historicDealsAmount: 0,
+    historicDealsCount: 0,
+    historicDealsCounts: 0,
+    historicGiftsAmount: 0,
+    historicGiftsCount: 0,
+    historicOriginalDealsAmount: 0,
+    historicOriginalGiftsAmount: 0,
+  },
+  {
+    currentMonthDealsAmount: 0,
+    currentMonthDealsCount: 0,
+    currentMonthGiftsAmount: 0,
+    currentMonthGiftsCount: 0,
+    currentMonthOriginalDealsAmount: 0,
+    currentMonthOriginalGiftsAmount: 0,
+    historicDealsAmount: 0,
+    historicDealsCount: 0,
+    historicDealsCounts: 0,
+    historicGiftsAmount: 0,
+    historicGiftsCount: 0,
+    historicOriginalDealsAmount: 0,
+    historicOriginalGiftsAmount: 0,
+  }]);
+
+  const [giftDataCurrencyINR, setGiftDataCurrencyINR] = useState({ chartDetail: { labels: [], totalDeal: [], totalDealAmount: [], totalGift: [], totalGiftAmount: [], totalOriginalDealAmount: [], totalOriginalGiftAmount: [] } });
+  const [giftDataCurrencyNPR, setGiftDataCurrencyNPR] = useState({ chartDetail: { labels: [], totalDeal: [], totalDealAmount: [], totalGift: [], totalGiftAmount: [], totalOriginalDealAmount: [], totalOriginalGiftAmount: [] } });
 
 
   const [tolDebitAmount, setTolDebitAmount] = useState([0]);
   const [tolMonthDebitAmount, setTolMonthDebitAmount] = useState([0]);
-
-  const [tolGiftAmount, setTolGiftAmount] = useState([0]);
-  const [tolMonthGiftAmount, setTolMonthGiftAmount] = useState([0]);
-  const [tolGiftOrder, setTolGiftOrder] = useState([0]);
-  const [tolMonthGiftOrder, setTolMonthGiftOrder] = useState([0]);
 
   const [tolDealAmount, setTolDealAmount] = useState([0]);
   const [tolMonthDealAmount, setTolMonthDealAmount] = useState([0]);
@@ -248,45 +338,195 @@ const Dashboard = () => {
 
     if (response.giftStats) {
 
-      let dates = response.giftStats.analysis.map(function (i) {
+      let dates = response.giftStats.dealsAndGiftsByDates.map(function (i) {
         return moment(i.date).format('DD-MM-YY');
       });
       dates = dates.reverse();
-      let amount = response.giftStats.analysis.map(function (i) {
-        return i.amount;
+
+      let totalDeal = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+        return i.totalDeal;
       });
-      amount = amount.reverse();
-      let numOfOrder = response.giftStats.analysis.map(function (i) {
-        return i.numOfOrder;
+      totalDeal = totalDeal.reverse();
+
+      let totalDealAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+        return i.totalDealAmount;
       });
+      totalDealAmount = totalDealAmount.reverse();
 
 
+      let totalGift = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+        return i.totalGift;
+      });
+      totalGift = totalGift.reverse();
 
-      let arrtotGiftAmt = [tolGiftAmount.pop()];
-      arrtotGiftAmt.push(response.giftStats["totalAmount"]);
-      setTolGiftAmount([...arrtotGiftAmt]);
 
-      let arrtotMonthGiftAmt = [tolMonthGiftAmount.pop()];
-      arrtotMonthGiftAmt.push(response.giftStats["monthAmount"]);
-      setTolMonthGiftAmount([...arrtotMonthGiftAmt]);
+      let totalGiftAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+        return i.totalGiftAmount;
+      });
+      totalGiftAmount = totalGiftAmount.reverse();
 
-      let arrtotGiftOrder = [tolGiftOrder.pop()];
-      arrtotGiftOrder.push(response.giftStats["totalOrder"]);
-      setTolGiftAmount([...arrtotGiftOrder]);
 
-      let arrtotMonthGiftOrder = [tolMonthGiftAmount.pop()];
-      arrtotMonthGiftOrder.push(response.giftStats["monthOrder"]);
-      setTolMonthGiftAmount([...arrtotMonthGiftOrder]);
+      let totalOriginalDealAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+        return i.totalOriginalDealAmount;
+      });
+      totalOriginalDealAmount = totalOriginalDealAmount.reverse();
 
+      let totalOriginalGiftAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+        return i.totalOriginalGiftAmount;
+      });
+      totalOriginalGiftAmount = totalOriginalGiftAmount.reverse();
+
+
+      let arrGiftStatsData = [giftStatsData.pop()];
+      let obj = {
+        currentMonthDealsAmount: response.giftStats["currentMonthDealsAmount"],
+        currentMonthDealsCount: response.giftStats["currentMonthDealsCount"],
+        currentMonthGiftsAmount: response.giftStats["currentMonthGiftsAmount"],
+        currentMonthGiftsCount: response.giftStats["currentMonthGiftsCount"],
+        currentMonthOriginalDealsAmount: response.giftStats["currentMonthOriginalDealsAmount"],
+        currentMonthOriginalGiftsAmount: response.giftStats["currentMonthOriginalGiftsAmount"],
+        historicDealsAmount: response.giftStats["historicDealsAmount"],
+        historicDealsCount: response.giftStats["historicDealsCount"],
+        historicDealsCounts: response.giftStats["historicDealsCounts"],
+        historicGiftsAmount: response.giftStats["historicGiftsAmount"],
+        historicGiftsCount: response.giftStats["historicGiftsCount"],
+        historicOriginalDealsAmount: response.giftStats["historicOriginalDealsAmount"],
+        historicOriginalGiftsAmount: response.giftStats["historicOriginalGiftsAmount"],
+      }
+      arrGiftStatsData.push(obj);
+      setGiftStatsData([...arrGiftStatsData]);
 
       let giftObj = {
-        totalAmount: response.giftStats["totalAmount"],
-        monthAmount: response.giftStats["monthAmount"],
-        totalOrder: response.giftStats["totalOrder"],
-        monthOrder: response.giftStats["monthOrder"],
-        chartDetail: { labels: dates, data: amount, numOfOrder: numOfOrder }
+        chartDetail: { labels: dates, totalDeal: totalDeal, totalDealAmount: totalDealAmount, totalGift: totalGift, totalGiftAmount: totalGiftAmount, totalOriginalDealAmount: totalOriginalDealAmount, totalOriginalGiftAmount: totalOriginalGiftAmount }
       }
       setGiftData(giftObj);
+
+      if (response.giftStats.transactionsByCurrency) {
+        if (response.giftStats.transactionsByCurrency.INR) {
+          let INRdates = response.giftStats.transactionsByCurrency.INR.dealsAndGiftsByDates.map(function (i) {
+            return moment(i.date).format('DD-MM-YY');
+          });
+          INRdates = INRdates.reverse();
+
+          let INRtotalDeal = response.giftStats.transactionsByCurrency.INR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalDeal;
+          });
+          INRtotalDeal = INRtotalDeal.reverse();
+
+          let INRtotalDealAmount = response.giftStats.transactionsByCurrency.INR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalDealAmount;
+          });
+          INRtotalDealAmount = INRtotalDealAmount.reverse();
+
+
+          let INRtotalGift = response.giftStats.transactionsByCurrency.INR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalGift;
+          });
+          INRtotalGift = INRtotalGift.reverse();
+
+
+          let INRtotalGiftAmount = response.giftStats.transactionsByCurrency.INR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalGiftAmount;
+          });
+          INRtotalGiftAmount = INRtotalGiftAmount.reverse();
+
+
+          let INRtotalOriginalDealAmount = response.giftStats.transactionsByCurrency.INR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalOriginalDealAmount;
+          });
+          INRtotalOriginalDealAmount = INRtotalOriginalDealAmount.reverse();
+
+          let INRtotalOriginalGiftAmount = response.giftStats.transactionsByCurrency.INR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalOriginalGiftAmount;
+          });
+          INRtotalOriginalGiftAmount = INRtotalOriginalGiftAmount.reverse();
+
+          let giftObjINR = { chartDetail: { labels: INRdates, totalDeal: INRtotalDeal, totalDealAmount: INRtotalDealAmount, totalGift: INRtotalGift, totalGiftAmount: INRtotalGiftAmount, totalOriginalDealAmount: INRtotalOriginalDealAmount, totalOriginalGiftAmount: INRtotalOriginalGiftAmount } };
+          setGiftDataCurrencyINR(giftObjINR);
+          let arrInr = [transactionsByCurrencyINR.pop()];
+          let INRObj = {
+            currentMonthDealsAmount: response.giftStats.transactionsByCurrency.INR["currentMonthDealsAmount"],
+            currentMonthDealsCount: response.giftStats.transactionsByCurrency.INR["currentMonthDealsCount"],
+            currentMonthGiftsAmount: response.giftStats.transactionsByCurrency.INR["currentMonthGiftsAmount"],
+            currentMonthGiftsCount: response.giftStats.transactionsByCurrency.INR["currentMonthGiftsCount"],
+            currentMonthOriginalDealsAmount: response.giftStats.transactionsByCurrency.INR["currentMonthOriginalDealsAmount"],
+            currentMonthOriginalGiftsAmount: response.giftStats.transactionsByCurrency.INR["currentMonthOriginalGiftsAmount"],
+            historicDealsAmount: response.giftStats.transactionsByCurrency.INR["historicDealsAmount"],
+            historicDealsCount: response.giftStats.transactionsByCurrency.INR["historicDealsCount"],
+            historicDealsCounts: response.giftStats.transactionsByCurrency.INR["historicDealsCounts"],
+            historicGiftsAmount: response.giftStats.transactionsByCurrency.INR["historicGiftsAmount"],
+            historicGiftsCount: response.giftStats.transactionsByCurrency.INR["historicGiftsCount"],
+            historicOriginalDealsAmount: response.giftStats.transactionsByCurrency.INR["historicOriginalDealsAmount"],
+            historicOriginalGiftsAmount: response.giftStats.transactionsByCurrency.INR["historicOriginalGiftsAmount"],
+          }
+          arrInr.push(INRObj);
+          setTransactionsByCurrencyINR([...arrInr]);
+        }
+
+        if (response.giftStats.transactionsByCurrency.NPR) {
+          let NPRdates = response.giftStats.transactionsByCurrency.NPR.dealsAndGiftsByDates.map(function (i) {
+            return moment(i.date).format('DD-MM-YY');
+          });
+          NPRdates = NPRdates.reverse();
+
+          let NPRtotalDeal = response.giftStats.transactionsByCurrency.NPR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalDeal;
+          });
+          NPRtotalDeal = NPRtotalDeal.reverse();
+
+          let NPRtotalDealAmount = response.giftStats.transactionsByCurrency.NPR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalDealAmount;
+          });
+          NPRtotalDealAmount = NPRtotalDealAmount.reverse();
+
+
+          let NPRtotalGift = response.giftStats.transactionsByCurrency.NPR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalGift;
+          });
+          NPRtotalGift = NPRtotalGift.reverse();
+
+
+          let NPRtotalGiftAmount = response.giftStats.transactionsByCurrency.NPR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalGiftAmount;
+          });
+          NPRtotalGiftAmount = NPRtotalGiftAmount.reverse();
+
+
+          let NPRtotalOriginalDealAmount = response.giftStats.transactionsByCurrency.NPR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalOriginalDealAmount;
+          });
+          NPRtotalOriginalDealAmount = NPRtotalOriginalDealAmount.reverse();
+
+          let NPRtotalOriginalGiftAmount = response.giftStats.transactionsByCurrency.NPR.dealsAndGiftsByDates.map(function (i) {
+            return i.totalOriginalGiftAmount;
+          });
+          NPRtotalOriginalGiftAmount = NPRtotalOriginalGiftAmount.reverse();
+
+          let giftObjNPR = { chartDetail: { labels: NPRdates, totalDeal: NPRtotalDeal, totalDealAmount: NPRtotalDealAmount, totalGift: NPRtotalGift, totalGiftAmount: NPRtotalGiftAmount, totalOriginalDealAmount: NPRtotalOriginalDealAmount, totalOriginalGiftAmount: NPRtotalOriginalGiftAmount } };
+          setGiftDataCurrencyNPR(giftObjNPR);
+
+
+          let arrNPR = [transactionsByCurrencyNPR.pop()];
+          let NPRObj = {
+            currentMonthDealsAmount: response.giftStats.transactionsByCurrency.NPR["currentMonthDealsAmount"],
+            currentMonthDealsCount: response.giftStats.transactionsByCurrency.NPR["currentMonthDealsCount"],
+            currentMonthGiftsAmount: response.giftStats.transactionsByCurrency.NPR["currentMonthGiftsAmount"],
+            currentMonthGiftsCount: response.giftStats.transactionsByCurrency.NPR["currentMonthGiftsCount"],
+            currentMonthOriginalDealsAmount: response.giftStats.transactionsByCurrency.NPR["currentMonthOriginalDealsAmount"],
+            currentMonthOriginalGiftsAmount: response.giftStats.transactionsByCurrency.NPR["currentMonthOriginalGiftsAmount"],
+            historicDealsAmount: response.giftStats.transactionsByCurrency.NPR["historicDealsAmount"],
+            historicDealsCount: response.giftStats.transactionsByCurrency.NPR["historicDealsCount"],
+            historicDealsCounts: response.giftStats.transactionsByCurrency.NPR["historicDealsCounts"],
+            historicGiftsAmount: response.giftStats.transactionsByCurrency.NPR["historicGiftsAmount"],
+            historicGiftsCount: response.giftStats.transactionsByCurrency.NPR["historicGiftsCount"],
+            historicOriginalDealsAmount: response.giftStats.transactionsByCurrency.NPR["historicOriginalDealsAmount"],
+            historicOriginalGiftsAmount: response.giftStats.transactionsByCurrency.NPR["historicOriginalGiftsAmount"],
+          }
+          arrNPR.push(NPRObj);
+          setTransactionsByCurrencyNPR([...arrNPR]);
+        }
+
+      }
     }
 
     if (response.dealStats) {
@@ -445,11 +685,36 @@ const Dashboard = () => {
 
 
       <div className="row">
+        <div className="col-12 bg-info p-1 mb-1 pl-3 lead text-white">
+          Deals & Gifts
+        </div>
+      </div>
+      <div className="row">
 
-        <GiftStats {...giftData} tolGiftAmount={tolGiftAmount} tolMonthGiftAmount={tolMonthGiftAmount}
-          tolGiftOrder={tolGiftOrder} tolMonthGiftOrder={tolMonthGiftOrder} ></GiftStats>
+        <GiftStats {...giftData} giftStatsData={giftStatsData} ></GiftStats>
 
       </div>
+
+      <div className="row">
+        <div className="col-12 bg-info p-1 mb-1 pl-3 lead text-white">
+          Transactions By Currency (INR)
+        </div>
+      </div>
+      <div className="row">
+        <GiftStats {...giftDataCurrencyINR} giftStatsData={transactionsByCurrencyINR} ></GiftStats>
+
+      </div>
+
+      <div className="row">
+        <div className="col-12 bg-info p-1 mb-1 pl-3 lead text-white">
+          Transactions By Currency (NPR)
+        </div>
+      </div>
+      <div className="row">
+        <GiftStats {...giftDataCurrencyNPR} giftStatsData={transactionsByCurrencyNPR} ></GiftStats>
+
+      </div>
+
       <div className="row">
 
         <DealStats {...dealsData} tolDealAmount={tolDealAmount} tolMonthDealAmount={tolMonthDealAmount}
