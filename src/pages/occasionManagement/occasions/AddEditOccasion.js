@@ -40,7 +40,9 @@ const AddEditOccasion = () => {
   const [isSubmit, setIsSubmit] = useState(false)
   const [loader, setLoader] = useState(false)
   const visibilityData = [{ label: "Universal", value: 0 }, { label: "India", value: 91 }, { label: "Nepal", value: 977 }];
-
+  const [lottieBackgroundFileName, setLottieBackgroundFileName] = useState('');
+  const [lottieBackgroundFileNameErr, setLottieBackgroundFileNameErr] = useState('');
+  const [lottieBackgroundBase64, setLottieBackgroundBase64] = useState('');
   const [visibility, setVisibility] = useState([]);
   const [visibilityErr, setVisibilityErr] = useState('');
 
@@ -111,6 +113,25 @@ const AddEditOccasion = () => {
     return validate;
   };
 
+
+  const handleUpload = e => {
+    let reader = new FileReader()
+    let file = e.target.files[0]
+    console.log('filefile', file)
+    reader.addEventListener(
+      'load',
+      () => {
+        setLottieBackgroundBase64(reader.result);
+        setLottieBackgroundFileName(file.name);
+        setLottieBackgroundFileNameErr("")
+      },
+    )
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+  }
+
+
   const handleGetOccasionById = (id) => {
     setLoader(true);
     let params = {
@@ -129,6 +150,8 @@ const AddEditOccasion = () => {
         } else {
           setOccasionStatus(false);
         }
+
+        setLottieBackgroundBase64(data.userLottiBackgroundIcon);
 
         setFileName(data.fileName);
         setOccasionOrder(data.displayOrder);
@@ -167,6 +190,7 @@ const AddEditOccasion = () => {
           occasionIcon: occasionIcon,
           fileName: fileName,
           visibility: visibility.map(a => a.value),
+          userLottiBackgroundIcon: lottieBackgroundBase64
         },
       };
 
@@ -234,6 +258,7 @@ const AddEditOccasion = () => {
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
           fileName: fileName,
           visibility: visibility.map(a => a.value),
+          userLottiBackgroundIcon: lottieBackgroundBase64
         },
       };
       console.log("createOccasionObj---", createOccasionObj);
@@ -375,6 +400,37 @@ const AddEditOccasion = () => {
               )}
             </div>
             <div className='col'>
+              <label>Background Json File</label>
+              <div className="custom-file">
+                <input id="lottieBackground" type="file"
+                  className=" form-control custom-file-input"
+                  name="lottieBackgroundFileName"
+                  accept=".json"
+                  onChange={handleUpload} />
+                <label className="custom-file-label" htmlFor="lottieBackground">
+                  {lottieBackgroundFileName ? lottieBackgroundFileName : 'Choose file'}
+                </label>
+              </div>
+              {lottieBackgroundBase64 && <a href={lottieBackgroundBase64} download={lottieBackgroundBase64.includes("https://") ? lottieBackgroundBase64 : lottieBackgroundFileName} target="blank"> {lottieBackgroundBase64.includes("https://") ? lottieBackgroundBase64 : lottieBackgroundFileName} </a>}
+              {lottieBackgroundFileNameErr && <div className='inlineerror'>{lottieBackgroundFileNameErr} </div>}
+            </div>
+
+
+
+          </div>
+
+          <div className="form-group row">
+            <div className='col'>
+              <label>Icon</label>
+              <input
+                type='file'
+                className='form-control'
+                value=''
+                onChange={handleFileChange}
+              />
+            </div>
+
+            <div className='col'>
               <div className='rounded-sm pb-3'>
                 <label className="pl-1 ">Visibility</label>
                 <div className="form-group row">
@@ -405,22 +461,13 @@ const AddEditOccasion = () => {
               </div>
 
             </div>
-
-
           </div>
-
-          <div className="form-group row">
-            <div className='col'>
-              <label>Icon</label>
-              <input
-                type='file'
-                className='form-control'
-                value=''
-                onChange={handleFileChange}
-              />
-            </div>
+          <div className="form-grop row">
             <div className='col'>
               {base64 ? <img className='iconImg' src={base64} alt='icon' /> : ''}
+            </div>
+            <div className="col">
+
             </div>
           </div>
 
