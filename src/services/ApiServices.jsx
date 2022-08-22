@@ -25,7 +25,8 @@ export {
   orderListByMobileno,
   orderListByOrderId,
   userCleverTapLiveCount,
-  waitlistedUsers
+  waitlistedUsers,
+  waitlistedExport
 };
 
 
@@ -152,6 +153,13 @@ function userCleverTapLiveCount(date) {
 function waitlistedUsers(data) {
   return axios.get(
     `${Api.WAITLISTED_USERS}?${data}`, {
+    headers: headersApplicationJson,
+  });
+}
+
+function waitlistedExport(data) {
+  return axios.get(
+    `${Api.EXPORT_WAITLISTED_USERS}?${data}`, {
     headers: headersApplicationJson,
   });
 }

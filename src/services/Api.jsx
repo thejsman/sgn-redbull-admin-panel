@@ -108,5 +108,10 @@ export default {
 	USER_MANGEMENT: process.env.REACT_APP_API_AUTH_BASE_URL + "users",
 
 	//Waitlisted Users
-	WAITLISTED_USERS: siteSetting.api.BaseUrl + "/invitationAdmin/fetchWaitListedUsers"
+	WAITLISTED_USERS: siteSetting.api.BaseUrl + "/invitationAdmin/fetchWaitListedUsers",
+
+	//Export Waitlisted Users
+	EXPORT_WAITLISTED_USERS: siteSetting.api.BaseUrl + "/invitationAdmin/requestUserDataToExport?"
+
+
 };
