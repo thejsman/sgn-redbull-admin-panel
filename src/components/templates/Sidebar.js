@@ -36,6 +36,15 @@ const Sidebar = () => {
             </NavLink>
           </li>
         ))}
+        {((getPermission('connection-stats') !== -1) && (
+          <li>
+
+            <NavLink to="/connection-stats" exact>
+              <i class="fa fa-handshake"></i>{" "}
+              <span className="menu_text">Connection Stats</span>
+            </NavLink>
+          </li>
+        ))}
         {((getPermission('notifications') !== -1) && (
           <li>
             <NavLink to="/notifications">
