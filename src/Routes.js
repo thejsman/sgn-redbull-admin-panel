@@ -33,6 +33,8 @@ import UnAuthorized from './pages/unAuthorized/Unauthorized'
 import WaitlistedUsers from "./pages/waitlistedUsers/WaitlistedUsers";
 import AddEditOnBoardingCards from "./pages/cards/onBoardingCards/AddEditOnBoardingCards";
 import OnBoardingCards from "./pages/cards/onBoardingCards/OnBoardingCards";
+import WaitlistedExport from "./pages/waitlistedUsers/WaitlistedExport";
+import ConnectionStats from "./pages/connectionStats/ConnectionStats";
 
 
 const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
@@ -155,6 +157,10 @@ const Routes = (props) => {
 
             {/* Waitlisted Users  Routes */}
             <PrivateRoute exact module="waitlisted" path="/waitlisted/users" {...props} component={WaitlistedUsers} />
+            <PrivateRoute exact module="waitlisted" path="/waitlisted/export" {...props} component={WaitlistedExport} />
+
+            {/* Connection Stats  Routes */}
+            <PrivateRoute exact module="connection-stats" path="/connection-stats" {...props} component={ConnectionStats} />
 
           </Switch>
         </Router>

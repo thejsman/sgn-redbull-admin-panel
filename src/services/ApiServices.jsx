@@ -25,7 +25,9 @@ export {
   orderListByMobileno,
   orderListByOrderId,
   userCleverTapLiveCount,
-  waitlistedUsers
+  waitlistedUsers,
+  waitlistedExport,
+  connectionStats
 };
 
 
@@ -155,3 +157,18 @@ function waitlistedUsers(data) {
     headers: headersApplicationJson,
   });
 }
+
+function waitlistedExport(data) {
+  return axios.get(
+    `${Api.EXPORT_WAITLISTED_USERS}?${data}`, {
+    headers: headersApplicationJson,
+  });
+}
+
+function connectionStats(data) {
+  return axios.get(
+    `${Api.CONNECTION_STATS}?${data}`, {
+    headers: headersApplicationJson,
+  });
+}
+

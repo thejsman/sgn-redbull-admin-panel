@@ -36,6 +36,15 @@ const Sidebar = () => {
             </NavLink>
           </li>
         ))}
+        {((getPermission('connection-stats') !== -1) && (
+          <li>
+
+            <NavLink to="/connection-stats" exact>
+              <i class="fa fa-handshake"></i>{" "}
+              <span className="menu_text">Connection Stats</span>
+            </NavLink>
+          </li>
+        ))}
         {((getPermission('notifications') !== -1) && (
           <li>
             <NavLink to="/notifications">
@@ -185,14 +194,53 @@ const Sidebar = () => {
             </NavLink>
           </li>
         ))}
+
         {((getPermission('waitlisted') !== -1) && (
           <li>
-            <NavLink to="/waitlisted/users"  >
-              <i className="fas fa-user-friends"></i>{" "}
-              <span className="menu_text">Waitlisted Users</span>
-            </NavLink>
+            <div className="">
+              <NavLink
+                exact
+                to="/waitlisted/users"
+                className={
+                  (location.pathname.includes("/waitlisted"))
+                    ? "active"
+                    : ""
+                }
+              >
+                <i className="fas fa-user-friends"></i>{" "}
+
+                <span className="menu_text">Waitlisted Users</span>
+              </NavLink>
+              <div
+                className="submenu"
+                style={{
+                  display: (location.pathname.includes("/waitlisted"))
+                    ? "block"
+                    : "none",
+                }}
+              >
+                <NavLink to="/waitlisted/users"
+                  className={
+                    (location.pathname.includes("/waitlisted/users"))
+                      ? "active"
+                      : ""
+                  }
+
+                > <i className="fab fa-elementor"></i>{" "}List</NavLink>
+                <NavLink to="/waitlisted/export"
+                  className={
+                    (location.pathname.includes("/waitlisted/export"))
+                      ? "active"
+                      : ""
+                  }
+                ><i className="fas fa-calendar-week"></i>{" "}Export</NavLink>
+
+              </div>
+            </div>
           </li>
         ))}
+
+
         {((getPermission('users') !== -1) && (
           <li>
             <NavLink to="/users"  >
