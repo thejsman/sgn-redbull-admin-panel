@@ -120,7 +120,7 @@ const InvitationForm = () => {
       ) : (
         <form className="form-controller chosen">
           {invitationCode !== "" && (
-            <div className="alert alert-primary text-center"> Invitation code has been sent successfully. Your invitation Code is <span style={{ color: "red" }}> {invitationCode} </span><i class="fas fa-copy" style={{ cursor: 'pointer' }} title="Copy invitation code" onClick={copyToClipboard} ></i></div>
+            <div className="alert alert-primary text-center"> Invitation code has been sent successfully. Your invitation Code is <span style={{ color: "red" }}> {invitationCode} </span><i className="fas fa-copy" style={{ cursor: 'pointer' }} title="Copy invitation code" onClick={copyToClipboard} ></i></div>
           )}
           <div className="form-group row">
             <div className="col">

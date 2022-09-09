@@ -40,7 +40,7 @@ const Sidebar = () => {
           <li>
 
             <NavLink to="/connection-stats" exact>
-              <i class="fa fa-handshake"></i>{" "}
+              <i className="fa fa-handshake"></i>{" "}
               <span className="menu_text">Connection Stats</span>
             </NavLink>
           </li>
@@ -246,6 +246,15 @@ const Sidebar = () => {
             <NavLink to="/users"  >
               <i className="fas fa-user"></i>{" "}
               <span className="menu_text">Users</span>
+            </NavLink>
+          </li>
+        ))}
+
+        {((getPermission('users') !== -1) && (
+          <li>
+            <NavLink to="/app-users"  >
+              <i className="fas fa-users"></i>{" "}
+              <span className="menu_text">App Users</span>
             </NavLink>
           </li>
         ))}

@@ -11,6 +11,7 @@ import siteSetting from "../../config/env/Index";
 import { userAnalytics, userCleverTapLiveCount } from "../../services/ApiServices";
 import moment from 'moment'
 
+
 const URL = siteSetting.api.WebSocketUrl;
 
 
@@ -338,44 +339,50 @@ const Dashboard = () => {
 
     if (response.giftStats) {
 
-      let dates = response.giftStats.dealsAndGiftsByDates.map(function (i) {
-        return moment(i.date).format('DD-MM-YY');
-      });
-      dates = dates.reverse();
+      if (Array.isArray(response.giftStats.dealsAndGiftsByDates)) {
+        let dates = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+          return moment(i.date).format('DD-MM-YY');
+        });
+        dates = dates.reverse();
 
-      let totalDeal = response.giftStats.dealsAndGiftsByDates.map(function (i) {
-        return i.totalDeal;
-      });
-      totalDeal = totalDeal.reverse();
+        let totalDeal = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+          return i.totalDeal;
+        });
+        totalDeal = totalDeal.reverse();
 
-      let totalDealAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
-        return i.totalDealAmount;
-      });
-      totalDealAmount = totalDealAmount.reverse();
-
-
-      let totalGift = response.giftStats.dealsAndGiftsByDates.map(function (i) {
-        return i.totalGift;
-      });
-      totalGift = totalGift.reverse();
+        let totalDealAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+          return i.totalDealAmount;
+        });
+        totalDealAmount = totalDealAmount.reverse();
 
 
-      let totalGiftAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
-        return i.totalGiftAmount;
-      });
-      totalGiftAmount = totalGiftAmount.reverse();
+        let totalGift = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+          return i.totalGift;
+        });
+        totalGift = totalGift.reverse();
 
 
-      let totalOriginalDealAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
-        return i.totalOriginalDealAmount;
-      });
-      totalOriginalDealAmount = totalOriginalDealAmount.reverse();
+        let totalGiftAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+          return i.totalGiftAmount;
+        });
+        totalGiftAmount = totalGiftAmount.reverse();
 
-      let totalOriginalGiftAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
-        return i.totalOriginalGiftAmount;
-      });
-      totalOriginalGiftAmount = totalOriginalGiftAmount.reverse();
 
+        let totalOriginalDealAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+          return i.totalOriginalDealAmount;
+        });
+        totalOriginalDealAmount = totalOriginalDealAmount.reverse();
+
+        let totalOriginalGiftAmount = response.giftStats.dealsAndGiftsByDates.map(function (i) {
+          return i.totalOriginalGiftAmount;
+        });
+        totalOriginalGiftAmount = totalOriginalGiftAmount.reverse();
+        let giftObj = {
+          chartDetail: { labels: dates, totalDeal: totalDeal, totalDealAmount: totalDealAmount, totalGift: totalGift, totalGiftAmount: totalGiftAmount, totalOriginalDealAmount: totalOriginalDealAmount, totalOriginalGiftAmount: totalOriginalGiftAmount }
+        }
+        setGiftData(giftObj);
+
+      }
 
       let arrGiftStatsData = [giftStatsData.pop()];
       let obj = {
@@ -396,10 +403,7 @@ const Dashboard = () => {
       arrGiftStatsData.push(obj);
       setGiftStatsData([...arrGiftStatsData]);
 
-      let giftObj = {
-        chartDetail: { labels: dates, totalDeal: totalDeal, totalDealAmount: totalDealAmount, totalGift: totalGift, totalGiftAmount: totalGiftAmount, totalOriginalDealAmount: totalOriginalDealAmount, totalOriginalGiftAmount: totalOriginalGiftAmount }
-      }
-      setGiftData(giftObj);
+
 
       if (response.giftStats.transactionsByCurrency) {
         if (response.giftStats.transactionsByCurrency.INR) {

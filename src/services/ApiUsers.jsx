@@ -5,7 +5,8 @@ export {
   getUserList,
   getUserDetailById,
   updateUserDetailById,
-  changePassword
+  changePassword,
+  getAppUserByCondition
 };
 
 
@@ -42,3 +43,9 @@ function changePassword(params) {
   });
 }
 
+
+function getAppUserByCondition(params) {
+  return axios.get(`${Api.GET_APP_USER}?${params}`, {
+    headers: headersApplicationJson
+  })
+}

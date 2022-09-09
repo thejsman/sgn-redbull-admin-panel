@@ -96,16 +96,16 @@ const WaitlistedExport = () => {
       </div>
       <div id="main">
 
-        <div class="container">
-          <div class="accordion" id="faq">
-            <div class="card">
-              <div class="card-header" id="faqhead1">
-                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+        <div className="container">
+          <div className="accordion" id="faq">
+            <div className="card">
+              <div className="card-header" id="faqhead1">
+                <a href="#" className="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
                   aria-expanded="true" aria-controls="faq1">By Date</a>
               </div>
 
-              <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
-                <div class="card-body">
+              <div id="faq1" className="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                <div className="card-body">
                   <div className="form-group row">
                     <div className="col-4">
                       <label>Email :</label>

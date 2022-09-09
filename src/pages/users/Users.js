@@ -261,7 +261,7 @@ const Users = () => {
                           {item.permissions?.map((content, j) => (
 
                             <div className='col-3'>
-                              <span><i class="far fa-check-circle" style={{ color: "#5e3fe3" }}></i>{content}</span>
+                              <span><i className="far fa-check-circle" style={{ color: "#5e3fe3" }}></i>{content}</span>
                             </div>
 
 

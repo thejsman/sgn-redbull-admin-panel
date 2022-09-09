@@ -113,6 +113,12 @@ export default {
 	//Export Waitlisted Users
 	EXPORT_WAITLISTED_USERS: siteSetting.api.BaseUrl + "/invitationAdmin/requestUserDataToExport?",
 
-	CONNECTION_STATS: siteSetting.api.BaseUrl + "/connectionAdmin/connectionStats"
+	//Connection Stats
+	CONNECTION_STATS: siteSetting.api.BaseUrl + "/connectionAdmin/connectionStats",
+
+	//App User Section
+	GET_APP_USER: siteSetting.api.BaseUrl + "/appUser/user",
+
+
 
 };
