@@ -5,19 +5,7 @@
 // import axios from "axios";
 import siteSetting from "../config/env/Index";
 
-// export const awsAxios = axios.create({
-// 	transformRequest: (data, headers) => {
-// 		// Remove all shared headers
-// 		delete headers.common["AccessToken"];
-// 		return data;
-// 		// or just the auth header
-// 		//	delete defaults.headers.common["Access-Control-Allow-Origin"];
-// 	}
-// });
-
 export default {
-
-
 
 	///Authorization
 	AUTH: process.env.REACT_APP_API_AUTH_BASE_URL + "auth",
