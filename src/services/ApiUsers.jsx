@@ -6,7 +6,10 @@ export {
   getUserDetailById,
   updateUserDetailById,
   changePassword,
-  getAppUserByCondition
+  getAppUserByCondition,
+  getRewardsByUserId,
+  getTransactionsByUserId,
+  getConnectionsByUserId
 };
 
 
@@ -49,3 +52,20 @@ function getAppUserByCondition(params) {
     headers: headersApplicationJson
   })
 }
+
+function getRewardsByUserId(params) {
+  return axios.get(`${Api.GET_APP_USER_REWARDS}?${params}`, {
+    headers: headersApplicationJson
+  })
+}
+function getConnectionsByUserId(params) {
+  return axios.get(`${Api.GET_APP_USER_CONNECTIONS}?${params}`, {
+    headers: headersApplicationJson
+  })
+}
+function getTransactionsByUserId(params) {
+  return axios.get(`${Api.GET_APP_USER_TRANSACTIONS}?${params}`, {
+    headers: headersApplicationJson
+  })
+}
+

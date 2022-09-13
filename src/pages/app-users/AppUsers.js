@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Breadcrumb from '../../components/common/Breadcrumb'
-import { getAppUserByCondition } from "../../services/ApiUsers";
+import { getAppUserByCondition, getRewardsByUserId, getTransactionsByUserId, getConnectionsByUserId } from "../../services/ApiUsers";
 import { resHandle } from '../../components/util/utils'
 import { ToastContainer, toast } from 'react-toastify'
 import { Loader } from '../../components/common/loader'
@@ -19,14 +19,12 @@ const AppUsers = () => {
   const [userObject, setUserObject] = useState({})
   const [mobileNoErr, setMobileNoErr] = useState("");
   const [loader, setLoader] = useState(0)
-  const [isSearch, setIsSearch] = useState(false)
+  const [isSearch, setIsSearch] = useState(false);
+  const [rewards, setRewards] = useState([])
   // all handler start
 
 
-  const getOrderListByMobileNo = () => {
 
-
-  }
   const handleValidate = () => {
     let validate = true
     if (!userId.replace(/\s+/g, "")) {
@@ -38,16 +36,12 @@ const AppUsers = () => {
     return validate
   }
 
-  const mobileNoRegEx = /^[0-9]$/;
   const handleMobileValidate = () => {
     let validate = true;
 
     if (!mobileNo.replace(/\s+/g, "")) {
       setMobileNoErr("Mobile no is required");
       validate = false;
-    } else if (!mobileNoRegEx.test(mobileNo)) {
-      setMobileNoErr("Invalid mobile no")
-      validate = false
     } else {
       setMobileNoErr("");
     }
@@ -80,6 +74,21 @@ const AppUsers = () => {
       setLoader(0);
       setUserObject({})
     });
+  }
+
+  const getRewards = (id) => {
+    setLoader(2)
+    getAppUserByCondition(cond).then(res => {
+      let { status, data } = resHandle(res)
+      if (status === 200) {
+        setLoader(0)
+        setUserObject(data.data)
+      }
+    }).catch((err) => {
+      setLoader(0);
+      setUserObject({})
+    });
+
   }
 
   // all handler end
@@ -223,13 +232,13 @@ const AppUsers = () => {
                   <div className="card">
                     <div className="card-header" id="rewards">
                       <a href="#" className="btn btn-header-link" data-toggle="collapse" data-target="#reward"
-                        aria-expanded="true" aria-controls="reward">Rewards</a>
+                        aria-expanded="true" aria-controls="reward" onClick={(e) => (getRewards(userObject.userId))}>Rewards</a>
                     </div>
 
                     <div id="reward" className="collapse" aria-labelledby="rewards" data-parent="#user">
                       <div className="card-body">
                         <div className='table-responsive cm_card p-0'>
-                          {loader ? (
+                          {loader == 2 ? (
                             <Loader />
                           ) : (
                             <table className='table  table-bordered user-table table-hover align-items-center'>
