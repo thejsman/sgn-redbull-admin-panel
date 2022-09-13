@@ -127,7 +127,7 @@ export default {
 	CREATE_STICKER: siteSetting.api.BaseUrl + "/sticker/create",
 	UPDATE_STICKER: siteSetting.api.BaseUrl + "/sticker/update",
 	GET_STICKER_BY_ID: siteSetting.api.BaseUrl + "/sticker/getOne",
-	GET_STICKER_LIST: siteSetting.api.BaseUrl + "/stickers/list",
+	GET_STICKER_LIST: siteSetting.api.BaseUrl + "/sticker/list",
 
 
 
