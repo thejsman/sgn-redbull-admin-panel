@@ -1765,6 +1765,7 @@ td.cm_2_line span {
 }
 
 #main #user .card .card-header .btn-header-link {
+  color: #fff;
   display: block;
   text-align: left;
   background: $primary;
@@ -1780,8 +1781,8 @@ td.cm_2_line span {
 }
 
 #main #user .card .card-header .btn-header-link.collapsed {
-  background: #5e3fe3;
-  color: #fff;
+  background: #efebff;
+  color: #000;
 }
 
 #main #user .card .card-header .btn-header-link.collapsed:after {
@@ -1789,7 +1790,7 @@ td.cm_2_line span {
 }
 
 #main #user .card .collapsing {
-  background: #5e3fe3;
+  background: #efebff;
   line-height: 30px;
 }
 
@@ -1798,10 +1799,10 @@ td.cm_2_line span {
 }
 
 #main #user .card .collapse.show {
-  background: #5e3fe3;
+  background: #efebff;
   line-height: 30px;
-  color: #fff;
-  border-bottom: 1px solid #5e3fe3;
+  color: #222;
+  border-bottom: 1px solid #ccc2ef;
 }
 
 .title {

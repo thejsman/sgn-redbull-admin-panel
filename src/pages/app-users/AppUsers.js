@@ -84,7 +84,7 @@ const AppUsers = () => {
       let { status, data } = resHandle(res)
       if (status === 200) {
         setLoader(0)
-        setRewards(data.data)
+        setRewards(data.data.Items)
       }
     }).catch((err) => {
       setLoader(0);
@@ -284,69 +284,35 @@ const AppUsers = () => {
                                 </tr>
                               </thead>
                               <tbody>
-                                {/* {relationArrayList.length ? (
-                relationArrayList?.map((item, i) => ( */}
-                                <tr >
-                                  <td>1</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
+                                {rewards.length ? (
+                                  rewards?.map((item, i) => (
+                                    <tr key={i}>
+                                      <td>{(page - 1) * limit + i + 1}</td>
+                                      <td>
+                                        <span className=''>{item.transactionType}</span>
+                                      </td>
+                                      <td>
+                                        <span className=''>{item.amount}</span>
+                                      </td>
 
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
+                                      <td>
+                                        <span className=''>{item.description}</span>
+                                      </td>
+                                      <td>
+                                        {item.createdAt}
+                                      </td>
 
-                                </tr>
-                                <tr >
-                                  <td>2</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
-
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
-
-                                </tr>
-                                <tr >
-                                  <td>3</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
-
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
-
-                                </tr>
-                                {/* ))
-              ) : (
-                <tr>
-                  <td colSpan='6'>
-                    <div className='nodatafound'>
-                      <h3>No Data Found</h3>
-                    </div>
-                  </td>
-                </tr>
-              )} */}
+                                    </tr>
+                                  ))
+                                ) : (
+                                  <tr>
+                                    <td colSpan='5'>
+                                      <div className='nodatafound'>
+                                        <h3>No Data Found</h3>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                )}
                               </tbody>
                             </table>
                           )}
