@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Modal, Dropdown, Button } from "react-bootstrap";
-import Pagination from "react-js-pagination";
-import { waitlistedExport } from "../../services/ApiServices";
+import { reportExport } from "../../services/ApiServices";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader } from "../../components/common/loader";
-import { sendInvitation } from '../../services/ApiServices';
-import moment from 'moment'
+import moment from "moment";
 
-
-const WaitlistedExport = () => {
-  const breadcrumb = [{ link: "", linkText: "Export Waitlisted Users" }];
+const ReportExport = () => {
+  const breadcrumb = [{ link: "", linkText: "Report Export" }];
   const [startDate, setStartDate] = useState("");
   const [endDate, setendDate] = useState("");
   const [loader, setLoader] = useState(false);
@@ -58,12 +54,12 @@ const WaitlistedExport = () => {
   const getListByDate = () => {
     if (handleValidate()) {
       setLoader(true);
-      let params = `startDate=` + startDate;
+      let params = `?startDate=` + startDate;
       if (endDate) {
         params += "&endDate=" + endDate;
       }
       params += "&email=" + email;
-      waitlistedExport(params).then((res) => {
+      reportExport(params).then((res) => {
         let { status, data } = resHandle(res);
         if (status === 200) {
           setLoader(false);
@@ -92,7 +88,7 @@ const WaitlistedExport = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className="twocol sb page_header mr-3">
-        <h2>Export Waitlisted Users</h2>
+        <h2>Report Export</h2>
       </div>
       <div id="main">
 
@@ -195,4 +191,4 @@ const WaitlistedExport = () => {
   );
 };
 
-export default WaitlistedExport;
+export default ReportExport;

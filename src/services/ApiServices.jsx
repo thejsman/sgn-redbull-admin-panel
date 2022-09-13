@@ -27,7 +27,8 @@ export {
   userCleverTapLiveCount,
   waitlistedUsers,
   waitlistedExport,
-  connectionStats
+  connectionStats,
+  reportExport
 };
 
 
@@ -168,6 +169,13 @@ function waitlistedExport(data) {
 function connectionStats(data) {
   return axios.get(
     `${Api.CONNECTION_STATS}?${data}`, {
+    headers: headersApplicationJson,
+  });
+}
+
+function reportExport(params) {
+  return axios.get(
+    Api.EXPORT_REPORT + params, {
     headers: headersApplicationJson,
   });
 }

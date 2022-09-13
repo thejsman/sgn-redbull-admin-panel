@@ -14,6 +14,7 @@ import { Loader } from "../../components/common/loader";
 import moment from "moment";
 
 const Orders = () => {
+
 	const history = useHistory();
 	const breadcrumb = [{ link: "", linkText: "Orders" }];
 	const [orderList, setOrderList] = useState([]);
@@ -469,7 +470,7 @@ const Orders = () => {
 						</div>
 					</div>
 					{orderList[index]?.giftWith &&
-					orderList[index]?.giftWith.length > 0 ? (
+						orderList[index]?.giftWith.length > 0 ? (
 						<>
 							<div className="row">
 								<div className="col">
@@ -487,18 +488,18 @@ const Orders = () => {
 
 					{orderList[index]?.giftWith && orderList[index]?.giftWith.length > 0
 						? orderList[index]?.giftWith?.map((item, i) => (
-								<div className="row" key={"gift" + i}>
-									<div className="col-2">
-										{item?.profileImage ? (
-											<img src={item?.profileImage} style={{ width: "50%" }} />
-										) : (
-											""
-										)}
-									</div>
-									<div className="col-7">{item?.userId}</div>
-									<div className="col-3">{item?.screenName}</div>
+							<div className="row" key={"gift" + i}>
+								<div className="col-2">
+									{item?.profileImage ? (
+										<img src={item?.profileImage} style={{ width: "50%" }} />
+									) : (
+										""
+									)}
 								</div>
-						  ))
+								<div className="col-7">{item?.userId}</div>
+								<div className="col-3">{item?.screenName}</div>
+							</div>
+						))
 						: null}
 					<div className="row">
 						<div className="col">
@@ -512,7 +513,7 @@ const Orders = () => {
 						<div className="col-3 font-weight-bold">Valid Till</div>
 					</div>
 					{orderList[index]?.giftCardDetails &&
-					orderList[index]?.giftCardDetails.length ? (
+						orderList[index]?.giftCardDetails.length ? (
 						orderList[index]?.giftCardDetails?.map((giftcard, j) => (
 							<div className="row" key={"giftcard" + j}>
 								<div className="col-3">{giftcard?.giftCardCode}</div>

@@ -35,6 +35,10 @@ import AddEditOnBoardingCards from "./pages/cards/onBoardingCards/AddEditOnBoard
 import OnBoardingCards from "./pages/cards/onBoardingCards/OnBoardingCards";
 import WaitlistedExport from "./pages/waitlistedUsers/WaitlistedExport";
 import ConnectionStats from "./pages/connectionStats/ConnectionStats";
+import AppUsers from "./pages/app-users/AppUsers";
+import Sticker from "./pages/sticker/Sticker";
+import AddEditSticker from "./pages/sticker/AddEditSticker";
+import ReportExport from "./pages/reports/ReportExport";
 
 
 const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
@@ -161,6 +165,18 @@ const Routes = (props) => {
 
             {/* Connection Stats  Routes */}
             <PrivateRoute exact module="connection-stats" path="/connection-stats" {...props} component={ConnectionStats} />
+
+            {/* Connection Stats  Routes */}
+            <PrivateRoute exact module="users" path="/app-users" {...props} component={AppUsers} />
+
+            {/* Stricker Routes */}
+            <PrivateRoute exact module="relationship-management" path='/sticker/edit/:id'  {...props} component={AddEditSticker} />
+            <PrivateRoute exact module="relationship-management" path='/sticker/create'  {...props} component={AddEditSticker} />
+            <PrivateRoute exact module="relationship-management" path='/sticker'         {...props} component={Sticker} />
+
+
+            {/* Waitlisted Users  Routes */}
+            <PrivateRoute exact module="waitlisted" path="/report/export" {...props} component={ReportExport} />
 
           </Switch>
         </Router>

@@ -40,7 +40,7 @@ const Sidebar = () => {
           <li>
 
             <NavLink to="/connection-stats" exact>
-              <i class="fa fa-handshake"></i>{" "}
+              <i className="fa fa-handshake"></i>{" "}
               <span className="menu_text">Connection Stats</span>
             </NavLink>
           </li>
@@ -58,6 +58,14 @@ const Sidebar = () => {
             <NavLink to="/family-relationship"  >
               <i className="fas fa-users"></i>{" "}
               <span className="menu_text">Relationship management</span>
+            </NavLink>
+          </li>
+        ))}
+        {((getPermission('relationship-management') !== -1) && (
+          <li>
+            <NavLink to="/sticker"  >
+              <i class="fas fa-yin-yang"></i>{" "}
+              <span className="menu_text">Sticker management</span>
             </NavLink>
           </li>
         ))}
@@ -250,6 +258,52 @@ const Sidebar = () => {
           </li>
         ))}
 
+        {((getPermission('users') !== -1) && (
+          <li>
+            <NavLink to="/app-users"  >
+              <i className="fas fa-users"></i>{" "}
+              <span className="menu_text">App Users</span>
+            </NavLink>
+          </li>
+        ))}
+
+
+        {((getPermission('users') !== -1) && (
+          <li>
+            <div className="">
+              <NavLink
+                exact
+                to="/report/export"
+                className={
+                  (location.pathname.includes("/report/"))
+                    ? "active"
+                    : ""
+                }
+              >
+                <i className="fa fa-credit-card"></i>{" "}
+
+                <span className="menu_text">Reports</span>
+              </NavLink>
+              <div
+                className="submenu"
+                style={{
+                  display: (location.pathname.includes("/report/"))
+                    ? "block"
+                    : "none",
+                }}
+              >
+                <NavLink to="/report/export"
+                  className={
+                    (location.pathname.includes("/report/export"))
+                      ? "active"
+                      : ""
+                  }
+
+                > <i className="fab fa-elementor"></i>{" "}Export</NavLink>
+              </div>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );

@@ -125,7 +125,7 @@ h1,
 h2,
 h3,
 h4,
-h5 ,
+h5,
 h6 {
   font-weight: 500;
 }
@@ -823,7 +823,6 @@ i.fas.fa-edit {
     max-width: 300px;
     padding: 15px 10px;
   }
- 
 }
 .imgpreview img {
   max-width: 290px;
@@ -1662,10 +1661,9 @@ td.cm_2_line span {
   margin-top: 12px;
 }
 
-.tablecollapse  {
+.tablecollapse {
   table-layout: fixed;
   word-wrap: break-word;
- 
 }
 
 .tablecollapse tr {
@@ -1675,8 +1673,8 @@ td.cm_2_line span {
 .tablecollapse .is-breakable {
   word-break: break-all;
   white-space: pre-wrap;
-word-wrap: break-word;
-background-color: #eef1f5;
+  word-wrap: break-word;
+  background-color: #eef1f5;
 }
 
 .tablecollapse .text-wrap {
@@ -1696,7 +1694,7 @@ background-color: #eef1f5;
 }
 
 #main {
- margin: 0;
+  margin: 0;
 }
 
 #main #faq .card {
@@ -1707,7 +1705,7 @@ background-color: #eef1f5;
 #main #faq .card .card-header {
   border: 0;
   -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
-          box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+  box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
   border-radius: 2px;
   padding: 0;
 }
@@ -1723,7 +1721,7 @@ background-color: #eef1f5;
 
 #main #faq .card .card-header .btn-header-link:after {
   content: "\f107";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   float: right;
 }
@@ -1751,7 +1749,60 @@ background-color: #eef1f5;
   line-height: 30px;
   color: #222;
   border-bottom: 1px solid #ccc2ef;
- 
+}
+
+#main #user .card {
+  margin-bottom: 5px;
+  border: 0;
+}
+
+#main #user .card .card-header {
+  border: 0;
+  -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+  box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+  border-radius: 2px;
+  padding: 0;
+}
+
+#main #user .card .card-header .btn-header-link {
+  color: #fff;
+  display: block;
+  text-align: left;
+  background: $primary;
+  color: #fff;
+  padding: 20px;
+}
+
+#main #user .card .card-header .btn-header-link:after {
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  float: right;
+}
+
+#main #user .card .card-header .btn-header-link.collapsed {
+  background: #efebff;
+  color: #000;
+}
+
+#main #user .card .card-header .btn-header-link.collapsed:after {
+  content: "\f106";
+}
+
+#main #user .card .collapsing {
+  background: #efebff;
+  line-height: 30px;
+}
+
+#main #user .card .collapse {
+  border: 0;
+}
+
+#main #user .card .collapse.show {
+  background: #efebff;
+  line-height: 30px;
+  color: #222;
+  border-bottom: 1px solid #ccc2ef;
 }
 
 .title {

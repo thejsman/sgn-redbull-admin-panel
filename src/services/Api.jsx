@@ -5,19 +5,7 @@
 // import axios from "axios";
 import siteSetting from "../config/env/Index";
 
-// export const awsAxios = axios.create({
-// 	transformRequest: (data, headers) => {
-// 		// Remove all shared headers
-// 		delete headers.common["AccessToken"];
-// 		return data;
-// 		// or just the auth header
-// 		//	delete defaults.headers.common["Access-Control-Allow-Origin"];
-// 	}
-// });
-
 export default {
-
-
 
 	///Authorization
 	AUTH: process.env.REACT_APP_API_AUTH_BASE_URL + "auth",
@@ -113,6 +101,27 @@ export default {
 	//Export Waitlisted Users
 	EXPORT_WAITLISTED_USERS: siteSetting.api.BaseUrl + "/invitationAdmin/requestUserDataToExport?",
 
-	CONNECTION_STATS: siteSetting.api.BaseUrl + "/connectionAdmin/connectionStats"
+	//Connection Stats
+	CONNECTION_STATS: siteSetting.api.BaseUrl + "/connectionAdmin/connectionStats",
+
+	//App User Section
+	GET_APP_USER: siteSetting.api.BaseUrl + "/appUser/user",
+	GET_APP_USER_REWARDS: siteSetting.api.BaseUrl + "/appUser/rewards",
+	GET_APP_USER_CONNECTIONS: siteSetting.api.BaseUrl + "/appUser/connections",
+	GET_APP_USER_TRANSACTIONS: siteSetting.api.BaseUrl + "/appUser/transactions",
+
+	//Sticker Section
+	DELETE_STICKER: siteSetting.api.BaseUrl + "/sticker/delete",
+	CREATE_STICKER: siteSetting.api.BaseUrl + "/sticker/create",
+	UPDATE_STICKER: siteSetting.api.BaseUrl + "/sticker/update",
+	GET_STICKER_BY_ID: siteSetting.api.BaseUrl + "/sticker/getOne",
+	GET_STICKER_LIST: siteSetting.api.BaseUrl + "/sticker/list",
+
+
+	//Export Report
+	EXPORT_REPORT: siteSetting.api.BaseUrl + "/statistics/requestReport",
+
+
+
 
 };

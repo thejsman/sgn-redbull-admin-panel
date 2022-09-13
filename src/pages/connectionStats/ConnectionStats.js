@@ -110,16 +110,16 @@ const ConnectionStats = () => {
       </div>
       <div id="main">
 
-        <div class="container">
-          <div class="accordion" id="faq">
-            <div class="card">
-              <div class="card-header" id="faqhead1">
-                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+        <div className="container">
+          <div className="accordion" id="faq">
+            <div className="card">
+              <div className="card-header" id="faqhead1">
+                <a href="#" className="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
                   aria-expanded="true" aria-controls="faq1">Search By Date</a>
               </div>
 
-              <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
-                <div class="card-body">
+              <div id="faq1" className="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                <div className="card-body">
                   <div className="form-group row">
                     <div className="col-4">
                       <label>Select Date :</label>
@@ -146,14 +146,14 @@ const ConnectionStats = () => {
                 </div>
               </div>
             </div>
-            <div class="card">
-              <div class="card-header" id="faqhead2">
-                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq2"
+            <div className="card">
+              <div className="card-header" id="faqhead2">
+                <a href="#" className="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq2"
                   aria-expanded="true" aria-controls="faq2">Search By Month</a>
               </div>
 
-              <div id="faq2" class="collapse" aria-labelledby="faqhead2" data-parent="#faq">
-                <div class="card-body">
+              <div id="faq2" className="collapse" aria-labelledby="faqhead2" data-parent="#faq">
+                <div className="card-body">
                   <div className="form-group  row mb-4">
 
                     <div className="col-6">
@@ -188,8 +188,8 @@ const ConnectionStats = () => {
       </div>
       {isShow && (
         <>
-          <div class="card mt-5 mb-3">
-            <div class="card-header title">
+          <div className="card mt-5 mb-3">
+            <div className="card-header title">
               {title}
             </div>
           </div>
@@ -233,8 +233,8 @@ const ConnectionStats = () => {
           </div>
 
 
-          <div class="card mt-5 mb-3">
-            <div class="card-header title">
+          <div className="card mt-5 mb-3">
+            <div className="card-header title">
               Last Week Transactions
             </div>
           </div>
