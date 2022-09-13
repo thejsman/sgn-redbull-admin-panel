@@ -20,7 +20,9 @@ const AppUsers = () => {
   const [mobileNoErr, setMobileNoErr] = useState("");
   const [loader, setLoader] = useState(0)
   const [isSearch, setIsSearch] = useState(false);
-  const [rewards, setRewards] = useState([])
+  const [rewards, setRewards] = useState([]);
+  const [transactions, setTransactions] = useState([]);
+  const [connections, setConnections] = useState([]);
   // all handler start
 
 
@@ -78,18 +80,47 @@ const AppUsers = () => {
 
   const getRewards = (id) => {
     setLoader(2)
-    getAppUserByCondition(cond).then(res => {
+    getRewardsByUserId("userId=" + id).then(res => {
       let { status, data } = resHandle(res)
       if (status === 200) {
         setLoader(0)
-        setUserObject(data.data)
+        setRewards(data.data)
       }
     }).catch((err) => {
       setLoader(0);
-      setUserObject({})
+      setRewards([])
     });
 
   }
+  const getTransactions = (id) => {
+    setLoader(3)
+    getTransactionsByUserId("userId=" + id + "&transaction=null").then(res => {
+      let { status, data } = resHandle(res)
+      if (status === 200) {
+        setLoader(0)
+        setTransactions(data.data)
+      }
+    }).catch((err) => {
+      setLoader(0);
+      setTransactions([])
+    });
+
+  }
+  const getConnections = (id) => {
+    setLoader(4)
+    getConnectionsByUserId("userId=" + id).then(res => {
+      let { status, data } = resHandle(res)
+      if (status === 200) {
+        setLoader(0)
+        setConnections(data.data)
+      }
+    }).catch((err) => {
+      setLoader(0);
+      setConnections([])
+    });
+
+  }
+
 
   // all handler end
   return (
@@ -326,7 +357,7 @@ const AppUsers = () => {
                   <div className="card">
                     <div className="card-header" id="transactions">
                       <a href="#" className="btn btn-header-link" data-toggle="collapse" data-target="#transaction"
-                        aria-expanded="true" aria-controls="transaction">Transactions</a>
+                        aria-expanded="true" aria-controls="transaction" onClick={(e) => (getTransactions(userObject.userId))}>Transactions</a>
                     </div>
 
                     <div id="transaction" className="collapse" aria-labelledby="transactions" data-parent="#user">
@@ -420,7 +451,7 @@ const AppUsers = () => {
                   <div className="card">
                     <div className="card-header" id="connections">
                       <a href="#" className="btn btn-header-link" data-toggle="collapse" data-target="#connection"
-                        aria-expanded="true" aria-controls="transaction">Connections</a>
+                        aria-expanded="true" aria-controls="transaction" onClick={(e) => (getConnections(userObject.userId))}>Connections</a>
                     </div>
 
                     <div id="connection" className="collapse" aria-labelledby="connections" data-parent="#user">
