@@ -61,6 +61,14 @@ const Sidebar = () => {
             </NavLink>
           </li>
         ))}
+        {((getPermission('relationship-management') !== -1) && (
+          <li>
+            <NavLink to="/sticker"  >
+              <i class="fas fa-yin-yang"></i>{" "}
+              <span className="menu_text">Sticker management</span>
+            </NavLink>
+          </li>
+        ))}
         {((getPermission('occasion-management') !== -1) && (
           <li>
             <div className="">

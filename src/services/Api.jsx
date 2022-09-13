@@ -122,6 +122,13 @@ export default {
 	GET_APP_USER_CONNECTIONS: siteSetting.api.BaseUrl + "/appUser/connections",
 	GET_APP_USER_TRANSACTIONS: siteSetting.api.BaseUrl + "/appUser/transactions",
 
+	//Sticker Section
+	DELETE_STICKER: siteSetting.api.BaseUrl + "/sticker/delete",
+	CREATE_STICKER: siteSetting.api.BaseUrl + "/sticker/create",
+	UPDATE_STICKER: siteSetting.api.BaseUrl + "/sticker/update",
+	GET_STICKER_BY_ID: siteSetting.api.BaseUrl + "/sticker/getOne",
+	GET_STICKER_LIST: siteSetting.api.BaseUrl + "/stickers/list",
+
 
 
 };
