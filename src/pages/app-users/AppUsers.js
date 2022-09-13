@@ -173,12 +173,12 @@ const AppUsers = () => {
       ) : (
         Object.keys(userObject).length > 0 ? (
           <>
-            <div className='cm_card m-4'>
-              <div className='form-group row'>
+            <div className='cm_card mt-2'>
+              <div className='row'>
                 <div className='col-12'><h4>User Detail &nbsp;&nbsp;&nbsp;   ({userObject?.userId})</h4></div>
               </div>
 
-              <div className='form-group row '>
+              <div className='row '>
                 <div className='col-3'>
                   <img style={{ width: "50%" }} src={userObject?.profileImage} />
                 </div>
@@ -186,29 +186,28 @@ const AppUsers = () => {
                 <div className='col-9 '>
                   <div className='row' >
                     <div className='col-3 cm_card mr-1'>
-                      <div className='row '>
-                        <div className='col'> <label>Name  : {userObject?.screenName}</label></div></div>
+                      <div className='row '><div className='col'> <label>Name  : {userObject?.screenName}</label></div></div>
                       <div className='row'><div className='col'>  <label>DOB :{userObject?.dob}</label></div></div>
-                      <div className='row'><div className='col'> <label>Gender  :{userObject?.gender}</label></div>
-                        <div className='col'> <label>Reg Date  : {userObject?.createdDate}</label></div></div>
+                      <div className='row'><div className='col'> <label>Gender  :{userObject?.gender}</label></div></div>
+                      <div className='row'>  <div className='col'> <label>Reg Date  : {userObject?.createdDate}</label></div></div>
 
                     </div>
 
-                  </div>
-                  <div className='col-3 cm_card mr-1'>
-                    <div className='row '> <div className='col'> <label>Is Email Verified  : {userObject?.emailVerified == true ? "Yes" : "No"}</label></div></div>
-                    <div className='row'><div className='col'> <label>Contact No.  : {userObject?.phone}</label></div></div>
-                    <div className='row'><div className='col'> <label>Email  : {userObject?.email}</label></div></div>
-                    <div className='row'> <div className='col'> <label>Country  : {userObject?.countryName}</label></div></div>
 
-                  </div>
+                    <div className='col-4 cm_card mr-1'>
+                      <div className='row '> <div className='col'> <label>Is Email Verified  : {userObject?.emailVerified == true ? "Yes" : "No"}</label></div></div>
+                      <div className='row'><div className='col'> <label>Contact No.  : {userObject?.phone}</label></div></div>
+                      <div className='row'><div className='col'> <label>Email  : {userObject?.email}</label></div></div>
+                      <div className='row'> <div className='col'> <label>Country  : {userObject?.countryName}</label></div></div>
 
-                  <div className='col-4  cm_card'>
-                    <div className='row '><div className='col'> <label>Total Rewards  : {userObject?.totalRewards}</label></div></div>
-                    <div className='row '><div className='col'> <label>Total Reward Earned : {userObject?.totalRewardEarned}</label></div></div>
-                    <div className='row '><div className='col'> <label>Total Reward Used  : {userObject?.totalRewardUsed}</label></div></div>
-                  </div>
+                    </div>
 
+                    <div className='col-4  cm_card'>
+                      <div className='row '><div className='col'> <label>Total Rewards  : {userObject?.totalRewards}</label></div></div>
+                      <div className='row '><div className='col'> <label>Total Reward Earned : {userObject?.totalRewardEarned}</label></div></div>
+                      <div className='row '><div className='col'> <label>Total Reward Used  : {userObject?.totalRewardUsed}</label></div></div>
+                    </div>
+                  </div>
                 </div>
 
               </div>
