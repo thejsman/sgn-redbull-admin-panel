@@ -267,6 +267,43 @@ const Sidebar = () => {
           </li>
         ))}
 
+
+        {((getPermission('users') !== -1) && (
+          <li>
+            <div className="">
+              <NavLink
+                exact
+                to="/report/export"
+                className={
+                  (location.pathname.includes("/report/"))
+                    ? "active"
+                    : ""
+                }
+              >
+                <i className="fa fa-credit-card"></i>{" "}
+
+                <span className="menu_text">Reports</span>
+              </NavLink>
+              <div
+                className="submenu"
+                style={{
+                  display: (location.pathname.includes("/report/"))
+                    ? "block"
+                    : "none",
+                }}
+              >
+                <NavLink to="/report/export"
+                  className={
+                    (location.pathname.includes("/report/export"))
+                      ? "active"
+                      : ""
+                  }
+
+                > <i className="fab fa-elementor"></i>{" "}Export</NavLink>
+              </div>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );

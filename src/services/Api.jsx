@@ -118,5 +118,10 @@ export default {
 	GET_STICKER_LIST: siteSetting.api.BaseUrl + "/sticker/list",
 
 
+	//Export Report
+	EXPORT_REPORT: siteSetting.api.BaseUrl + "/statistics/requestReport",
+
+
+
 
 };
