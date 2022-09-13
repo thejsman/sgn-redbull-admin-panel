@@ -120,7 +120,7 @@ export default {
 	GET_APP_USER: siteSetting.api.BaseUrl + "/appUser/user",
 	GET_APP_USER_REWARDS: siteSetting.api.BaseUrl + "/appUser/rewards",
 	GET_APP_USER_CONNECTIONS: siteSetting.api.BaseUrl + "/appUser/connections",
-	GET_APP_USER_TRANSACTIONS: siteSetting.api.BaseUrl + "/appUser/transaction",
+	GET_APP_USER_TRANSACTIONS: siteSetting.api.BaseUrl + "/appUser/transactions",
 
 
 

@@ -94,11 +94,11 @@ const AppUsers = () => {
   }
   const getTransactions = (id) => {
     setLoader(3)
-    getTransactionsByUserId("userId=" + id + "&transaction=null").then(res => {
+    getTransactionsByUserId("userId=" + id + "&transactionId=null").then(res => {
       let { status, data } = resHandle(res)
       if (status === 200) {
         setLoader(0)
-        setTransactions(data.data)
+        setTransactions(data.data.Items)
       }
     }).catch((err) => {
       setLoader(0);
@@ -112,7 +112,7 @@ const AppUsers = () => {
       let { status, data } = resHandle(res)
       if (status === 200) {
         setLoader(0)
-        setConnections(data.data)
+        setConnections(data.data.Items)
       }
     }).catch((err) => {
       setLoader(0);
@@ -229,7 +229,7 @@ const AppUsers = () => {
                       <div className='row '><div className='col'> <label>Name  : {userObject?.screenName}</label></div></div>
                       <div className='row'><div className='col'>  <label>DOB :{userObject?.dob}</label></div></div>
                       <div className='row'><div className='col'> <label>Gender  :{userObject?.gender}</label></div></div>
-                      <div className='row'>  <div className='col'> <label>Reg Date  : {userObject?.createdDate}</label></div></div>
+                      <div className='row'>  <div className='col'> <label>Reg Date  :   {moment(userObject?.createdDate).format('DD-MMM-YY')}</label></div></div>
 
                     </div>
 
@@ -299,7 +299,7 @@ const AppUsers = () => {
                                         <span className=''>{item.description}</span>
                                       </td>
                                       <td>
-                                        {item.createdAt}
+                                        {moment(item.createdAt).format('DD-MMM-YY')}
                                       </td>
 
                                     </tr>
@@ -329,84 +329,57 @@ const AppUsers = () => {
                     <div id="transaction" className="collapse" aria-labelledby="transactions" data-parent="#user">
                       <div className="card-body">
                         <div className='table-responsive cm_card p-0'>
-                          {loader ? (
+                          {loader == 3 ? (
                             <Loader />
                           ) : (
                             <table className='table  table-bordered user-table table-hover align-items-center'>
                               <thead>
                                 <tr>
                                   <th>S.No</th>
-                                  <th>Transaction Type</th>
-                                  <th>Amount</th>
-                                  <th>Description</th>
+                                  <th>Trans Id</th>
+                                  <th>Trans Type</th>
+                                  <th>Occasion</th>
+                                  <th>Quantity</th>
+                                  <th>Trans Status</th>
                                   <th>Date</th>
 
                                 </tr>
                               </thead>
                               <tbody>
-                                {/* {relationArrayList.length ? (
-                relationArrayList?.map((item, i) => ( */}
-                                <tr >
-                                  <td>1</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
+                                {transactions.length ? (
+                                  transactions?.map((item, i) => (
+                                    <tr key={i}>
+                                      <td>{(page - 1) * limit + i + 1}</td>
+                                      <td>
+                                        <span className=''>{item.orderId}</span>
+                                      </td>
+                                      <td>
+                                        <span className=''>{item.transactionType}</span>
+                                      </td>
 
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
+                                      <td>
+                                        <span className=''>{item.occasionTitle}</span>
+                                      </td>
+                                      <td>
+                                        <span className=''>{item.quantity}</span>
+                                      </td>
+                                      <td>
+                                        <span className=''>{item.transactionStatus}</span>
+                                      </td>
+                                      <td>
+                                        {moment(item.transactionDate).format('DD-MMM-YY')}
+                                      </td>
 
-                                </tr>
-                                <tr >
-                                  <td>2</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
-
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
-
-                                </tr>
-                                <tr >
-                                  <td>3</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
-
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
-
-                                </tr>
-                                {/* ))
-              ) : (
-                <tr>
-                  <td colSpan='6'>
-                    <div className='nodatafound'>
-                      <h3>No Data Found</h3>
-                    </div>
-                  </td>
-                </tr>
-              )} */}
+                                    </tr>
+                                  ))) : (
+                                  <tr>
+                                    <td colSpan='7'>
+                                      <div className='nodatafound'>
+                                        <h3>No Data Found</h3>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                )}
                               </tbody>
                             </table>
                           )}
@@ -423,84 +396,58 @@ const AppUsers = () => {
                     <div id="connection" className="collapse" aria-labelledby="connections" data-parent="#user">
                       <div className="card-body">
                         <div className='table-responsive cm_card p-0'>
-                          {loader ? (
+                          {loader == 4 ? (
                             <Loader />
                           ) : (
                             <table className='table  table-bordered user-table table-hover align-items-center'>
                               <thead>
                                 <tr>
                                   <th>S.No</th>
-                                  <th>Transaction Type</th>
-                                  <th>Amount</th>
-                                  <th>Description</th>
+                                  <th>Relationship</th>
+                                  <th>To Name</th>
+                                  <th>Contact No</th>
+                                  <th>Status</th>
+                                  <th>Accept Date</th>
                                   <th>Date</th>
 
                                 </tr>
                               </thead>
                               <tbody>
-                                {/* {relationArrayList.length ? (
-                relationArrayList?.map((item, i) => ( */}
-                                <tr >
-                                  <td>1</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
+                                {connections.length ? (
+                                  connections?.map((item, i) => (
+                                    <tr key={i}>
+                                      <td>{(page - 1) * limit + i + 1}</td>
+                                      <td>
+                                        <span className=''>{item.subToRelationTitle}</span>
+                                      </td>
 
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
 
-                                </tr>
-                                <tr >
-                                  <td>2</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
+                                      <td>
+                                        <span className=''>{item.subToName}</span>
+                                      </td>
+                                      <td>
+                                        <span className=''>{item.subTo}</span>
+                                      </td>
+                                      <td>
+                                        <span className=''>{item.status}</span>
+                                      </td>
+                                      <td>
+                                        {moment(item.acceptTime).format('DD-MMM-YY')}
+                                      </td>
+                                      <td>
+                                        {moment(item.createdAt).format('DD-MMM-YY')}
+                                      </td>
 
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
-
-                                </tr>
-                                <tr >
-                                  <td>3</td>
-                                  <td>
-                                    <span className=''>Credit</span>
-                                  </td>
-                                  <td>
-                                    <span className=''>10</span>
-                                  </td>
-
-                                  <td>
-                                    <span className=''>Scratch card game</span>
-                                  </td>
-                                  <td>
-                                    29/07/2022
-                                  </td>
-
-                                </tr>
-                                {/* ))
-              ) : (
-                <tr>
-                  <td colSpan='6'>
-                    <div className='nodatafound'>
-                      <h3>No Data Found</h3>
-                    </div>
-                  </td>
-                </tr>
-              )} */}
+                                    </tr>
+                                  ))) : (
+                                  <tr>
+                                    <td colSpan='7'>
+                                      <div className='nodatafound'>
+                                        <h3>No Data Found</h3>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                )}
                               </tbody>
                             </table>
                           )}
