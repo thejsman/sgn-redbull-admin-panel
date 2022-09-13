@@ -56,7 +56,6 @@ const Sticker = () => {
     handleClose()
     setLoader(true)
     deleteSticker(params).then(res => {
-      getStickerList()
       let { status, data } = resHandle(res)
       if (status === 200) {
         setLoader(false)
