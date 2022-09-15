@@ -88,7 +88,7 @@ const WaitlistedUsers = () => {
       if (ck) {
         setDateErr("");
       } else {
-        setDateErr("Invalid date formate ('DD-MM-YYYY')");
+        setDateErr("Invalid date format ('DD-MM-YYYY')");
         validate = false
       }
 

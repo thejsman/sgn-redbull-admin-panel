@@ -28,7 +28,8 @@ export {
   waitlistedUsers,
   waitlistedExport,
   connectionStats,
-  reportExport
+  reportExport,
+  updateOrderStatus
 };
 
 
@@ -179,4 +180,11 @@ function reportExport(params) {
     headers: headersApplicationJson,
   });
 }
+
+function updateOrderStatus(params) {
+  return axios.patch(Api.UPDATE_ORDER_STATUS, params, {
+    headers: headersApplicationJson,
+  });
+}
+
 

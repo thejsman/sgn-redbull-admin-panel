@@ -31,7 +31,7 @@ const ReportExport = () => {
       if (ck) {
         setDateErr("");
       } else {
-        setDateErr("Invalid start date formate ('DD-MM-YYYY')");
+        setDateErr("Invalid start date format ('DD-MM-YYYY')");
         validate = false
       }
     }

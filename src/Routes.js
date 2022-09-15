@@ -166,17 +166,17 @@ const Routes = (props) => {
             {/* Connection Stats  Routes */}
             <PrivateRoute exact module="connection-stats" path="/connection-stats" {...props} component={ConnectionStats} />
 
-            {/* Connection Stats  Routes */}
-            <PrivateRoute exact module="users" path="/app-users" {...props} component={AppUsers} />
+            {/* App Users  Routes */}
+            <PrivateRoute exact module="app-users" path="/app-users" {...props} component={AppUsers} />
 
             {/* Stricker Routes */}
-            <PrivateRoute exact module="relationship-management" path='/sticker/edit/:id'  {...props} component={AddEditSticker} />
-            <PrivateRoute exact module="relationship-management" path='/sticker/create'  {...props} component={AddEditSticker} />
-            <PrivateRoute exact module="relationship-management" path='/sticker'         {...props} component={Sticker} />
+            <PrivateRoute exact module="sticker-management" path='/sticker/edit/:id'  {...props} component={AddEditSticker} />
+            <PrivateRoute exact module="sticker-management" path='/sticker/create'  {...props} component={AddEditSticker} />
+            <PrivateRoute exact module="sticker-management" path='/sticker'         {...props} component={Sticker} />
 
 
-            {/* Waitlisted Users  Routes */}
-            <PrivateRoute exact module="waitlisted" path="/report/export" {...props} component={ReportExport} />
+            {/* Reports  Routes */}
+            <PrivateRoute exact module="reports" path="/report/export" {...props} component={ReportExport} />
 
           </Switch>
         </Router>
