@@ -306,8 +306,9 @@ const Orders = () => {
 			setIsProcess(true);
 			let params = {
 				transactionId: orderList[index].orderId,
-				deliveryDate: moment().toISOString(deliveryDate)
+				deliveryDate: deliveryDate + "T00:00:00.00Z"
 			}
+
 			updateOrderStatus(params).then(res => {
 				let { status, data } = resHandle(res)
 				setIsProcess(false);
