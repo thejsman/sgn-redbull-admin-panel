@@ -88,6 +88,8 @@ export default {
 
 	//Orders Section
 	GET_ORDERS: siteSetting.api.BaseUrl + "/shopAdmin/transaction/",
+	UPDATE_ORDER_STATUS: siteSetting.api.BaseUrl + "/shopAdmin/transaction/updateDelivery",
+
 
 	//user Analytics
 	USER_ANALYTICS: siteSetting.api.BaseUrl + "/statistics/",

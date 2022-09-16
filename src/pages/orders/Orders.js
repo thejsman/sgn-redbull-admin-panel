@@ -6,12 +6,14 @@ import {
 	orderListByDate,
 	orderListByMobileno,
 	orderListByOrderId,
+	updateOrderStatus,
 } from "../../services/ApiServices";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader } from "../../components/common/loader";
 import moment from "moment";
+import { Spinner } from "react-bootstrap";
 
 const Orders = () => {
 
@@ -37,6 +39,11 @@ const Orders = () => {
 	const [isSearch, setIsSearch] = useState(1);
 	const [orderId, setOrderId] = useState("");
 	const [orderIdErr, setOrderIdErr] = useState("");
+	const [chk, setChk] = useState(false);
+	const [chkErr, setChkErr] = useState("");
+	const [deliveryDate, setDeliveryDate] = useState(new Date().toJSON().slice(0, 10).toString());
+	const [deliveryDateErr, setDeliveryDateErr] = useState("");
+	const [isProcess, setIsProcess] = useState(false);
 	const [pageState, setPageState] = useState([
 		{
 			page: 1,
@@ -134,7 +141,7 @@ const Orders = () => {
 			if (ck) {
 				setDateErr("");
 			} else {
-				setDateErr("Invalid date formate ('DD-MM-YYYY')");
+				setDateErr("Invalid date format ('DD-MM-YYYY')");
 				validate = false;
 			}
 		}
@@ -264,6 +271,68 @@ const Orders = () => {
 				}
 			});
 	};
+	const onChangeCheckbox = (e) => {
+
+	}
+
+	const handleCheckboxValidate = () => {
+		let validate = true;
+		if (chk == false) {
+			setChkErr("Select the checkbox");
+			validate = false;
+		}
+		if (!deliveryDate.replace(/\s+/g, "")) {
+			setDeliveryDateErr("Date is required");
+			validate = false;
+		} else {
+			let dt = moment(deliveryDate);
+			let ck = dt.isValid();
+			if (ck) {
+				setDeliveryDateErr("");
+			} else {
+				setDeliveryDateErr("Invalid date format ('DD-MM-YYYY')");
+				validate = false;
+			}
+		}
+		return validate;
+	};
+
+
+
+
+	const handleUpdateStatus = (e, index) => {
+		e.preventDefault()
+		if (handleCheckboxValidate()) {
+			setIsProcess(true);
+			let params = {
+				transactionId: orderList[index].orderId,
+				deliveryDate: deliveryDate + "T00:00:00.00Z"
+			}
+
+			updateOrderStatus(params).then(res => {
+				let { status, data } = resHandle(res)
+				setIsProcess(false);
+				setChk(false);
+				setDeliveryDate(new Date().toJSON().slice(0, 10).toString());
+				if (status === 200) {
+					let orders = orderList;
+					if (!orders[index].deliveryObject) {
+						orders[index]["deliveryObject"] = {}
+					}
+					orders[index].deliveryObject["deliveryStatus"] = "DELIVERED";
+					orders[index].deliveryObject["deliveryDate"] = deliveryDate;
+					setOrderList([...orders])
+					toast.success(data.message)
+				} else {
+					toast.success(data.message)
+				}
+			}).catch((err) => {
+				setIsProcess(false)
+				toast.error("Sorry, a technical error occurred! Please try again later")
+			});
+		}
+	}
+
 
 	const resetData = () => {
 		setStatus("SUCCESS");
@@ -569,6 +638,85 @@ const Orders = () => {
 							</div>
 						</div>
 					</div>
+					{(orderList[index]?.deliveryObject && Object.keys(orderList[index]?.deliveryObject).length > 0) && (
+						<>	<div className="row">
+							<div className="col">
+								<hr />
+								<p className="text-primary">Delivery Status</p>
+							</div>
+						</div>
+							{orderList[index]?.deliveryObject?.deliveryStatus == "DELIVERED" ?
+
+								<div className="row">
+									<div className="col-4">
+										<label>Delivery Status : </label>{orderList[index]?.deliveryObject?.deliveryStatus}
+									</div>
+									<div className="col-4">
+										<label>Delivery Date :  </label>{moment(orderList[index]?.deliveryObject?.deliveryDate).format("DD, MMM YYYY")}
+									</div>
+								</div>
+								:
+								<div className="row">
+									<div className="col-4 mt-2">
+										<div className="form-check">
+											<input type="checkbox"
+												id="chk"
+												className="form-check-input"
+												checked={chk}
+												value={chk}
+												onChange={(e) => {
+													setChk(e.target.checked)
+												}}
+											/>
+											<label htmlFor="chk" className="form-check-label"  >  Marked product Delivered
+											</label>
+
+
+											{chkErr && (
+												<div className="inlineerror">{chkErr} </div>
+											)}
+										</div>
+									</div>
+									<div className="col-4">
+										<input
+											type="date"
+											className="form-control"
+											name="deliveryDate"
+											value={deliveryDate}
+											onChange={(e) => (
+												setDeliveryDate(e.target.value), setDeliveryDateErr("")
+											)}
+										/>
+										{deliveryDateErr && <div className="inlineerror">{deliveryDateErr} </div>}
+									</div>
+									<div className={isProcess ? "col-4 mt-2" : "col-4"}>
+										{isProcess ? (<>
+											<span >
+												<Spinner
+													as="span"
+													animation="border"
+													size="sm"
+													role="status"
+													aria-hidden="true"
+													style={{ color: '#603be1' }}
+												/>
+												<label style={{ color: '#603be1' }}>&nbsp; Processing...</label>
+											</span>
+										</>
+										)
+											: (
+
+												<button className="btn btn-primary"
+													onClick={(e) => (handleUpdateStatus(e, index))}
+												>Submit</button>
+											)}
+									</div>
+								</div>
+							}
+						</>
+					)}
+
+
 				</Modal.Body>
 			</Modal>
 			<Breadcrumb breadcrumb={breadcrumb} />
