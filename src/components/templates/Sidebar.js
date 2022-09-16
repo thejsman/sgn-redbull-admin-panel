@@ -12,7 +12,8 @@ const Sidebar = () => {
     if (localStorage.getItem("userDetail")) {
       let detail = JSON.parse(localStorage.getItem("userDetail"));
       let index = detail.permissions.findIndex((i) => (i == str));
-      return index;
+      let resp = detail.isSuperAdmin ? 1 : index
+      return resp;
     } else {
       return (-1);
     }
@@ -61,7 +62,7 @@ const Sidebar = () => {
             </NavLink>
           </li>
         ))}
-        {((getPermission('relationship-management') !== -1) && (
+        {((getPermission('sticker-management') !== -1) && (
           <li>
             <NavLink to="/sticker"  >
               <i class="fas fa-yin-yang"></i>{" "}
@@ -258,7 +259,7 @@ const Sidebar = () => {
           </li>
         ))}
 
-        {((getPermission('users') !== -1) && (
+        {((getPermission('app-users') !== -1) && (
           <li>
             <NavLink to="/app-users"  >
               <i className="fas fa-users"></i>{" "}
@@ -268,7 +269,7 @@ const Sidebar = () => {
         ))}
 
 
-        {((getPermission('users') !== -1) && (
+        {((getPermission('reports') !== -1) && (
           <li>
             <div className="">
               <NavLink
