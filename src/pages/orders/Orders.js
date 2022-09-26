@@ -44,6 +44,8 @@ const Orders = () => {
 	const [deliveryDate, setDeliveryDate] = useState(new Date().toJSON().slice(0, 10).toString());
 	const [deliveryDateErr, setDeliveryDateErr] = useState("");
 	const [isProcess, setIsProcess] = useState(false);
+	const [dateArr, setDateArr] = useState([]);
+	const [processArr, setProcessArr] = useState([]);
 	const [pageState, setPageState] = useState([
 		{
 			page: 1,
@@ -271,9 +273,12 @@ const Orders = () => {
 				}
 			});
 	};
-	const onChangeCheckbox = (e) => {
-
+	const onChangeSetArr = (e, index) => {
+		let arrDate = dateArr;
+		arrDate[index] = e.target.value;
+		setDateArr([...arrDate]);
 	}
+
 
 	const handleCheckboxValidate = () => {
 		let validate = true;
@@ -297,18 +302,58 @@ const Orders = () => {
 		return validate;
 	};
 
+	const saveDeliveryDate = (e, i, orderId, index, item) => {
+		e.preventDefault()
+		let p = processArr;
+		p[index] = true;
+		setProcessArr([...p]);
+		//if (handleCheckboxValidate()) {
+		setIsProcess(true);
+		const d = new Date();
+		let text = d.toISOString();
+		let params = {
+			transactionId: orderId,
+			deliveryDate: dateArr[index] + "T" + text.split("T")[1],
+			userId: item.userId,
+			transactionType: "gifts"
+		}
+		updateOrderStatus(params).then(res => {
+			p[index] = false;
+			setProcessArr([...p]);
+			let { status, data } = resHandle(res)
+			setIsProcess(false);
+			setChk(false);
+			setDeliveryDate(new Date().toJSON().slice(0, 10).toString());
+			if (status === 200) {
+				let orders = orderList;
 
+				orders[i].giftWith[index]["delivered"] = true;
+				setOrderList([...orders])
+				toast.success(data.message)
+			} else {
+				toast.success(data.message)
+			}
+		}).catch((err) => {
+			p[index] = false;
+			setProcessArr([...p]);
+			setIsProcess(false)
+			toast.error("Sorry, a technical error occurred! Please try again later")
+		});
+		//}
+	}
 
 
 	const handleUpdateStatus = (e, index) => {
 		e.preventDefault()
 		if (handleCheckboxValidate()) {
 			setIsProcess(true);
+			const d = new Date();
+			let text = d.toISOString();
 			let params = {
 				transactionId: orderList[index].orderId,
-				deliveryDate: deliveryDate + "T00:00:00.00Z"
+				deliveryDate: deliveryDate + "T" + text.split("T")[1],
+				transactionType: "deals"
 			}
-
 			updateOrderStatus(params).then(res => {
 				let { status, data } = resHandle(res)
 				setIsProcess(false);
@@ -548,9 +593,11 @@ const Orders = () => {
 								</div>
 							</div>
 							<div className="row" key={"gift"}>
-								<div className="col-2 font-weight-bold">Image</div>
-								<div className="col-7 font-weight-bold">User Id</div>
-								<div className="col-3 font-weight-bold">Screen Name</div>
+								<div className="col font-weight-bold">Image</div>
+								<div className="col font-weight-bold">User Id</div>
+								<div className="col font-weight-bold">Screen Name</div>
+								<div className="col font-weight-bold">Date</div>
+								<div className="col font-weight-bold">Action</div>
 							</div>
 						</>
 					) : null}
@@ -558,15 +605,58 @@ const Orders = () => {
 					{orderList[index]?.giftWith && orderList[index]?.giftWith.length > 0
 						? orderList[index]?.giftWith?.map((item, i) => (
 							<div className="row" key={"gift" + i}>
-								<div className="col-2">
+								<div className="col">
 									{item?.profileImage ? (
 										<img src={item?.profileImage} style={{ width: "50%" }} />
 									) : (
 										""
 									)}
 								</div>
-								<div className="col-7">{item?.userId}</div>
-								<div className="col-3">{item?.screenName}</div>
+								<div className="col">{item?.userId}</div>
+								<div className="col">{item?.screenName}</div>
+								{item?.delivered == true ? (<>
+
+									<div className="col"></div>
+									<div className="col"><label className="text-primary">Delivered</label></div>
+								</>
+								) : (
+									<>
+										<div className="col"><input
+											type="date"
+											className="form-control"
+											name={"dateArr" + i}
+											value={dateArr[i] ? dateArr[i] : new Date().toJSON().slice(0, 10).toString()}
+											onChange={(e) => (onChangeSetArr(e, i))}
+										/>
+											{/* {deliveryDateErr && <div className="inlineerror">{deliveryDateErr} </div>} */}
+										</div>
+
+										{processArr[i] ? (
+											<div className="col mt-2"> <span >
+												<Spinner
+													as="span"
+													animation="border"
+													size="sm"
+													role="status"
+													aria-hidden="true"
+													style={{ color: '#603be1' }}
+												/>
+												<label style={{ color: '#603be1' }}>&nbsp; Processing...</label>
+											</span></div>
+										) : (
+											<div className="col mt-2"><button className="btn btn-primary btn-sm"
+												onClick={(e) => (saveDeliveryDate(e, index, orderList[index]?.orderId, i, item))}
+											>Submit</button>
+											</div>
+
+										)}
+
+									</>
+								)
+
+								}
+
+
 							</div>
 						))
 						: null}
@@ -638,7 +728,7 @@ const Orders = () => {
 							</div>
 						</div>
 					</div>
-					{(orderList[index]?.deliveryObject && Object.keys(orderList[index]?.deliveryObject).length > 0) && (
+					{(orderList[index]?.deliveryObject && Object.keys(orderList[index]?.deliveryObject).length > 0 && orderList[index]?.transactionType !== "gift") && (
 						<>	<div className="row">
 							<div className="col">
 								<hr />
