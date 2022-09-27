@@ -303,14 +303,14 @@ const Sidebar = () => {
                       : ""
                   }
 
-                > <i className="fab fa-elementor"></i>{" "}Export Master Data</NavLink>
+                > <i className="fab fa-elementor"></i>{" "}Master Data</NavLink>
                 <NavLink to="/report/waitlist/export"
                   className={
                     (location.pathname.includes("/report/waitlist/export"))
                       ? "active"
                       : ""
                   }
-                ><i className="fas fa-calendar-week"></i>{" "}Export Waitlisted Users</NavLink>
+                ><i className="fas fa-calendar-week"></i>{" "}Waitlisted Users</NavLink>
               </div>
             </div>
           </li>

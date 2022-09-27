@@ -8,7 +8,7 @@ import { Loader } from "../../components/common/loader";
 import moment from "moment";
 
 const ReportExport = () => {
-  const breadcrumb = [{ link: "", linkText: "Export Master Data" }];
+  const breadcrumb = [{ link: "", linkText: "Master Data" }];
   const [startDate, setStartDate] = useState("");
   const [endDate, setendDate] = useState("");
   const [loader, setLoader] = useState(false);
@@ -88,7 +88,7 @@ const ReportExport = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className="twocol sb page_header mr-3">
-        <h2>Export Master Data</h2>
+        <h2>Master Data</h2>
       </div>
       <div id="main">
 
