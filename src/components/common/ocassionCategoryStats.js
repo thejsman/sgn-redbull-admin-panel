@@ -1,12 +1,10 @@
 import React from "react";
-import { Ticker } from './Ticker'
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'
 
 
 
 export const OcassionCategoryStats = React.memo((props) => {
-    console.log('ppppppppppppppppppp', props)
 
     const options = {
         responsive: true,
