@@ -12,7 +12,7 @@ import moment from 'moment'
 
 
 const WaitlistedExport = () => {
-  const breadcrumb = [{ link: "", linkText: "Export Waitlisted Users" }];
+  const breadcrumb = [{ link: "", linkText: "Waitlisted Users" }];
   const [startDate, setStartDate] = useState("");
   const [endDate, setendDate] = useState("");
   const [loader, setLoader] = useState(false);
@@ -92,7 +92,7 @@ const WaitlistedExport = () => {
 
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className="twocol sb page_header mr-3">
-        <h2>Export Waitlisted Users</h2>
+        <h2>Waitlisted Users</h2>
       </div>
       <div id="main">
 

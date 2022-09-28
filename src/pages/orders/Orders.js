@@ -814,13 +814,13 @@ const Orders = () => {
 				<h2>Orders</h2>
 			</div>
 			<div id="main">
-				<div class="container">
-					<div class="accordion" id="faq">
-						<div class="card">
-							<div class="card-header" id="faqhead1">
+				<div className="container">
+					<div className="accordion" id="faq">
+						<div className="card">
+							<div className="card-header" id="faqhead1">
 								<a
 									href="#"
-									class="btn btn-header-link"
+									className="btn btn-header-link"
 									data-toggle="collapse"
 									data-target="#faq1"
 									aria-expanded="true"
@@ -832,11 +832,11 @@ const Orders = () => {
 
 							<div
 								id="faq1"
-								class="collapse show"
+								className="collapse show"
 								aria-labelledby="faqhead1"
 								data-parent="#faq"
 							>
-								<div class="card-body">
+								<div className="card-body">
 									<div className="form-group row">
 										<div className="col-4">
 											<label>Select Date :</label>
@@ -873,11 +873,11 @@ const Orders = () => {
 								</div>
 							</div>
 						</div>
-						<div class="card">
-							<div class="card-header" id="faqhead2">
+						<div className="card">
+							<div className="card-header" id="faqhead2">
 								<a
 									href="#"
-									class="btn btn-header-link collapsed"
+									className="btn btn-header-link collapsed"
 									data-toggle="collapse"
 									data-target="#faq2"
 									aria-expanded="true"
@@ -889,11 +889,11 @@ const Orders = () => {
 
 							<div
 								id="faq2"
-								class="collapse"
+								className="collapse"
 								aria-labelledby="faqhead2"
 								data-parent="#faq"
 							>
-								<div class="card-body">
+								<div className="card-body">
 									<div className="form-group  row mb-4">
 										<div className="col-6">
 											<label>Mobile :</label>
@@ -924,11 +924,11 @@ const Orders = () => {
 								</div>
 							</div>
 						</div>
-						<div class="card">
-							<div class="card-header" id="faqhead3">
+						<div className="card">
+							<div className="card-header" id="faqhead3">
 								<a
 									href="#"
-									class="btn btn-header-link collapsed"
+									className="btn btn-header-link collapsed"
 									data-toggle="collapse"
 									data-target="#faq3"
 									aria-expanded="true"
@@ -940,11 +940,11 @@ const Orders = () => {
 
 							<div
 								id="faq3"
-								class="collapse"
+								className="collapse"
 								aria-labelledby="faqhead3"
 								data-parent="#faq"
 							>
-								<div class="card-body">
+								<div className="card-body">
 									<div className="form-group  row mb-4">
 										<div className="col-4">
 											<label>Order Id :</label>

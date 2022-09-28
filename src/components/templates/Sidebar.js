@@ -65,7 +65,7 @@ const Sidebar = () => {
         {((getPermission('sticker-management') !== -1) && (
           <li>
             <NavLink to="/sticker"  >
-              <i class="fas fa-yin-yang"></i>{" "}
+              <i className="fas fa-yin-yang"></i>{" "}
               <span className="menu_text">Sticker management</span>
             </NavLink>
           </li>
@@ -236,13 +236,7 @@ const Sidebar = () => {
                   }
 
                 > <i className="fab fa-elementor"></i>{" "}List</NavLink>
-                <NavLink to="/waitlisted/export"
-                  className={
-                    (location.pathname.includes("/waitlisted/export"))
-                      ? "active"
-                      : ""
-                  }
-                ><i className="fas fa-calendar-week"></i>{" "}Export</NavLink>
+
 
               </div>
             </div>
@@ -264,6 +258,15 @@ const Sidebar = () => {
             <NavLink to="/app-users"  >
               <i className="fas fa-users"></i>{" "}
               <span className="menu_text">App Users</span>
+            </NavLink>
+          </li>
+        ))}
+
+        {((getPermission('sms-management') !== -1) && (
+          <li>
+            <NavLink to="/sms/send"  >
+              <i className="fas fa-sms"></i>{" "}
+              <span className="menu_text">Send SMS</span>
             </NavLink>
           </li>
         ))}
@@ -300,7 +303,14 @@ const Sidebar = () => {
                       : ""
                   }
 
-                > <i className="fab fa-elementor"></i>{" "}Export</NavLink>
+                > <i className="fab fa-elementor"></i>{" "}Master Data</NavLink>
+                <NavLink to="/report/waitlist/export"
+                  className={
+                    (location.pathname.includes("/report/waitlist/export"))
+                      ? "active"
+                      : ""
+                  }
+                ><i className="fas fa-calendar-week"></i>{" "}Waitlisted Users</NavLink>
               </div>
             </div>
           </li>

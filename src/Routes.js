@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect, Router, useHistory } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
 import Header from "./components/templates/Header";
 import Sidebar from "./components/templates/Sidebar";
 import Login from "./pages/auth/Login";
@@ -39,6 +39,7 @@ import AppUsers from "./pages/app-users/AppUsers";
 import Sticker from "./pages/sticker/Sticker";
 import AddEditSticker from "./pages/sticker/AddEditSticker";
 import ReportExport from "./pages/reports/ReportExport";
+import SendSmsManagement from "./pages/smsManagement/SendSmsManagement";
 
 
 const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
@@ -161,7 +162,6 @@ const Routes = (props) => {
 
             {/* Waitlisted Users  Routes */}
             <PrivateRoute exact module="waitlisted" path="/waitlisted/users" {...props} component={WaitlistedUsers} />
-            <PrivateRoute exact module="waitlisted" path="/waitlisted/export" {...props} component={WaitlistedExport} />
 
             {/* Connection Stats  Routes */}
             <PrivateRoute exact module="connection-stats" path="/connection-stats" {...props} component={ConnectionStats} />
@@ -177,6 +177,10 @@ const Routes = (props) => {
 
             {/* Reports  Routes */}
             <PrivateRoute exact module="reports" path="/report/export" {...props} component={ReportExport} />
+            <PrivateRoute exact module="reports" path="/report/waitlist/export" {...props} component={WaitlistedExport} />
+
+            {/* SMS Management  Routes */}
+            <PrivateRoute exact module="sms-management" path="/sms/send" {...props} component={SendSmsManagement} />
 
           </Switch>
         </Router>

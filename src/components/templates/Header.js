@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 const toggleSidebar = () => document.body.classList.toggle('hide_sidebar')
 //const [name, setName] = useState('')

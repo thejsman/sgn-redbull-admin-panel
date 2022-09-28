@@ -123,6 +123,10 @@ export default {
 	//Export Report
 	EXPORT_REPORT: siteSetting.api.BaseUrl + "/statistics/requestReport",
 
+	//Sms Management
+	SMS_MANAGEMENT: siteSetting.api.BaseUrl + "/adminMessage/send",
+
+
 
 
 
