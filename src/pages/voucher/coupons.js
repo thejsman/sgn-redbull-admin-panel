@@ -176,7 +176,7 @@ const Coupons = () => {
           <div className='row'>
 
             <div className='col'>
-              <span>Voucher Status : </span> <span className='color-primary'>{voucherStatus}</span>
+              <span>Voucher Status : </span> <span className='color-primary'>{(voucherStatus == "notArchived" ? "Unarchived" : "Archived")}</span>
             </div>
           </div>
           <div className='row'>
@@ -198,7 +198,7 @@ const Coupons = () => {
                 ) : (
                   ""
                 )}
-                {isSubmit ? " Processing.." : (voucherStatus == "notArchived" ? "Archived" : "Unarchived")}
+                {isSubmit ? " Processing.." : (voucherStatus == "notArchived" ? "Archive" : "Unarchive")}
               </button>
               {/* <button className="btn btn-primary btn-sm mr-2">{voucherStatus == "notArchived" ? "Archived" : "Unarchived"}</button> */}
 
