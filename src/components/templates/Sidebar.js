@@ -11,14 +11,13 @@ const Sidebar = () => {
   const getPermission = (str) => {
     if (localStorage.getItem("userDetail")) {
       let detail = JSON.parse(localStorage.getItem("userDetail"));
-      let index = detail.permissions.findIndex((i) => (i == str));
-      let resp = detail.isSuperAdmin ? 1 : index
+      let index = detail.permissions.findIndex((i) => i == str);
+      let resp = detail.isSuperAdmin ? 1 : index;
       return resp;
     } else {
-      return (-1);
+      return -1;
     }
-
-  }
+  };
 
   //const history = useHistory();
   return (
@@ -29,292 +28,304 @@ const Sidebar = () => {
       </h3>
 
       <ul>
-        {((getPermission('dashboard') !== -1) && (
+        {getPermission("dashboard") !== -1 && (
           <li>
             <NavLink to="/" exact>
               <i className="fa fa-home" />{" "}
               <span className="menu_text">Dashboard</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('connection-stats') !== -1) && (
+        )}
+        {getPermission("connection-stats") !== -1 && (
           <li>
-
             <NavLink to="/connection-stats" exact>
               <i className="fa fa-handshake"></i>{" "}
               <span className="menu_text">Connection Stats</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('notifications') !== -1) && (
+        )}
+        {getPermission("notifications") !== -1 && (
           <li>
             <NavLink to="/notifications">
               <i className="fas fa-sitemap"></i>{" "}
               <span className="menu_text">Notifications</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('relationship-management') !== -1) && (
+        )}
+        {getPermission("relationship-management") !== -1 && (
           <li>
-            <NavLink to="/family-relationship"  >
+            <NavLink to="/family-relationship">
               <i className="fas fa-users"></i>{" "}
               <span className="menu_text">Relationship management</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('sticker-management') !== -1) && (
+        )}
+        {getPermission("sticker-management") !== -1 && (
           <li>
-            <NavLink to="/sticker"  >
+            <NavLink to="/sticker">
               <i className="fas fa-yin-yang"></i>{" "}
               <span className="menu_text">Sticker management</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('occasion-management') !== -1) && (
+        )}
+        {getPermission("occasion-management") !== -1 && (
           <li>
             <div className="">
               <NavLink
                 exact
                 to="/occasion-management/occasion"
                 className={
-                  (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion/") || location.pathname.includes("/template/"))
+                  location.pathname.includes("/occasion-management") ||
+                  location.pathname.includes("/occasion/") ||
+                  location.pathname.includes("/template/")
                     ? "active"
                     : ""
                 }
               >
                 <i className="fas fa-glass-cheers"></i>{" "}
-
                 <span className="menu_text">Occasion management</span>
               </NavLink>
               <div
                 className="submenu"
                 style={{
-                  display: (location.pathname.includes("/occasion-management") || location.pathname.includes("/occasion/") || location.pathname.includes("/template/"))
-                    ? "block"
-                    : "none",
+                  display:
+                    location.pathname.includes("/occasion-management") ||
+                    location.pathname.includes("/occasion/") ||
+                    location.pathname.includes("/template/")
+                      ? "block"
+                      : "none",
                 }}
               >
-                <NavLink to="/occasion-management/occasion"
+                <NavLink
+                  to="/occasion-management/occasion"
                   className={
-                    (location.pathname.includes("/occasion-management/occasion") || location.pathname.includes("/occasion/"))
+                    location.pathname.includes(
+                      "/occasion-management/occasion"
+                    ) || location.pathname.includes("/occasion/")
                       ? "active"
                       : ""
                   }
-
-                > <i className="fab fa-elementor"></i>{" "}Occasions</NavLink>
-                <NavLink to="/occasion-management/templates"
+                >
+                  {" "}
+                  <i className="fab fa-elementor"></i> Occasions
+                </NavLink>
+                <NavLink
+                  to="/occasion-management/templates"
                   className={
-                    (location.pathname.includes("/occasion-management/templates") || location.pathname.includes("/template/"))
+                    location.pathname.includes(
+                      "/occasion-management/templates"
+                    ) || location.pathname.includes("/template/")
                       ? "active"
                       : ""
                   }
-                ><i className="fas fa-calendar-week"></i>{" "}Templates</NavLink>
+                >
+                  <i className="fas fa-calendar-week"></i> Templates
+                </NavLink>
               </div>
             </div>
           </li>
-        ))}
-        {((getPermission('cards-management') !== -1) && (
+        )}
+        {getPermission("cards-management") !== -1 && (
           <li>
             <div className="">
               <NavLink
                 exact
                 to="/card/occasions"
-                className={
-                  (location.pathname.includes("/card/"))
-                    ? "active"
-                    : ""
-                }
+                className={location.pathname.includes("/card/") ? "active" : ""}
               >
                 <i className="fa fa-credit-card"></i>{" "}
-
                 <span className="menu_text">Cards management</span>
               </NavLink>
               <div
                 className="submenu"
                 style={{
-                  display: (location.pathname.includes("/card/"))
+                  display: location.pathname.includes("/card/")
                     ? "block"
                     : "none",
                 }}
               >
-                <NavLink to="/card/occasions"
+                <NavLink
+                  to="/card/occasions"
                   className={
-                    (location.pathname.includes("/card/occasions"))
+                    location.pathname.includes("/card/occasions")
                       ? "active"
                       : ""
                   }
-
-                > <i className="fab fa-elementor"></i>{" "}Occasion Cards</NavLink>
-                <NavLink to="/card/tasks"
+                >
+                  {" "}
+                  <i className="fab fa-elementor"></i> Occasion Cards
+                </NavLink>
+                <NavLink
+                  to="/card/tasks"
                   className={
-                    (location.pathname.includes("/card/tasks"))
+                    location.pathname.includes("/card/tasks") ? "active" : ""
+                  }
+                >
+                  <i className="fas fa-calendar-week"></i> Task Card
+                </NavLink>
+                <NavLink
+                  to="/card/onboarding"
+                  className={
+                    location.pathname.includes("/card/onboarding")
                       ? "active"
                       : ""
                   }
-                ><i className="fas fa-calendar-week"></i>{" "}Task Card</NavLink>
-                <NavLink to="/card/onboarding"
-                  className={
-                    (location.pathname.includes("/card/onboarding"))
-                      ? "active"
-                      : ""
-                  }
-                ><i className="fas fa-calendar-week"></i>{" "}Onboarding Card</NavLink>
+                >
+                  <i className="fas fa-calendar-week"></i> Onboarding Card
+                </NavLink>
               </div>
             </div>
           </li>
-        ))}
-        {((getPermission('rozy') !== -1) && (
+        )}
+        {getPermission("rozy") !== -1 && (
           <li>
-            <NavLink to="/rozy"  >
+            <NavLink to="/rozy">
               <i className="fas fa-crown"></i>{" "}
               <span className="menu_text">Rozy</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('voucher') !== -1) && (
+        )}
+        {getPermission("voucher") !== -1 && (
           <li>
-            <NavLink to="/voucher"  >
+            <NavLink to="/voucher">
               <i className="fas fa-gift"></i>{" "}
               <span className="menu_text">Voucher</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('redis') !== -1) && (
+        )}
+        {getPermission("redis") !== -1 && (
           <li>
-            <NavLink to="/redis"  >
+            <NavLink to="/redis">
               <i className="fas fa-align-justify"></i>{" "}
               <span className="menu_text">Redis</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('invitation-form') !== -1) && (
+        )}
+        {getPermission("invitation-form") !== -1 && (
           <li>
-            <NavLink to="/invitation"  >
+            <NavLink to="/invitation">
               <i className="fas fa-file-alt"></i>{" "}
               <span className="menu_text">Invitation Form</span>
             </NavLink>
           </li>
-        ))}
-        {((getPermission('orders') !== -1) && (
+        )}
+        {getPermission("orders") !== -1 && (
           <li>
-            <NavLink to="/orders"  >
+            <NavLink to="/orders">
               <i className="fas fa-shopping-bag"></i>{" "}
               <span className="menu_text">Orders</span>
             </NavLink>
           </li>
-        ))}
+        )}
 
-        {((getPermission('waitlisted') !== -1) && (
+        {getPermission("waitlisted") !== -1 && (
           <li>
             <div className="">
               <NavLink
                 exact
                 to="/waitlisted/users"
                 className={
-                  (location.pathname.includes("/waitlisted"))
-                    ? "active"
-                    : ""
+                  location.pathname.includes("/waitlisted") ? "active" : ""
                 }
               >
                 <i className="fas fa-user-friends"></i>{" "}
-
                 <span className="menu_text">Waitlisted Users</span>
               </NavLink>
               <div
                 className="submenu"
                 style={{
-                  display: (location.pathname.includes("/waitlisted"))
+                  display: location.pathname.includes("/waitlisted")
                     ? "block"
                     : "none",
                 }}
               >
-                <NavLink to="/waitlisted/users"
+                <NavLink
+                  to="/waitlisted/users"
                   className={
-                    (location.pathname.includes("/waitlisted/users"))
+                    location.pathname.includes("/waitlisted/users")
                       ? "active"
                       : ""
                   }
-
-                > <i className="fab fa-elementor"></i>{" "}List</NavLink>
-
-
+                >
+                  {" "}
+                  <i className="fab fa-elementor"></i> List
+                </NavLink>
               </div>
             </div>
           </li>
-        ))}
+        )}
 
-
-        {((getPermission('users') !== -1) && (
+        {getPermission("users") !== -1 && (
           <li>
-            <NavLink to="/users"  >
+            <NavLink to="/users">
               <i className="fas fa-user"></i>{" "}
               <span className="menu_text">Users</span>
             </NavLink>
           </li>
-        ))}
+        )}
 
-        {((getPermission('app-users') !== -1) && (
+        {getPermission("app-users") !== -1 && (
           <li>
-            <NavLink to="/app-users"  >
+            <NavLink to="/app-users">
               <i className="fas fa-users"></i>{" "}
               <span className="menu_text">App Users</span>
             </NavLink>
           </li>
-        ))}
+        )}
 
-        {((getPermission('sms-management') !== -1) && (
+        {getPermission("sms-management") !== -1 && (
           <li>
-            <NavLink to="/sms/send"  >
+            <NavLink to="/sms/send">
               <i className="fas fa-sms"></i>{" "}
               <span className="menu_text">Send SMS</span>
             </NavLink>
           </li>
-        ))}
+        )}
 
-
-        {((getPermission('reports') !== -1) && (
+        {getPermission("reports") !== -1 && (
           <li>
             <div className="">
               <NavLink
                 exact
                 to="/report/export"
                 className={
-                  (location.pathname.includes("/report/"))
-                    ? "active"
-                    : ""
+                  location.pathname.includes("/report/") ? "active" : ""
                 }
               >
                 <i className="fa fa-credit-card"></i>{" "}
-
                 <span className="menu_text">Reports</span>
               </NavLink>
               <div
                 className="submenu"
                 style={{
-                  display: (location.pathname.includes("/report/"))
+                  display: location.pathname.includes("/report/")
                     ? "block"
                     : "none",
                 }}
               >
-                <NavLink to="/report/export"
+                <NavLink
+                  to="/report/export"
                   className={
-                    (location.pathname.includes("/report/export"))
+                    location.pathname.includes("/report/export") ? "active" : ""
+                  }
+                >
+                  {" "}
+                  <i className="fab fa-elementor"></i> Master Data
+                </NavLink>
+                <NavLink
+                  to="/report/waitlist/export"
+                  className={
+                    location.pathname.includes("/report/waitlist/export")
                       ? "active"
                       : ""
                   }
-
-                > <i className="fab fa-elementor"></i>{" "}Master Data</NavLink>
-                <NavLink to="/report/waitlist/export"
-                  className={
-                    (location.pathname.includes("/report/waitlist/export"))
-                      ? "active"
-                      : ""
-                  }
-                ><i className="fas fa-calendar-week"></i>{" "}Waitlisted Users</NavLink>
+                >
+                  <i className="fas fa-calendar-week"></i> Waitlisted Users
+                </NavLink>
               </div>
             </div>
           </li>
-        ))}
+        )}
       </ul>
     </div>
   );
