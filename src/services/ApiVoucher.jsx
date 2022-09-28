@@ -33,7 +33,7 @@ function updateVoucher(params) {
 
 function VoucherList(params) {
   return axios.get(
-    Api.GET_VOUCHERS_LIST + '?limit=' + params.limit + '&pk=null', {
+    Api.GET_VOUCHERS_LIST + '?country=' + params.country + '&voucherStatus=' + params.voucherStatus + '&limit=' + params.limit + '&pk=null', {
     headers: headersApplicationJson,
   });
 }

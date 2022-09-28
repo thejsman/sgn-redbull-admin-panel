@@ -22,10 +22,12 @@ const Voucher = () => {
   const [search, setSearch] = useState('')
   const [count, setCount] = useState(10)
   const [loader, setLoader] = useState(false)
+  const [countryCode, setCountryCode] = useState('India')
+  const [status, setStatus] = useState('notArchived')
 
   // all handler start
   useEffect(() => {
-    getVoucherList()
+    // getVoucherList()
   }, [])
 
   const editPages = _id => {
@@ -37,11 +39,13 @@ const Voucher = () => {
   const getVoucherList = () => {
     setLoader(true)
     let params = {
-      limit: 5000,
+      limit: 10000,
       LastEvaluatedKey: 'null',
       sOrder: 1,
       eOrder: 5001,
-      scanOrder: true
+      scanOrder: true,
+      country: countryCode,
+      voucherStatus: status
     }
     VoucherList(params).then(res => {
       let { status, data } = resHandle(res)
@@ -87,9 +91,67 @@ const Voucher = () => {
           Add Voucher
         </Link>
       </div>
-      <div className='twocol sb page_header'>
-        <div className='headerinner left'></div>
+      <div id="main">
+
+        <div className="container">
+          <div className="accordion" id="faq">
+            <div className="card">
+              <div className="card-header" id="faqhead1">
+                <a href="#" className="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+                  aria-expanded="true" aria-controls="faq1">Search</a>
+              </div>
+
+              <div id="faq1" className="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                <div className="card-body">
+                  <div className="form-group row">
+                    <div className="col-4">
+                      <label>Country Code</label>
+                      <select
+                        className="form-control"
+                        name="cars"
+                        value={countryCode}
+                        onChange={(e) => (
+                          setCountryCode(e.target.value)
+                        )}
+                      >
+                        <option value="India">India</option>
+                        <option value="Nepal">Nepal</option>
+
+                      </select>
+
+                    </div>
+                    <div className="col-4">
+                      <label>Voucher Status</label>
+                      <select
+                        className="form-control"
+                        name="cars"
+                        value={status}
+                        onChange={(e) => (
+                          setStatus(e.target.value)
+                        )}
+                      >
+                        <option value="notArchived">Not Archived</option>
+                        <option value="archived">Archived</option>
+
+                      </select>
+
+                    </div>
+
+                    <div className="col-4 mt-4 pt-3">
+                      <button className="btn btn-primary" onClick={getVoucherList}>Search</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
       </div>
+
+
 
       <div className='table-responsive cm_card p-0'>
         {loader ? (
