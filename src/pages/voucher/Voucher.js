@@ -207,7 +207,7 @@ const Voucher = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan='5'>
+                  <td colSpan='6'>
                     <div className='nodatafound'>
                       <h3>No Data Found</h3>
                     </div>
