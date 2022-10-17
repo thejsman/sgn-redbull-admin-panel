@@ -24,6 +24,8 @@ const AddVoucher = () => {
 	const [validTillErr, setValidTillErr] = useState("");
 	const [coupon, setCoupon] = useState("");
 	const [couponErr, setCouponErr] = useState("");
+	const [country, setCountry] = useState("India");
+	const [countryErr, setCountryErr] = useState("");
 	const [status, setStatus] = useState("free");
 	const [statusErr, setStatusErr] = useState("");
 	const [value, setValue] = useState("");
@@ -111,6 +113,7 @@ const AddVoucher = () => {
 				coupon,
 				status,
 				value: parseInt(value),
+				country
 			};
 			console.log("createObj---", createObj);
 			createVoucher(createObj).then((res) => {
@@ -228,6 +231,20 @@ const AddVoucher = () => {
 							{valueErr && <div className="inlineerror">{valueErr} </div>}
 						</div>
 					</div>
+					<div className="form-group row">
+					<div className="col">
+							<label>Country</label>
+							<select
+								className="form-control"
+								name="country"
+								value={country}
+								onChange={(e) => (setCountry(e.target.value), setCountryErr(""))}
+							>
+								<option value="India">India</option>
+								<option value="Nepal">Nepal</option>
+							</select>
+						</div>
+						</div>
 					<div className="form-group row">
 						<div className="col">
 							<label>Coupons</label>
