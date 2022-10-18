@@ -7,6 +7,8 @@ import { couponList } from "../../services/ApiVoucher";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader } from "../../components/common/loader";
+import { updateVoucher } from "../../services/ApiVoucher";
+import { Spinner } from "react-bootstrap";
 import moment from "moment";
 
 const Coupons = () => {
@@ -14,7 +16,8 @@ const Coupons = () => {
   const { id } = useParams();
   const breadcrumb = [{ link: '/voucher', linkText: 'Voucher Management' }, { link: '', linkText: 'Coupon List' }]
   const [couponVoucherId, setCouponVoucherId] = useState([]);
-  const [productName, setProductName] = useState([])
+  const [productName, setProductName] = useState('')
+  const [voucherStatus, setVoucherStatus] = useState('')
   const [couponArrList, setCouponList] = useState([])
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(20)
@@ -23,8 +26,10 @@ const Coupons = () => {
   const [pk, setPK] = useState(null)
   const [couponVoucherIdPage, setcouponVoucherIdPage] = useState(null)
   const [pageState, setPageState] = useState([{ page: 1, pk: null, couponVoucherId: null }])
+  const [isSubmit, setIsSubmit] = useState(false);
   // all handler start
   useEffect(() => {
+    setProductName(id);
     getCouponList(id, null, null, page)
 
   }, [])
@@ -32,6 +37,7 @@ const Coupons = () => {
   const editPages = _id => {
     history.push('/coupon/edit/' + _id)
   }
+
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`)
     let pageno = parseInt(pageNumber);
@@ -58,6 +64,35 @@ const Coupons = () => {
     }
   }
 
+  const updateVoucherStatus = (e) => {
+    e.preventDefault();
+    setIsSubmit(true);
+    let createObj = {
+      productName,
+      voucherStatus: (voucherStatus == "notArchived" ? "Archived" : "notArchived")
+    };
+    console.log("createObj---", createObj);
+    updateVoucher(createObj)
+      .then((res) => {
+        let { status, data } = resHandle(res);
+        console.log('ddddddddddddddd', data)
+        setIsSubmit(false);
+        if (status === 200) {
+          toast.success(data.message);
+          setVoucherStatus(data.data.Attributes.voucherStatus);
+          history.push("/coupons/" + productName);
+        } else {
+          toast.success(data.message);
+        }
+      })
+      .catch((err) => {
+        setIsSubmit(false);
+        toast.error(
+          "Sorry, a technical error occurred! Please try again later"
+        );
+      });
+
+  }
 
   const getCouponList = (id, pkvalue, couponVoucherIdValue, nextPage) => {
     setLoader(true)
@@ -74,6 +109,9 @@ const Coupons = () => {
       if (status === 200) {
         setLoader(false)
         setCouponList([...data.data.Items])
+        if (data.data.Items.length > 0) {
+          setVoucherStatus(data.data.Items[0].voucherStatus);
+        }
         if (data.data.LastEvaluatedKey && (Object.keys(data.data.LastEvaluatedKey).length > 0)) {
           let arr = pageState;
           if (arr.findIndex(item => item.page == (nextPage + 1)) == -1) {
@@ -127,7 +165,43 @@ const Coupons = () => {
 
             <div className='col'>
               <span>Item Id : </span> <span className='color-primary'>{couponArrList[0]?.itemId}</span> &nbsp; &nbsp; &nbsp;
+            </div>
+          </div>
+          <div className='row'>
+
+            <div className='col'>
               <span ml-5>Variant Id : </span> <span className='color-primary'>{couponArrList[0]?.variantId}</span>
+            </div>
+          </div>
+          <div className='row'>
+
+            <div className='col'>
+              <span>Voucher Status : </span> <span className='color-primary'>{(voucherStatus == "notArchived" ? "Unarchived" : "Archived")}</span>
+            </div>
+          </div>
+          <div className='row'>
+            <div className="col">
+              <button
+                type="button"
+                className="btn btn-primary btn-sm mr-2"
+                onClick={updateVoucherStatus}
+                disabled={isSubmit ? "disabled" : ""}
+              >
+                {isSubmit ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  ""
+                )}
+                {isSubmit ? " Processing.." : (voucherStatus == "notArchived" ? "Archive" : "Unarchive")}
+              </button>
+              {/* <button className="btn btn-primary btn-sm mr-2">{voucherStatus == "notArchived" ? "Archived" : "Unarchived"}</button> */}
+
             </div>
           </div>
 

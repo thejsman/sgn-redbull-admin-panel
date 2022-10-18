@@ -40,6 +40,8 @@ import Sticker from "./pages/sticker/Sticker";
 import AddEditSticker from "./pages/sticker/AddEditSticker";
 import ReportExport from "./pages/reports/ReportExport";
 import SendSmsManagement from "./pages/smsManagement/SendSmsManagement";
+import PreTemplates from "./pages/occasionManagement/pretemplates/PreTemplates";
+import AddEditPreTemplate from "./pages/occasionManagement/pretemplates/AddEditPreTemplate";
 
 
 const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
@@ -109,6 +111,10 @@ const Routes = (props) => {
             <PrivateRoute exact module="occasion-management" path="/template/create" {...props} component={AddEditTemplate} />
             <PrivateRoute exact module="occasion-management" path="/template/edit/:oname/:tname" {...props} component={AddEditTemplate} />
 
+            {/* Predefined Template Management Routes */}
+            <PrivateRoute exact module="occasion-management" path="/occasion-management/predefined-templates" {...props} component={PreTemplates} />
+            <PrivateRoute exact module="occasion-management" path="/predefined-templates/create" {...props} component={AddEditPreTemplate} />
+            <PrivateRoute exact module="occasion-management" path="/predefined-templates/edit/:oname/:tname" {...props} component={AddEditPreTemplate} />
 
             {/* Family Relation Routes */}
             <PrivateRoute exact module="relationship-management" path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />

@@ -91,7 +91,8 @@ const Sidebar = () => {
                   display:
                     location.pathname.includes("/occasion-management") ||
                     location.pathname.includes("/occasion/") ||
-                    location.pathname.includes("/template/")
+                    location.pathname.includes("/template/") ||
+                    location.pathname.includes("/predefined-template/")
                       ? "block"
                       : "none",
                 }}
@@ -121,6 +122,19 @@ const Sidebar = () => {
                 >
                   <i className="fas fa-calendar-week"></i> Templates
                 </NavLink>
+                <NavLink
+                  to="/occasion-management/predefined-templates"
+                  className={
+                    location.pathname.includes(
+                      "/occasion-management/predefined-templates"
+                    ) || location.pathname.includes("/predefined-template/")
+                      ? "active"
+                      : ""
+                  }
+                >
+                  <i className="fas fa-calendar-week"></i> Predefined Templates
+                </NavLink>
+             
               </div>
             </div>
           </li>

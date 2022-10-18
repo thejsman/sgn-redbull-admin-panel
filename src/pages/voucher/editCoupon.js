@@ -14,7 +14,7 @@ import moment from "moment";
 const EditCoupon = () => {
 	const history = useHistory();
 	const { id } = useParams();
-
+	const [country, setCountry] = useState("India");
 	const [couponVoucherId, setCouponVoucherId] = useState([]);
 	const [productName, setProductName] = useState("");
 	const [pk, setPK] = useState("");
@@ -84,6 +84,7 @@ const EditCoupon = () => {
 					setStatus(data.data.Items[0].status);
 					setValue(data.data.Items[0].value);
 					setPK(data.data.Items[0].pk);
+					setCountry(data.data.Items[0].country)
 					setLoader(false);
 				} else {
 					setLoader(false);
@@ -232,6 +233,21 @@ const EditCoupon = () => {
 						</div>
 					</div>
 					<div className="form-group row">
+					<div className="col">
+							<label>Country</label>
+							<select
+								disabled="disabled"
+								className="form-control"
+								name="country"
+								value={country}
+								readOnly="readonly"
+
+							>
+								<option value="India">India</option>
+								<option value="Nepal">Nepal</option>
+							</select>
+						</div>
+					
 						<div className="col">
 							<label>Status</label>
 							<select
@@ -246,7 +262,6 @@ const EditCoupon = () => {
 							</select>
 						</div>
 
-						<div className="col"></div>
 					</div>
 
 					<div className="button300">
