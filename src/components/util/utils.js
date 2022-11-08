@@ -5,7 +5,7 @@ const pattern = /(([a-zA-Z0-9\-?\.?]+)@(([a-zA-Z0-9\-_]+\.)+)([a-z]{2,3}))+$/;
 
 //Response handler
 export const resHandle = (res) => {
-  console.log("resresres", res);
+  // console.log("resresres", res);
   // console.log('||||||||', res.data.responseData.message, '===>>>', res)
   let status = res.status;
   let data;
