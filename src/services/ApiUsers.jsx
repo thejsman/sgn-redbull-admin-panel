@@ -9,12 +9,12 @@ export {
   getAppUserByCondition,
   getRewardsByUserId,
   getTransactionsByUserId,
-  getConnectionsByUserId
+  getConnectionsByUserId,
+  addReward,
 };
 
-
 const headersApplicationJson = {
-  Authorization: "Bearer " + localStorage.getItem("accessToken")
+  Authorization: "Bearer " + localStorage.getItem("accessToken"),
 };
 function createUser(params) {
   return axios.post(Api.USER_MANGEMENT, params, {
@@ -24,48 +24,52 @@ function createUser(params) {
 
 function getUserList(params) {
   return axios.get(Api.USER_MANGEMENT, {
-    headers: headersApplicationJson
+    headers: headersApplicationJson,
   });
 }
 
 function getUserDetailById(id) {
   return axios.get(`${Api.USER_MANGEMENT}/${id}`, {
-    headers: headersApplicationJson
+    headers: headersApplicationJson,
   });
 }
 
 function updateUserDetailById(id, params) {
   return axios.put(`${Api.USER_MANGEMENT}/${id}`, params, {
-    headers: headersApplicationJson
+    headers: headersApplicationJson,
   });
 }
 
 function changePassword(params) {
   return axios.post(`${Api.USER_MANGEMENT}/change-password`, params, {
-    headers: headersApplicationJson
+    headers: headersApplicationJson,
   });
 }
 
-
 function getAppUserByCondition(params) {
   return axios.get(`${Api.GET_APP_USER}?${params}`, {
-    headers: headersApplicationJson
-  })
+    headers: headersApplicationJson,
+  });
 }
 
 function getRewardsByUserId(params) {
   return axios.get(`${Api.GET_APP_USER_REWARDS}?${params}`, {
-    headers: headersApplicationJson
-  })
+    headers: headersApplicationJson,
+  });
 }
 function getConnectionsByUserId(params) {
   return axios.get(`${Api.GET_APP_USER_CONNECTIONS}?${params}`, {
-    headers: headersApplicationJson
-  })
+    headers: headersApplicationJson,
+  });
 }
 function getTransactionsByUserId(params) {
   return axios.get(`${Api.GET_APP_USER_TRANSACTIONS}?${params}`, {
-    headers: headersApplicationJson
-  })
+    headers: headersApplicationJson,
+  });
 }
 
+function addReward(params) {
+  return axios.post(Api.REWARD_SERVICE, params, {
+    headers: headersApplicationJson,
+  });
+}
