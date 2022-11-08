@@ -133,6 +133,14 @@ const AppUsers = () => {
       });
   };
   const handleAddRewards = () => {
+    if (rewardAmount.trim() === "" || rewardAmount < 0) {
+      setRewardAmountErr("Amount is required");
+      return;
+    }
+    if (rewardDescription.trim() === "") {
+      setRewardDescriptionErr("Reward description is required");
+      return;
+    }
     const params = {
       userId: userObject?.userId,
       amount: rewardAmount,
@@ -396,13 +404,15 @@ const AppUsers = () => {
                             name="amount"
                             placeholder="Amount"
                             value={rewardAmount}
+                            min="1"
+                            required
                             onChange={(e) => (
                               setRewardAmount(e.target.value),
-                              setRewardAmountErr("Amount is required")
+                              setRewardAmountErr("")
                             )}
                           />
-                          {mobileNoErr && (
-                            <div className="inlineerror">{mobileNoErr} </div>
+                          {rewardAmountErr && (
+                            <div className="inlineerror">{rewardAmountErr}</div>
                           )}
                         </div>
                         <div className="col-4">
@@ -413,13 +423,16 @@ const AppUsers = () => {
                             name="description"
                             placeholder="Description"
                             value={rewardDescription}
+                            required
                             onChange={(e) => (
                               setRewardDescription(e.target.value),
-                              setRewardDescriptionErr("Description is required")
+                              setRewardDescriptionErr("")
                             )}
                           />
-                          {mobileNoErr && (
-                            <div className="inlineerror">{mobileNoErr} </div>
+                          {rewardDescriptionErr && (
+                            <div className="inlineerror">
+                              {rewardDescriptionErr}
+                            </div>
                           )}
                         </div>
                         <div className="col-4 mt-4 pt-3">
