@@ -162,6 +162,12 @@ const AppUsers = () => {
       });
   };
 
+  const sendRewardSms = (e) => {
+    e.preventDefault();
+
+    alert("Feature coming soon");
+  };
+
   // all handler end
   return (
     <div className="page_wrapper">
@@ -396,7 +402,7 @@ const AppUsers = () => {
                   >
                     <div className="card-body">
                       <div className="form-group  row mb-4">
-                        <div className="col-4">
+                        <div className="col-3">
                           <label>Amount :</label>
                           <input
                             type="number"
@@ -435,12 +441,18 @@ const AppUsers = () => {
                             </div>
                           )}
                         </div>
-                        <div className="col-4 mt-4 pt-3">
+                        <div className="col-5 mt-4 pt-3 text-center">
                           <button
                             className="btn btn-primary"
                             onClick={() => handleAddRewards()}
                           >
                             Add Reward
+                          </button>
+                          <button
+                            className="btn btn-primary ml-3"
+                            onClick={(e) => sendRewardSms(e)}
+                          >
+                            Send Reward SMS
                           </button>
                         </div>
                       </div>
