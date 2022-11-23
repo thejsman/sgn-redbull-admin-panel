@@ -7,8 +7,9 @@ import {
 import Breadcrumb from "../../../components/common/Breadcrumb";
 import { resHandle } from "../../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
-import { Spinner } from "react-bootstrap"
-import { Loader } from '../../../components/common/loader'
+import { Spinner } from "react-bootstrap";
+import { Loader } from '../../../components/common/loader';
+import { PhotoshopPicker } from "react-color";
 
 const AddEditOccasion = () => {
   const history = useHistory();
@@ -45,6 +46,15 @@ const AddEditOccasion = () => {
   const [lottieBackgroundBase64, setLottieBackgroundBase64] = useState('');
   const [visibility, setVisibility] = useState([]);
   const [visibilityErr, setVisibilityErr] = useState('');
+  const [color, setColor] = useState("");
+  const [textColor, setTextColor] = useState("");
+  const [textColorErr, setTextColorErr] = useState('');
+  const [bcolor, setBColor] = useState("");
+  const [backgroundColor, setBackgroundColor] = useState("");
+  const [backgroundColorErr, setBackgroundColorErr] = useState('');
+  const [isShowTextColorPicker, setIsShowTextColorPicker] = useState(false);
+  const [isShowBackgroundColorPicker, setIsShowBackgroundColorPicker] = useState(false);
+
 
   const onChangeCheckbox = (e, item) => {
     let temp = visibility;
@@ -145,6 +155,10 @@ const AddEditOccasion = () => {
         setOccasionName(data.occasionName);
         setOccasionTitle(data.displayTitle);
         setOccasionIcon(data.occasionIcon);
+        setTextColor(data.textColor);
+        setBackgroundColor(data.backgroundColor);
+        setColor(data.textColor);
+        setBColor(data.backgroundColor)
         if (data.occasionStatus == true) {
           setOccasionStatus(true);
         } else {
@@ -178,6 +192,7 @@ const AddEditOccasion = () => {
     e.preventDefault();
     if (handleValidate()) {
       setIsSubmit(true);
+      debugger;
       let createOccasionObj = {
         "occasionIdentifier": "occasion",
         occasionName: occasionName,
@@ -190,7 +205,9 @@ const AddEditOccasion = () => {
           occasionIcon: occasionIcon,
           fileName: fileName,
           visibility: visibility.map(a => a.value),
-          userLottiBackgroundIcon: lottieBackgroundBase64
+          userLottiBackgroundIcon: lottieBackgroundBase64,
+          textColor : textColor,
+          backgroundColor: backgroundColor
         },
       };
 
@@ -258,7 +275,9 @@ const AddEditOccasion = () => {
           occasionStatus: occasionStatus == true || occasionStatus == "true" ? true : false,
           fileName: fileName,
           visibility: visibility.map(a => a.value),
-          userLottiBackgroundIcon: lottieBackgroundBase64
+          userLottiBackgroundIcon: lottieBackgroundBase64,
+          textColor,
+          backgroundColor
         },
       };
       console.log("createOccasionObj---", createOccasionObj);
@@ -417,6 +436,86 @@ const AddEditOccasion = () => {
 
 
 
+          </div>
+          <div className="form-group row">
+            <div className='col'>
+              <label>Text Color</label>
+              <div className="p-2 rounded-sm border" style={{
+                  backgroundColor: textColor,
+                  transition: "ease all 500ms",
+                  cursor: 'pointer',
+                  height: '40px',
+
+              }}
+                  onClick={e => {
+                      setIsShowTextColorPicker(true);
+                      setTextColorErr("");
+                  }}
+              > {textColor ? textColor : "Click here"}</div>
+              {textColorErr ? (
+                  <div className='inlineerror'>{textColorErr} </div>
+              ) : (
+                  ''
+              )}
+              {isShowTextColorPicker && (
+                  <PhotoshopPicker
+                      color={color}
+                      onChangeComplete={color => {
+                          setColor(color.hex);
+                      }}
+                      onAccept={() => {
+                          console.log('color', color)
+                          setTextColor(color);
+                          setIsShowTextColorPicker(false);
+                      }}
+                      onCancel={() => {
+                          setIsShowTextColorPicker(false);
+                      }}
+                  />
+              )}
+          <div>
+
+        </div>
+            </div>
+            <div className='col'>
+              <label>Background Color</label>
+              <div className="p-2 rounded-sm border" style={{
+                  backgroundColor: backgroundColor,
+                  transition: "ease all 500ms",
+                  cursor: 'pointer',
+                  height: '40px',
+
+              }}
+                  onClick={e => {
+                      setIsShowBackgroundColorPicker(true);
+                      setBackgroundColorErr("");
+                  }}
+              > {backgroundColor ? backgroundColor : "Click here"}</div>
+              {backgroundColorErr ? (
+                  <div className='inlineerror'>{backgroundColorErr} </div>
+              ) : (
+                  ''
+              )}
+              {isShowBackgroundColorPicker && (
+                  <PhotoshopPicker
+                      color={bcolor}
+                      onChangeComplete={color => {
+                          setBColor(color.hex);
+                      }}
+                      onAccept={() => {
+                          console.log('color', bcolor)
+                          setBackgroundColor(bcolor);
+                          setIsShowBackgroundColorPicker(false);
+                      }}
+                      onCancel={() => {
+                          setIsShowBackgroundColorPicker(false);
+                      }}
+                  />
+              )}
+          <div>
+
+        </div>
+            </div>
           </div>
 
           <div className="form-group row">
