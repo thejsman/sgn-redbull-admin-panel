@@ -5,7 +5,10 @@ export {
   couponList,
   updateVoucher,
   VoucherList,
-  couponDetailByCouponId
+  couponDetailByCouponId,
+  deleteVoucher,
+  updateVoucherExpiryDate
+
 };
 
 
@@ -26,6 +29,19 @@ function couponList(params) {
 
 function updateVoucher(params) {
   return axios.patch(Api.UPDATE_VOUCHERS, params, {
+    headers: headersApplicationJson,
+  });
+}
+
+function updateVoucherExpiryDate(params) {
+  return axios.patch(Api.UPDATE_VOUCHERS_EXPIRYDATE, params, {
+    headers: headersApplicationJson,
+  });
+}
+
+function deleteVoucher(params) {
+  console.log("params", params);
+  return axios.delete(`${Api.DELETE_VOUCHERS}?couponVoucherId=${params.couponVoucherId}`, {
     headers: headersApplicationJson,
   });
 }

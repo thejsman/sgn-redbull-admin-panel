@@ -9,6 +9,7 @@ import { OccasionStats } from '../../components/common/ocassionStats'
 import { OcassionCategoryStats } from '../../components/common/ocassionCategoryStats';
 import siteSetting from "../../config/env/Index";
 import { userAnalytics, userCleverTapLiveCount } from "../../services/ApiServices";
+import { DauMauCountDataStats } from '../../components/common/DauMauCountDataStats';
 import moment from 'moment'
 
 
@@ -30,6 +31,8 @@ const Dashboard = () => {
   const [tolMonthCreditAmount, setTolMonthCreditAmount] = useState([0]);
   const [liveUserCount, setLiveUserCount] = useState([{ currentUsers: 0, totalUsers: 0 }, { currentUsers: 0, totalUsers: 0 }]);
   const [cleverTapLiveUserCount, setCleverTapLiveUserCount] = useState([{ dailyUsers: 0, weeklyUsers: 0, monthlyUsers: 0 }, { dailyUsers: 0, weeklyUsers: 0, monthlyUsers: 0 }]);
+
+  const [dauMauCountDataStats, setDauMauCountDataStats] = useState([{ lastMonthCount: 0, lastWeekCount: 0, thisMonthCount: 0 , thisWeekCount: 0 , todayCount: 0 , yesterdayCount: 0 }, { lastMonthCount: 0, lastWeekCount: 0, thisMonthCount: 0 , thisWeekCount: 0 , todayCount: 0 , yesterdayCount: 0 }]);
 
   const [giftStatsData, setGiftStatsData] = useState([{
     currentMonthDealsAmount: 0,
@@ -621,6 +624,20 @@ const Dashboard = () => {
       setOccasionCatgeory(response.occasionStats["occasionByCategory"])
     }
 
+    if (response.DauMauCountDataStats) {
+      let arrDauMauCountStatsData = [dauMauCountDataStats.pop()];
+      let obj = {
+        lastMonthCount: response.DauMauCountDataStats["lastMonthCount"],
+        lastWeekCount: response.DauMauCountDataStats["lastWeekCount"],
+        thisMonthCount: response.DauMauCountDataStats["thisMonthCount"],
+        thisWeekCount: response.DauMauCountDataStats["thisWeekCount"],
+        todayCount: response.DauMauCountDataStats["todayCount"],
+        yesterdayCount: response.DauMauCountDataStats["yesterdayCount"],
+      }
+      arrDauMauCountStatsData.push(obj);
+      setDauMauCountDataStats([...arrDauMauCountStatsData]);
+    }
+
   };
 
   const getLiveUserCount = () => {
@@ -675,6 +692,11 @@ const Dashboard = () => {
       <div className="row">
 
         <Stats {...userData} arrUser={arrUser} arrMonthUser={arrMonthUser} cleverTapLiveUserCount={cleverTapLiveUserCount} liveUser={liveUserCount}></Stats>
+
+      </div>
+      <div className="row">
+
+        <DauMauCountDataStats {...dauMauCountDataStats} ></DauMauCountDataStats>
 
       </div>
       <div className="row">

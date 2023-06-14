@@ -56,6 +56,8 @@ export default {
   GET_VOUCHERS_LIST: siteSetting.api.BaseUrl + "/adminVoucher/list",
   CREATE_VOUCHERS: siteSetting.api.BaseUrl + "/adminVoucher/create",
   UPDATE_VOUCHERS: siteSetting.api.BaseUrl + "/adminVoucher/update",
+  UPDATE_VOUCHERS_EXPIRYDATE: siteSetting.api.BaseUrl + "/adminVoucher/update/tillDate",
+  DELETE_VOUCHERS: siteSetting.api.BaseUrl + "/adminVoucher/delete",
   GET_COUPONLIST_BY_PRODUCTNAME: siteSetting.api.BaseUrl + "/adminVoucher/get",
   GET_COUPONDETAIL_BY_COUPONID:
     siteSetting.api.BaseUrl + "/adminVoucher/getById",
