@@ -152,6 +152,7 @@ const Voucher = () => {
                       >
                         <option value="India">India</option>
                         <option value="Nepal">Nepal</option>
+                        <option value="Web">Web</option>
                       </select>
                     </div>
                     <div className="col-4">
