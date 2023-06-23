@@ -428,7 +428,13 @@ const Coupons = () => {
             <tbody>
               {couponArrList.length ? (
                 couponArrList?.map((item, i) => (
-                  <tr key={i} style={{ color: item.days < 5 ? "red" : "" }}>
+                  <tr
+                    key={i}
+                    style={{
+                      color:
+                        item.days < 5 && item.status !== "SUCCESS" ? "red" : "",
+                    }}
+                  >
                     <td>
                       <input
                         type="checkbox"
