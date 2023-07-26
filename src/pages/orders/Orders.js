@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Modal, Dropdown } from "react-bootstrap";
+import React, { useEffect, useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
+import { Modal } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import {
   orderListByDate,
@@ -14,8 +14,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { Loader } from "../../components/common/loader";
 import moment from "moment";
 import { Spinner } from "react-bootstrap";
+import JsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import PdfHtml from "../../components/order/PdfHtml";
 
 const Orders = () => {
+  const myHtmlContainer = useRef(null);
   const history = useHistory();
   const breadcrumb = [{ link: "", linkText: "Orders" }];
   const [orderList, setOrderList] = useState([]);
@@ -47,6 +51,7 @@ const Orders = () => {
   const [isProcess, setIsProcess] = useState(false);
   const [dateArr, setDateArr] = useState([]);
   const [processArr, setProcessArr] = useState([]);
+  const [htmlContent, setHtmlContent] = useState({});
   const [pageState, setPageState] = useState([
     {
       page: 1,
@@ -56,33 +61,6 @@ const Orders = () => {
       userId: null,
     },
   ]);
-
-  const users = [
-    {
-      id: 1,
-      name: "Caitlyn",
-      surname: "Kerluke",
-      age: 24,
-    },
-    {
-      id: 2,
-      name: "Rowan ",
-      surname: "Nikolaus",
-      age: 45,
-    },
-    {
-      id: 3,
-      name: "Kassandra",
-      surname: "Haley",
-      age: 32,
-    },
-    {
-      id: 4,
-      name: "Rusty",
-      surname: "Arne",
-      age: 58,
-    },
-  ];
 
   useEffect(() => {
     var utc = new Date().toJSON().slice(0, 10).toString();
@@ -219,8 +197,54 @@ const Orders = () => {
     a.dispatchEvent(clickEvt);
     a.remove();
   };
+  const htmlStringToPdf = async (htmlString) => {
+    // const doc = new JsPDF({
+    //   format: "a4",
+    //   unit: "px",
+    // });
 
-  const exportToExcel = () => {
+    // // Adding the fonts.
+    // doc.setFont("Inter-Regular", "normal");
+    // doc.setFontSize(6);
+
+    // doc.html(htmlString, {
+    //   async callback(doc) {
+    //     await doc.save("document");
+    //   },
+    // });
+    let iframe = document.createElement("iframe");
+    iframe.style.visibility = "hidden";
+    document.body.appendChild(iframe);
+    let iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframedoc.body.innerHTML = htmlString;
+
+    let canvas = await html2canvas(iframedoc.body, {});
+
+    // Convert the iframe into a PNG image using canvas.
+    let imgData = canvas.toDataURL("image/jpg");
+
+    // Create a PDF document and add the image as a page.
+    const doc = new JsPDF({
+      format: "a4",
+      unit: "px",
+    });
+    // var doc = new JsPDF("l", "pt", "a4");
+
+    doc.addImage(imgData, "JPG", 0, 0, 210, 297);
+
+    // Get the file as blob output.
+    let blob = doc.output("blob");
+
+    // Remove the iframe from the document when the file is generated.
+    document.body.removeChild(iframe);
+    downloadFile({
+      data: blob,
+      fileName: "order.pdf",
+      fileType: "text/pdf",
+    });
+  };
+
+  const exportToExcelAndCSV = async (type) => {
     if (handleValidate()) {
       let dt = date ? date : new Date().toJSON().slice(0, 10).toString();
       let params = `transactionDate=${dt}`;
@@ -241,84 +265,73 @@ const Orders = () => {
           if (status === 200) {
             setLoader(false);
 
-            // Headers for each column
-            let headers = [
-              "Order Id,Item Id,Variant Id,Product Name,Occasion Title,Transaction Type,Transaction Status,Payment Method,Amount,Sender UserId,Transaction Date,Quantity, Receiver Name,Receiver DialCode,Receiver PhoneNo,Receiver userId",
-            ];
+            if (type === "csv") {
+              // Headers for each column
+              let headers = [
+                "Order Id,Item Id,Variant Id,Product Name,Occasion Title,Transaction Type,Transaction Status,Payment Method,Amount,Sender UserId,Transaction Date,Quantity, Receiver Name,Receiver DialCode,Receiver PhoneNo,Receiver userId",
+              ];
 
-            let modifyData = data.data.Items.reduce((acc, item) => {
-              acc.push(
-                [
-                  item.orderId,
-                  item.itemId,
-                  item.variantId,
-                  item.itemDetails.name,
-                  item.occasionTitle,
-                  item.transactionType,
-                  item.transactionStatus,
-                  item.paymentMethod,
-                  item.amount,
-                  item.userId,
-                  item.transactionDate,
-                  item.quantity,
-                  item.giftWith[0].screenName,
-                  item.giftWith[0].dialCode,
-                  item.giftWith[0].phone,
-                  item.giftWith[0].userId,
-                ].join(",")
-              );
-              if (item.giftWith.length > 1) {
-                delete item.giftWith[0];
-                item.giftWith.map((gift) => {
-                  acc.push(
-                    [
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      "",
-                      gift.screenName,
-                      gift.dialCode,
-                      gift.phone,
-                      gift.userId,
-                    ].join(",")
-                  );
-                });
-              }
-              return acc;
-            }, []);
-            // // Convert users data to a csv
-            // let usersCsv = users.reduce((acc, user) => {
-            //   const { id, name, surname, age } = user;
-            //   acc.push([id, name, surname, age].join(","));
-            //   return acc;
-            // }, []);
+              let modifyData = data.data.Items.reduce((acc, item) => {
+                acc.push(
+                  [
+                    item.orderId,
+                    item.itemId,
+                    item.variantId,
+                    item.itemDetails.name,
+                    item.occasionTitle,
+                    item.transactionType,
+                    item.transactionStatus,
+                    item.paymentMethod,
+                    item.amount,
+                    item.userId,
+                    item.transactionDate,
+                    item.quantity,
+                    item.giftWith[0].screenName,
+                    item.giftWith[0].dialCode,
+                    item.giftWith[0].phone,
+                    item.giftWith[0].userId,
+                  ].join(",")
+                );
+                if (item.giftWith.length > 1) {
+                  delete item.giftWith[0];
+                  item.giftWith.map((gift) => {
+                    acc.push(
+                      [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        gift.screenName,
+                        gift.dialCode,
+                        gift.phone,
+                        gift.userId,
+                      ].join(",")
+                    );
+                  });
+                }
+                return acc;
+              }, []);
 
-            downloadFile({
-              data: [...headers, ...modifyData].join("\n"),
-              fileName: "order.csv",
-              fileType: "text/csv",
-            });
-
-            // setCsvData([
-            //   [
-            //     "Order Id",
-            //     "Occasion Title",
-            //     "Transaction Type",
-            //     "Transaction Status",
-            //     "Payment Method",
-            //     "Amount",
-            //     "Created At",
-            //   ],
-            //   ...modifyData,
-            // ]);
+              downloadFile({
+                data: [...headers, ...modifyData].join("\n"),
+                fileName: "order.csv",
+                fileType: "text/csv",
+              });
+            } else {
+              setTimeout(() => {
+                htmlStringToPdf(
+                  document.getElementById("orderPdfHTML").innerHTML
+                );
+              }, 5000);
+            }
           } else {
             setLoader(false);
             toast.error(
@@ -1062,15 +1075,10 @@ const Orders = () => {
                       </button>
                       <button
                         className="btn btn-primary m-2"
-                        onClick={exportToExcel}
+                        onClick={() => exportToExcelAndCSV("csv")}
                       >
                         <i className="fas fa-cloud-download-alt"></i>
                       </button>
-
-                      {/* <i
-                        className="fas fa-file-pdf btn btn-primary m-2 cursor-pointer"
-                        onClick={exportToExcel}
-                      ></i> */}
                     </div>
                   </div>
                 </div>
@@ -1193,16 +1201,17 @@ const Orders = () => {
                 <th>Trans. Status</th>
                 <th>Amount</th>
                 <th>Date</th>
+                <th style={{ width: "5%" }}>--</th>
               </tr>
             </thead>
             <tbody>
               {orderList.length ? (
                 orderList?.map((item, i) => (
-                  <tr
-                    key={i}
-                    onClick={() => (setConfirmModal(true), setIndex(i))}
-                  >
-                    <td className="text-wrap">
+                  <tr key={i}>
+                    <td
+                      className="text-wrap"
+                      onClick={() => (setConfirmModal(true), setIndex(i))}
+                    >
                       <span className="text-primary"> {item.orderId}</span>
                     </td>
                     <td>
@@ -1220,6 +1229,15 @@ const Orders = () => {
                         {" "}
                         {moment(item.createdAt).format("DD, MMM YYYY")}
                       </span>
+                    </td>
+                    <td>
+                      {" "}
+                      <i
+                        className="fas fa-file-pdf primary text-primary cursor-pointer"
+                        onClick={() => (
+                          setIndex(i), exportToExcelAndCSV("pdf")
+                        )}
+                      ></i>
                     </td>
                   </tr>
                 ))
@@ -1251,10 +1269,17 @@ const Orders = () => {
         //   ""
         // )
       }
+      {index > -1 && (
+        <div style={{ visibility: "hidden" }}>
+          <div ref={myHtmlContainer}>
+            <PdfHtml order={orderList[index]} index={index}></PdfHtml>
+          </div>
+        </div>
+      )}
 
       <ToastContainer />
     </div>
   );
 };
-
+// /
 export default Orders;

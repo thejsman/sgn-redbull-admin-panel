@@ -9,8 +9,8 @@ import TopicManagement from "./pages/templateManagement/TemplateManagement";
 import Occasions from "./pages/occasionManagement/occasions/Occasions";
 import AddEditTopic from "./pages/templateManagement/AddEditTemplate";
 import AddEditOccasion from "./pages/occasionManagement/occasions/AddEditOccasion";
-import AddEditFamilyRelationship from './pages/familyRelationship/AddEditFamilyRelationship';
-import FamilyRelationManagement from './pages/familyRelationship/FamilyRelationship';
+import AddEditFamilyRelationship from "./pages/familyRelationship/AddEditFamilyRelationship";
+import FamilyRelationManagement from "./pages/familyRelationship/FamilyRelationship";
 import Rozy from "./pages/rozy/rozy";
 import AddRozy from "./pages/rozy/AddRozy";
 import Templates from "./pages/occasionManagement/templates/Templates";
@@ -28,8 +28,8 @@ import InvitationForm from "./pages/invitation/InvitationForm";
 import Orders from "./pages/orders/Orders";
 import AddEditUsers from "./pages/users/AddEditUsers";
 import Users from "./pages/users/Users";
-import { checkPermission } from './utils'
-import UnAuthorized from './pages/unAuthorized/Unauthorized'
+import { checkPermission } from "./utils";
+import UnAuthorized from "./pages/unAuthorized/Unauthorized";
 import WaitlistedUsers from "./pages/waitlistedUsers/WaitlistedUsers";
 import AddEditOnBoardingCards from "./pages/cards/onBoardingCards/AddEditOnBoardingCards";
 import OnBoardingCards from "./pages/cards/onBoardingCards/OnBoardingCards";
@@ -43,20 +43,30 @@ import SendSmsManagement from "./pages/smsManagement/SendSmsManagement";
 import PreTemplates from "./pages/occasionManagement/pretemplates/PreTemplates";
 import AddEditPreTemplate from "./pages/occasionManagement/pretemplates/AddEditPreTemplate";
 
-
-const PrivateRoute = ({ component: Component, module, loggedIn, userDetail, ...rest }) => {
+const PrivateRoute = ({
+  component: Component,
+  module,
+  loggedIn,
+  userDetail,
+  ...rest
+}) => {
   loggedIn = localStorage.getItem("accessToken");
   userDetail = localStorage.getItem("userDetail");
   return (
     <Route
       {...rest}
       render={(props) =>
-        (loggedIn && userDetail) ?
-          (checkPermission(module) !== -1 ? <Component {...props} /> : <Redirect to="/unauthorized" />) : <Redirect to="/login" />
+        loggedIn && userDetail ? (
+          checkPermission(module) !== -1 ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to="/unauthorized" />
+          )
+        ) : (
+          <Redirect to="/login" />
+        )
       }
     />
-
-
   );
 };
 
@@ -80,7 +90,9 @@ const Routes = (props) => {
   return (
     <>
       <div className="site_wrapper">
-        {(localStorage.getItem("accessToken") && localStorage.getItem("userDetail") && history.location.pathname.indexOf("login") == "-1") ? (
+        {localStorage.getItem("accessToken") &&
+        localStorage.getItem("userDetail") &&
+        history.location.pathname.indexOf("login") === -1 ? (
           <>
             <Header />
             <Sidebar />
@@ -91,103 +103,382 @@ const Routes = (props) => {
         <Router history={history}>
           <Switch>
             <PublicRoute exact path="/login" {...props} component={Login} />
-            <PrivateRoute exact module="dashboard" path="/" {...props} component={Dashboard} />
+            <PrivateRoute
+              exact
+              module="dashboard"
+              path="/"
+              {...props}
+              component={Dashboard}
+            />
 
-            <PublicRoute exact path="/unauthorized" {...props} component={UnAuthorized} />
+            <PublicRoute
+              exact
+              path="/unauthorized"
+              {...props}
+              component={UnAuthorized}
+            />
 
             {/* Notifications Routes */}
-            <PrivateRoute exact module="notifications" path="/notifications" {...props} component={TopicManagement} />
-            <PrivateRoute exact module="notifications" path="/add-notification" {...props} component={AddEditTopic} />
-            <PrivateRoute exact module="notifications" path="/edit-notification/:id" {...props} component={AddEditTopic} />
+            <PrivateRoute
+              exact
+              module="notifications"
+              path="/notifications"
+              {...props}
+              component={TopicManagement}
+            />
+            <PrivateRoute
+              exact
+              module="notifications"
+              path="/add-notification"
+              {...props}
+              component={AddEditTopic}
+            />
+            <PrivateRoute
+              exact
+              module="notifications"
+              path="/edit-notification/:id"
+              {...props}
+              component={AddEditTopic}
+            />
 
             {/* Occasion Management Routes */}
-            <PrivateRoute exact module="occasion-management" path="/occasion-management/occasion" {...props} component={Occasions} />
-            <PrivateRoute exact module="occasion-management" path="/occasion/create" {...props} component={AddEditOccasion} />
-            <PrivateRoute exact module="occasion-management" path="/occasion/edit/:id" {...props} component={AddEditOccasion} />
-
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/occasion-management/occasion"
+              {...props}
+              component={Occasions}
+            />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/occasion/create"
+              {...props}
+              component={AddEditOccasion}
+            />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/occasion/edit/:id"
+              {...props}
+              component={AddEditOccasion}
+            />
 
             {/* Template Management Routes */}
-            <PrivateRoute exact module="occasion-management" path="/occasion-management/templates" {...props} component={Templates} />
-            <PrivateRoute exact module="occasion-management" path="/template/create" {...props} component={AddEditTemplate} />
-            <PrivateRoute exact module="occasion-management" path="/template/edit/:oname/:tname" {...props} component={AddEditTemplate} />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/occasion-management/templates"
+              {...props}
+              component={Templates}
+            />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/template/create"
+              {...props}
+              component={AddEditTemplate}
+            />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/template/edit/:oname/:tname"
+              {...props}
+              component={AddEditTemplate}
+            />
 
             {/* Predefined Template Management Routes */}
-            <PrivateRoute exact module="occasion-management" path="/occasion-management/predefined-templates" {...props} component={PreTemplates} />
-            <PrivateRoute exact module="occasion-management" path="/predefined-templates/create" {...props} component={AddEditPreTemplate} />
-            <PrivateRoute exact module="occasion-management" path="/predefined-templates/edit/:oname/:tname" {...props} component={AddEditPreTemplate} />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/occasion-management/predefined-templates"
+              {...props}
+              component={PreTemplates}
+            />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/predefined-templates/create"
+              {...props}
+              component={AddEditPreTemplate}
+            />
+            <PrivateRoute
+              exact
+              module="occasion-management"
+              path="/predefined-templates/edit/:oname/:tname"
+              {...props}
+              component={AddEditPreTemplate}
+            />
 
             {/* Family Relation Routes */}
-            <PrivateRoute exact module="relationship-management" path='/family-relationship/edit/:id'  {...props} component={AddEditFamilyRelationship} />
-            <PrivateRoute exact module="relationship-management" path='/family-relationship/create'  {...props} component={AddEditFamilyRelationship} />
-            <PrivateRoute exact module="relationship-management" path='/family-relationship'         {...props} component={FamilyRelationManagement} />
-
+            <PrivateRoute
+              exact
+              module="relationship-management"
+              path="/family-relationship/edit/:id"
+              {...props}
+              component={AddEditFamilyRelationship}
+            />
+            <PrivateRoute
+              exact
+              module="relationship-management"
+              path="/family-relationship/create"
+              {...props}
+              component={AddEditFamilyRelationship}
+            />
+            <PrivateRoute
+              exact
+              module="relationship-management"
+              path="/family-relationship"
+              {...props}
+              component={FamilyRelationManagement}
+            />
 
             {/* Rozy Routes */}
-            <PrivateRoute exact module="rozy" path='/rozy'            {...props} component={Rozy} />
-            <PrivateRoute exact module="rozy" path='/rozy/create'     {...props} component={AddRozy} />
-            <PrivateRoute exact module="rozy" path='/rozy/edit/:id'   {...props} component={AddRozy} />
-
+            <PrivateRoute
+              exact
+              module="rozy"
+              path="/rozy"
+              {...props}
+              component={Rozy}
+            />
+            <PrivateRoute
+              exact
+              module="rozy"
+              path="/rozy/create"
+              {...props}
+              component={AddRozy}
+            />
+            <PrivateRoute
+              exact
+              module="rozy"
+              path="/rozy/edit/:id"
+              {...props}
+              component={AddRozy}
+            />
 
             {/* Occasion Card Routes */}
-            <PrivateRoute exact module="cards-management" path="/card/occasions/create" {...props} component={AddEditOccasionCard} />
-            <PrivateRoute exact module="cards-management" path="/card/occasions" {...props} component={OccasionCard} />
-            <PrivateRoute exact module="cards-management" path="/card/occasions/edit/:id" {...props} component={AddEditOccasionCard} />
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/occasions/create"
+              {...props}
+              component={AddEditOccasionCard}
+            />
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/occasions"
+              {...props}
+              component={OccasionCard}
+            />
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/occasions/edit/:id"
+              {...props}
+              component={AddEditOccasionCard}
+            />
 
             {/* Task Card Routes */}
-            <PrivateRoute exact module="cards-management" path="/card/tasks/create" {...props} component={AddEditTaskCard} />
-            <PrivateRoute exact module="cards-management" path="/card/tasks" {...props} component={TaskCard} />
-            <PrivateRoute exact module="cards-management" path="/card/tasks/edit/:id" {...props} component={AddEditTaskCard} />
-
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/tasks/create"
+              {...props}
+              component={AddEditTaskCard}
+            />
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/tasks"
+              {...props}
+              component={TaskCard}
+            />
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/tasks/edit/:id"
+              {...props}
+              component={AddEditTaskCard}
+            />
 
             {/* Onboarding Card Routes */}
-            <PrivateRoute exact module="cards-management" path="/card/onboarding/create" {...props} component={AddEditOnBoardingCards} />
-            <PrivateRoute exact module="cards-management" path="/card/onboarding" {...props} component={OnBoardingCards} />
-            <PrivateRoute exact module="cards-management" path="/card/onboarding/edit/:id" {...props} component={AddEditOnBoardingCards} />
-
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/onboarding/create"
+              {...props}
+              component={AddEditOnBoardingCards}
+            />
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/onboarding"
+              {...props}
+              component={OnBoardingCards}
+            />
+            <PrivateRoute
+              exact
+              module="cards-management"
+              path="/card/onboarding/edit/:id"
+              {...props}
+              component={AddEditOnBoardingCards}
+            />
 
             {/* Voucher Routes */}
-            <PrivateRoute exact module="voucher" path="/voucher" {...props} component={Voucher} />
-            <PrivateRoute exact module="voucher" path="/coupons/:id" {...props} component={Coupons} />
-            <PrivateRoute exact module="voucher" path="/voucher/create" {...props} component={AddVoucher} />
-            <PrivateRoute exact module="voucher" path="/coupon/edit/:id" {...props} component={EditCoupon} />
+            <PrivateRoute
+              exact
+              module="voucher"
+              path="/voucher"
+              {...props}
+              component={Voucher}
+            />
+            <PrivateRoute
+              exact
+              module="voucher"
+              path="/coupons/:id"
+              {...props}
+              component={Coupons}
+            />
+            <PrivateRoute
+              exact
+              module="voucher"
+              path="/voucher/create"
+              {...props}
+              component={AddVoucher}
+            />
+            <PrivateRoute
+              exact
+              module="voucher"
+              path="/coupon/edit/:id"
+              {...props}
+              component={EditCoupon}
+            />
 
             {/* Redis Routes */}
-            <PrivateRoute exact module="redis" path="/redis" {...props} component={Redis} />
-
+            <PrivateRoute
+              exact
+              module="redis"
+              path="/redis"
+              {...props}
+              component={Redis}
+            />
 
             {/* Invitation  Routes */}
-            <PrivateRoute exact module="invitation-form" path="/invitation" {...props} component={InvitationForm} />
+            <PrivateRoute
+              exact
+              module="invitation-form"
+              path="/invitation"
+              {...props}
+              component={InvitationForm}
+            />
 
             {/* Orders  Routes */}
-            <PrivateRoute exact module="orders" path="/orders" {...props} component={Orders} />
+            <PrivateRoute
+              exact
+              module="orders"
+              path="/orders"
+              {...props}
+              component={Orders}
+            />
 
             {/* User  Routes */}
-            <PrivateRoute exact module="users" path="/user/create" {...props} component={AddEditUsers} />
-            <PrivateRoute exact module="users" path="/users" {...props} component={Users} />
-            <PrivateRoute exact module="users" path="/user/edit/:id" {...props} component={AddEditUsers} />
+            <PrivateRoute
+              exact
+              module="users"
+              path="/user/create"
+              {...props}
+              component={AddEditUsers}
+            />
+            <PrivateRoute
+              exact
+              module="users"
+              path="/users"
+              {...props}
+              component={Users}
+            />
+            <PrivateRoute
+              exact
+              module="users"
+              path="/user/edit/:id"
+              {...props}
+              component={AddEditUsers}
+            />
 
             {/* Waitlisted Users  Routes */}
-            <PrivateRoute exact module="waitlisted" path="/waitlisted/users" {...props} component={WaitlistedUsers} />
+            <PrivateRoute
+              exact
+              module="waitlisted"
+              path="/waitlisted/users"
+              {...props}
+              component={WaitlistedUsers}
+            />
 
             {/* Connection Stats  Routes */}
-            <PrivateRoute exact module="connection-stats" path="/connection-stats" {...props} component={ConnectionStats} />
+            <PrivateRoute
+              exact
+              module="connection-stats"
+              path="/connection-stats"
+              {...props}
+              component={ConnectionStats}
+            />
 
             {/* App Users  Routes */}
-            <PrivateRoute exact module="app-users" path="/app-users" {...props} component={AppUsers} />
+            <PrivateRoute
+              exact
+              module="app-users"
+              path="/app-users"
+              {...props}
+              component={AppUsers}
+            />
 
             {/* Stricker Routes */}
-            <PrivateRoute exact module="sticker-management" path='/sticker/edit/:id'  {...props} component={AddEditSticker} />
-            <PrivateRoute exact module="sticker-management" path='/sticker/create'  {...props} component={AddEditSticker} />
-            <PrivateRoute exact module="sticker-management" path='/sticker'         {...props} component={Sticker} />
-
+            <PrivateRoute
+              exact
+              module="sticker-management"
+              path="/sticker/edit/:id"
+              {...props}
+              component={AddEditSticker}
+            />
+            <PrivateRoute
+              exact
+              module="sticker-management"
+              path="/sticker/create"
+              {...props}
+              component={AddEditSticker}
+            />
+            <PrivateRoute
+              exact
+              module="sticker-management"
+              path="/sticker"
+              {...props}
+              component={Sticker}
+            />
 
             {/* Reports  Routes */}
-            <PrivateRoute exact module="reports" path="/report/export" {...props} component={ReportExport} />
-            <PrivateRoute exact module="reports" path="/report/waitlist/export" {...props} component={WaitlistedExport} />
+            <PrivateRoute
+              exact
+              module="reports"
+              path="/report/export"
+              {...props}
+              component={ReportExport}
+            />
+            <PrivateRoute
+              exact
+              module="reports"
+              path="/report/waitlist/export"
+              {...props}
+              component={WaitlistedExport}
+            />
 
             {/* SMS Management  Routes */}
-            <PrivateRoute exact module="sms-management" path="/sms/send" {...props} component={SendSmsManagement} />
-
+            <PrivateRoute
+              exact
+              module="sms-management"
+              path="/sms/send"
+              {...props}
+              component={SendSmsManagement}
+            />
           </Switch>
         </Router>
       </div>

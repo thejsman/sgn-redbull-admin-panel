@@ -55,7 +55,7 @@ const months = [
   "Dec",
 ];
 
-const Days = (data) => data.map((item) => item.day);
+//const Days = (data) => data.map((item) => item.day);
 
 export const modifyDashBoardData = (apiResult) => {
   let usersData = [],

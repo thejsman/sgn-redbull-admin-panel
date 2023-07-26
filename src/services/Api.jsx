@@ -5,7 +5,7 @@
 // import axios from "axios";
 import siteSetting from "../config/env/Index";
 
-export default {
+const apiUrl = {
   ///Authorization
   AUTH: process.env.REACT_APP_API_AUTH_BASE_URL + "auth",
 
@@ -129,3 +129,4 @@ export default {
   //Reward Service
   REWARD_SERVICE: siteSetting.api.BaseUrl + "/adminRewards/reward",
 };
+export default apiUrl;
