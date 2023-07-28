@@ -28,6 +28,7 @@ const Orders = () => {
   const [limit, setLimit] = useState(50);
   const [count, setCount] = useState(51);
   const [loader, setLoader] = useState(false);
+  const [btnLoader, setBtnLoader] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [index, setIndex] = useState(-1);
   const [status, setStatus] = useState("SUCCESS");
@@ -51,7 +52,6 @@ const Orders = () => {
   const [isProcess, setIsProcess] = useState(false);
   const [dateArr, setDateArr] = useState([]);
   const [processArr, setProcessArr] = useState([]);
-  const [htmlContent, setHtmlContent] = useState({});
   const [pageState, setPageState] = useState([
     {
       page: 1,
@@ -65,17 +65,15 @@ const Orders = () => {
   useEffect(() => {
     var utc = new Date().toJSON().slice(0, 10).toString();
     setDate(utc);
-    console.log("date", utc);
     getOrderList(null, null, null, null, page);
   }, []);
 
   const handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     let pageno = parseInt(pageNumber);
     let arr = pageState;
-    let data = arr.filter((item) => item.page == pageno);
-    if (isSearch == 2) {
-      if (data.length == 0) {
+    let data = arr.filter((item) => item.page === pageno);
+    if (isSearch === 2) {
+      if (data.length === 0) {
         setPage(pageno);
         if (transactionId !== null) {
           arr.push({
@@ -96,8 +94,8 @@ const Orders = () => {
         setTransactionId(data[0].transactionId);
         getOrderListByMobile(data[0].userId, data[0].transactionId, pageno);
       }
-    } else if (isSearch == 1) {
-      if (data.length == 0) {
+    } else if (isSearch === 1) {
+      if (data.length === 0) {
         setPage(pageno);
         if (transactionId !== null) {
           arr.push({
@@ -197,75 +195,50 @@ const Orders = () => {
     a.dispatchEvent(clickEvt);
     a.remove();
   };
-  const htmlStringToPdf = async (htmlString) => {
-    // const doc = new JsPDF({
-    //   format: "a4",
-    //   unit: "px",
-    // });
-
-    // // Adding the fonts.
-    // doc.setFont("Inter-Regular", "normal");
-    // doc.setFontSize(6);
-
-    // doc.html(htmlString, {
-    //   async callback(doc) {
-    //     await doc.save("document");
-    //   },
-    // });
-    let iframe = document.createElement("iframe");
-    iframe.style.visibility = "hidden";
-    document.body.appendChild(iframe);
-    let iframedoc = iframe.contentDocument || iframe.contentWindow.document;
-    iframedoc.body.innerHTML = htmlString;
-
-    let canvas = await html2canvas(iframedoc.body, {});
-
-    // Convert the iframe into a PNG image using canvas.
-    let imgData = canvas.toDataURL("image/jpg");
-
-    // Create a PDF document and add the image as a page.
+  const htmlStringToPdf = async (htmlString, ind) => {
     const doc = new JsPDF({
-      format: "a4",
-      unit: "px",
+      orientation: "p",
+      unit: "mm",
+      format: "a5",
+      compress: true,
     });
-    // var doc = new JsPDF("l", "pt", "a4");
-
-    doc.addImage(imgData, "JPG", 0, 0, 210, 297);
-
-    // Get the file as blob output.
-    let blob = doc.output("blob");
-
-    // Remove the iframe from the document when the file is generated.
-    document.body.removeChild(iframe);
-    downloadFile({
-      data: blob,
-      fileName: "order.pdf",
-      fileType: "text/pdf",
+    let invNo = orderList[ind].orderId + "-" + new Date().getTime();
+    // Adding the fonts.
+    doc.html(htmlString, {
+      callback(doc) {
+        doc.save(invNo);
+        setBtnLoader(false);
+      },
+      x: 0,
+      y: 0,
+      margin: [0, 5, 1, 5],
+      width: 138,
+      windowWidth: 480,
     });
   };
 
-  const exportToExcelAndCSV = async (type) => {
-    if (handleValidate()) {
-      let dt = date ? date : new Date().toJSON().slice(0, 10).toString();
-      let params = `transactionDate=${dt}`;
-      if (status) {
-        params += `&status=${status}`;
-      }
-      if (userId) {
-        params += `&userId=${userId}`;
-      }
-      if (transactionId) {
-        params += `&transactionId=${transactionId}`;
-      }
-      params += `&limit=1000`;
-      setLoader(true);
-      orderListByDate(params)
-        .then((res) => {
-          let { status, data } = resHandle(res);
-          if (status === 200) {
-            setLoader(false);
+  const exportToExcelAndCSV = async (type, ind) => {
+    if (type === "csv") {
+      if (handleValidate()) {
+        let dt = date ? date : new Date().toJSON().slice(0, 10).toString();
+        let params = `transactionDate=${dt}`;
+        if (status) {
+          params += `&status=${status}`;
+        }
+        if (userId) {
+          params += `&userId=${userId}`;
+        }
+        if (transactionId) {
+          params += `&transactionId=${transactionId}`;
+        }
+        params += `&limit=1000`;
+        setLoader(true);
+        orderListByDate(params)
+          .then((res) => {
+            let { status, data } = resHandle(res);
+            if (status === 200) {
+              setLoader(false);
 
-            if (type === "csv") {
               // Headers for each column
               let headers = [
                 "Order Id,Item Id,Variant Id,Product Name,Occasion Title,Transaction Type,Transaction Status,Payment Method,Amount,Sender UserId,Transaction Date,Quantity, Receiver Name,Receiver DialCode,Receiver PhoneNo,Receiver userId",
@@ -326,23 +299,22 @@ const Orders = () => {
                 fileType: "text/csv",
               });
             } else {
-              setTimeout(() => {
-                htmlStringToPdf(
-                  document.getElementById("orderPdfHTML").innerHTML
-                );
-              }, 5000);
+              setLoader(false);
+              toast.error(
+                "Sorry, a technical error occurred! Please try again later"
+              );
             }
-          } else {
+          })
+          .catch((err) => {
             setLoader(false);
-            toast.error(
-              "Sorry, a technical error occurred! Please try again later"
-            );
-          }
-        })
-        .catch((err) => {
-          setLoader(false);
-          setOrderList([]);
-        });
+            setOrderList([]);
+          });
+      }
+    } else {
+      setBtnLoader(true);
+      setTimeout(() => {
+        htmlStringToPdf(document.getElementById("orderPdfHTML").innerHTML, ind);
+      }, 2000);
     }
   };
   const getList = () => {
@@ -450,7 +422,7 @@ const Orders = () => {
 
   const handleCheckboxValidate = () => {
     let validate = true;
-    if (chk == false) {
+    if (chk === false) {
       setChkErr("Select the checkbox");
       validate = false;
     }
@@ -582,12 +554,12 @@ const Orders = () => {
             Object.keys(data.data.LastEvaluatedKey).length > 0
           ) {
             let arr = pageState;
-            if (arr.findIndex((item) => item.page == nextPage + 1) == -1) {
+            if (arr.findIndex((item) => item.page === nextPage + 1) === -1) {
               setTransactionId(data.data.LastEvaluatedKey.transactionId);
               setUserId(data.data.LastEvaluatedKey.userId);
             }
           }
-          if (data.data.Items.length == 0 || !data.data.LastEvaluatedKey) {
+          if (data.data.Items.length === 0 || !data.data.LastEvaluatedKey) {
             setTransactionId(null);
           }
         } else {
@@ -641,7 +613,7 @@ const Orders = () => {
             Object.keys(data.data.LastEvaluatedKey).length > 0
           ) {
             let arr = pageState;
-            if (arr.findIndex((item) => item.page == nextPage + 1) == -1) {
+            if (arr.findIndex((item) => item.page === nextPage + 1) === -1) {
               setTransactionId(data.data.LastEvaluatedKey.transactionId);
               setTransactionDate(data.data.LastEvaluatedKey.transactionDate);
               setTransactionStatus(
@@ -650,7 +622,7 @@ const Orders = () => {
               setUserId(data.data.LastEvaluatedKey.userId);
             }
           }
-          if (data.data.Items.length == 0 || !data.data.LastEvaluatedKey) {
+          if (data.data.Items.length === 0 || !data.data.LastEvaluatedKey) {
             setTransactionId(null);
           }
         } else {
@@ -710,7 +682,7 @@ const Orders = () => {
             <div className="col">{orderList[index]?.quantity}</div>
             <div className="col  font-weight-bold">Occasion Status</div>
             <div className="col">
-              {orderList[index]?.occasionStatus == false ? "False" : "True"}
+              {orderList[index]?.occasionStatus === false ? "False" : "True"}
             </div>
           </div>
           <div className="row">
@@ -788,7 +760,7 @@ const Orders = () => {
                   </div>
                   <div className="col">{item?.userId}</div>
                   <div className="col">{item?.screenName}</div>
-                  {item?.delivered == true ? (
+                  {item?.delivered === true ? (
                     <>
                       <div className="col"></div>
                       <div className="col">
@@ -814,7 +786,6 @@ const Orders = () => {
 
                       {processArr[i] ? (
                         <div className="col mt-2">
-                          {" "}
                           <span>
                             <Spinner
                               as="span"
@@ -924,7 +895,6 @@ const Orders = () => {
             Object.keys(orderList[index]?.deliveryObject).length > 0 &&
             orderList[index]?.transactionType !== "gift" && (
               <>
-                {" "}
                 <div className="row">
                   <div className="col">
                     <hr />
@@ -960,7 +930,6 @@ const Orders = () => {
                           }}
                         />
                         <label htmlFor="chk" className="form-check-label">
-                          {" "}
                           Marked product Delivered
                         </label>
 
@@ -1075,7 +1044,7 @@ const Orders = () => {
                       </button>
                       <button
                         className="btn btn-primary m-2"
-                        onClick={() => exportToExcelAndCSV("csv")}
+                        onClick={() => exportToExcelAndCSV("csv", "")}
                       >
                         <i className="fas fa-cloud-download-alt"></i>
                       </button>
@@ -1224,20 +1193,32 @@ const Orders = () => {
                     <td>{item.transactionText}</td>
                     <td>{item.amount}</td>
                     <td className="text-wrap">
-                      {" "}
                       <span className="">
-                        {" "}
                         {moment(item.createdAt).format("DD, MMM YYYY")}
                       </span>
                     </td>
                     <td>
-                      {" "}
-                      <i
-                        className="fas fa-file-pdf primary text-primary cursor-pointer"
-                        onClick={() => (
-                          setIndex(i), exportToExcelAndCSV("pdf")
-                        )}
-                      ></i>
+                      {btnLoader ? (
+                        <button
+                          className="btn btn-primary btn-sm"
+                          type="button"
+                          disabled
+                        >
+                          <span
+                            className="spinner-grow spinner-grow-sm"
+                            role="status"
+                          ></span>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => (
+                            setIndex(i), exportToExcelAndCSV("pdf", i)
+                          )}
+                        >
+                          <i className="fas fa-file-pdf"></i>
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))
@@ -1270,7 +1251,7 @@ const Orders = () => {
         // )
       }
       {index > -1 && (
-        <div style={{ visibility: "hidden" }}>
+        <div style={{ visibility: "hidden", height: 0, overflow: "hidden" }}>
           <div ref={myHtmlContainer}>
             <PdfHtml order={orderList[index]} index={index}></PdfHtml>
           </div>
