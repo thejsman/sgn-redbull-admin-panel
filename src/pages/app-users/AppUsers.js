@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import {
@@ -9,12 +9,11 @@ import {
   addReward,
 } from "../../services/ApiUsers";
 import { resHandle } from "../../components/util/utils";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { Loader } from "../../components/common/loader";
 import moment from "moment";
 
 const AppUsers = () => {
-  const history = useHistory();
   const breadcrumb = [{ link: "", linkText: "App User Management" }];
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(100);

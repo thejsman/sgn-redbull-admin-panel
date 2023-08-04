@@ -11,7 +11,7 @@ const Sidebar = () => {
   const getPermission = (str) => {
     if (localStorage.getItem("userDetail")) {
       let detail = JSON.parse(localStorage.getItem("userDetail"));
-      let index = detail.permissions.findIndex((i) => i == str);
+      let index = detail.permissions.findIndex((i) => i === str);
       let resp = detail.isSuperAdmin ? 1 : index;
       return resp;
     } else {
@@ -134,7 +134,6 @@ const Sidebar = () => {
                 >
                   <i className="fas fa-calendar-week"></i> Predefined Templates
                 </NavLink>
-             
               </div>
             </div>
           </li>
