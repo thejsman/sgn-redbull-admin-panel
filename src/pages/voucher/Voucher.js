@@ -90,7 +90,7 @@ const Voucher = () => {
                 (new Date(moment.unix(value.validTill)).getTime() -
                   currentDate.getTime()) /
                   (1000 * 3600 * 24) <
-                6
+                  6 && value.status !== "SUCCESS"
               );
             });
             result["expiry"] = days;
