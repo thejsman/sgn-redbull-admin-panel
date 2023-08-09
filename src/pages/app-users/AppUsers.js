@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Modal } from "react-bootstrap";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import {
   getAppUserByCondition,
@@ -31,8 +31,13 @@ const AppUsers = () => {
   const [rewardAmountErr, setRewardAmountErr] = useState("");
   const [rewardDescription, setRewardDescription] = useState("");
   const [rewardDescriptionErr, setRewardDescriptionErr] = useState("");
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [index, setIndex] = useState(-1);
 
   // all handler start
+  const handleClose = () => {
+    setConfirmModal(false);
+  };
 
   const handleValidate = () => {
     let validate = true;
@@ -170,6 +175,188 @@ const AppUsers = () => {
   // all handler end
   return (
     <div className="page_wrapper">
+      <Modal size="lg" show={confirmModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Order No : {transactions[index]?.orderId} <br />
+            User Id: {transactions[index]?.userId}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row">
+            <div className="col font-weight-bold">Occasion Title :</div>
+            <div className="col">{transactions[index]?.occasionTitle}</div>
+            <div className="col  font-weight-bold">Transaction Type</div>
+            <div className="col">{transactions[index]?.transactionType}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Occasion Name :</div>
+            <div className="col">{transactions[index]?.occasionName}</div>
+            <div className="col  font-weight-bold">Transaction Text</div>
+            <div className="col">{transactions[index]?.transactionText}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Amount:</div>
+            <div className="col">{transactions[index]?.amount}</div>
+            <div className="col  font-weight-bold">Transaction Date</div>
+            <div className="col">{transactions[index]?.transactionDate}</div>
+          </div>
+
+          <div className="row">
+            <div className="col font-weight-bold">Quantity :</div>
+            <div className="col">{transactions[index]?.quantity}</div>
+            <div className="col  font-weight-bold">Occasion Status</div>
+            <div className="col">
+              {transactions[index]?.occasionStatus === false ? "False" : "True"}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Trans Status :</div>
+            <div className="col">{transactions[index]?.transactionStatus}</div>
+            <div className="col  font-weight-bold">Order Detail Id</div>
+            <div className="col">
+              {transactions[index]?.orderDetailId
+                ? transactions[index]?.orderDetailId
+                : "--N/A--"}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Occasion Title :</div>
+            <div className="col">{transactions[index]?.occasionTitle}</div>
+            <div className="col  font-weight-bold">Transaction Type</div>
+            <div className="col">{transactions[index]?.transactionType}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Item Id :</div>
+            <div className="col">{transactions[index]?.itemId}</div>
+            <div className="col  font-weight-bold">Wallet Bal Used</div>
+            <div className="col">{transactions[index]?.walletBalanceUsed}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Currency Symbol:</div>
+            <div className="col">{transactions[index]?.currencySymbol}</div>
+            <div className="col  font-weight-bold">Amount</div>
+            <div className="col">{transactions[index]?.amount}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Currency Code :</div>
+            <div className="col">{transactions[index]?.currencyCode}</div>
+            <div className="col  font-weight-bold">Payment Method</div>
+            <div className="col">{transactions[index]?.paymentMethod}</div>
+          </div>
+          <div className="row">
+            <div className="col font-weight-bold">Variant Id:</div>
+            <div className="col">{transactions[index]?.variantId}</div>
+            <div className="col  font-weight-bold">Product Name</div>
+            <div className="col">
+              {transactions[index]?.productName
+                ? transactions[index]?.productName
+                : "--N/A--"}
+            </div>
+          </div>
+          {transactions[index]?.giftWith &&
+          transactions[index]?.giftWith.length > 0 ? (
+            <>
+              <div className="row">
+                <div className="col">
+                  <hr />
+                  <p className="text-primary">Gift With</p>
+                </div>
+              </div>
+              <div className="row" key={"gift"}>
+                <div className="col font-weight-bold">Image</div>
+                <div className="col font-weight-bold">User Id</div>
+                <div className="col font-weight-bold">Screen Name</div>
+              </div>
+            </>
+          ) : null}
+
+          {transactions[index]?.giftWith &&
+          transactions[index]?.giftWith.length > 0
+            ? transactions[index]?.giftWith?.map((item, i) => (
+                <div className="row" key={"gift" + i}>
+                  <div className="col">
+                    {item?.profileImage ? (
+                      <img src={item?.profileImage} style={{ width: "50%" }} />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="col">{item?.userId}</div>
+                  <div className="col">{item?.screenName}</div>
+                </div>
+              ))
+            : null}
+          <div className="row">
+            <div className="col">
+              <hr />
+              <p className="text-primary">Gift Card Details</p>
+            </div>
+          </div>
+          <div className="row" key={"giftcard"}>
+            <div className="col-3 font-weight-bold">Gift Card Code</div>
+            <div className="col-6 font-weight-bold">Voucher Id</div>
+            <div className="col-3 font-weight-bold">Valid Till</div>
+          </div>
+          {transactions[index]?.giftCardDetails &&
+          transactions[index]?.giftCardDetails.length ? (
+            transactions[index]?.giftCardDetails?.map((giftcard, j) => (
+              <div className="row" key={"giftcard" + j}>
+                <div className="col-3">{giftcard?.giftCardCode}</div>
+                <div className="col-6">{giftcard?.voucherId}</div>
+                <div className="col-3">{giftcard?.validTill}</div>
+              </div>
+            ))
+          ) : (
+            <div className="row">
+              <div className="col-3">--N/A--</div>
+              <div className="col-6">--N/A--</div>
+              <div className="col-3">--N/A--</div>
+            </div>
+          )}
+          <div className="row">
+            <div className="col">
+              <hr />
+              <p className="text-primary">Order Details</p>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-2">
+              {transactions[index]?.orderDetails?.source ? (
+                <img
+                  src={transactions[index]?.orderDetails?.source}
+                  style={{ width: "70%" }}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="col-10">
+              <div className="row">
+                <div className="col-2 font-weight-bold">Name :</div>
+                <div className="col-5">
+                  {transactions[index]?.orderDetails?.name}
+                </div>
+                <div className="col-3 font-weight-bold">Currency Symbol:</div>
+                <div className="col-2">
+                  {transactions[index]?.orderDetails?.currencySymbol}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-2 font-weight-bold">Amount :</div>
+                <div className="col-5">
+                  {transactions[index]?.orderDetails?.amount}
+                </div>
+                <div className="col-3 font-weight-bold">Quantity :</div>
+                <div className="col-2">
+                  {transactions[index]?.orderDetails?.quantity}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className="twocol sb page_header">
         <h2>App User Management</h2>
@@ -557,7 +744,14 @@ const AppUsers = () => {
                                   <tr key={i}>
                                     <td>{(page - 1) * limit + i + 1}</td>
                                     <td>
-                                      <span className="">{item.orderId}</span>
+                                      <span
+                                        className="text-primary c-pointer"
+                                        onClick={() => (
+                                          setConfirmModal(true), setIndex(i)
+                                        )}
+                                      >
+                                        {item.orderId}
+                                      </span>
                                     </td>
                                     <td>
                                       <span className="">
