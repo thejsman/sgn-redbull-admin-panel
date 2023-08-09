@@ -225,12 +225,6 @@ const Orders = () => {
         if (status) {
           params += `&status=${status}`;
         }
-        if (userId) {
-          params += `&userId=${userId}`;
-        }
-        if (transactionId) {
-          params += `&transactionId=${transactionId}`;
-        }
         params += `&limit=1000`;
         setLoader(true);
         orderListByDate(params)
@@ -245,6 +239,7 @@ const Orders = () => {
               ];
 
               let modifyData = data.data.Items.reduce((acc, item) => {
+                console.log("acc", acc.length);
                 acc.push(
                   [
                     item.orderId,
@@ -259,13 +254,23 @@ const Orders = () => {
                     item.userId,
                     item.transactionDate,
                     item.quantity,
-                    item.giftWith[0].screenName,
-                    item.giftWith[0].dialCode,
-                    item.giftWith[0].phone,
-                    item.giftWith[0].userId,
+                    item.giftWith && item.giftWith.length
+                      ? item.giftWith[0].screenName
+                      : "",
+                    item.giftWith && item.giftWith.length
+                      ? item.giftWith[0].dialCode
+                      : "",
+                    item.giftWith && item.giftWith.length
+                      ? item.giftWith[0].phone
+                        ? item.giftWith[0].phone
+                        : item.giftWith[0].mobile
+                      : "",
+                    item.giftWith && item.giftWith.length
+                      ? item.giftWith[0].userId
+                      : "",
                   ].join(",")
                 );
-                if (item.giftWith.length > 1) {
+                if (item.giftWith && item.giftWith.length > 1) {
                   delete item.giftWith[0];
                   item.giftWith.map((gift) => {
                     acc.push(
@@ -306,8 +311,12 @@ const Orders = () => {
             }
           })
           .catch((err) => {
+            console.log("err", err);
             setLoader(false);
-            setOrderList([]);
+            toast.error(
+              "Sorry, a technical error occurred! Please try again later"
+            );
+            //setOrderList([]);
           });
       }
     } else {
@@ -339,7 +348,7 @@ const Orders = () => {
       setTransactionStatus(null);
       setUserId(null);
       setPage(1);
-      setCount(6);
+      setCount(51);
       getOrderList(null, null, null, null, 1);
     }
   };
@@ -357,7 +366,7 @@ const Orders = () => {
       setTransactionId(null);
       setUserId(null);
       setPage(1);
-      setCount(6);
+      setCount(51);
       getOrderListByMobile(null, null, 1);
     }
   };
@@ -376,7 +385,7 @@ const Orders = () => {
       setPageState([...obj]);
       setIsSearch(3);
       setPage(1);
-      setCount(5);
+      setCount(51);
       getOrderListByOrderNo();
     }
   };
@@ -407,7 +416,13 @@ const Orders = () => {
       .catch((err) => {
         setLoader(false);
         setOrderList([]);
-        if (err.response.status !== 400) {
+        if (err.response) {
+          if (err.response.status !== 400) {
+            toast.error(
+              "Sorry, a technical error occurred! Please try again later"
+            );
+          }
+        } else {
           toast.error(
             "Sorry, a technical error occurred! Please try again later"
           );
@@ -597,6 +612,7 @@ const Orders = () => {
     if (userId) {
       params += `&userId=${userId}`;
     }
+
     if (transactionId) {
       params += `&transactionId=${transactionId}`;
     }
