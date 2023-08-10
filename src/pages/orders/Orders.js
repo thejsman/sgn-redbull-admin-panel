@@ -53,6 +53,7 @@ const Orders = () => {
   const [isProcess, setIsProcess] = useState(false);
   const [dateArr, setDateArr] = useState([]);
   const [processArr, setProcessArr] = useState([]);
+  const [pdfFlag, setPdfFlag] = useState(0);
   const [pageState, setPageState] = useState([
     {
       page: 1,
@@ -360,6 +361,7 @@ const Orders = () => {
       setBtnLoader(true);
       setTimeout(() => {
         htmlStringToPdf(document.getElementById("orderPdfHTML").innerHTML, ind);
+        setPdfFlag(0);
       }, 2000);
     }
   };
@@ -1266,7 +1268,9 @@ const Orders = () => {
                         <button
                           className="btn btn-primary btn-sm"
                           onClick={() => (
-                            setIndex(i), exportToExcelAndCSV("pdf", i)
+                            setIndex(i),
+                            setPdfFlag(1),
+                            exportToExcelAndCSV("pdf", i)
                           )}
                         >
                           <i className="fas fa-file-pdf"></i>
@@ -1303,7 +1307,7 @@ const Orders = () => {
         //   ""
         // )
       }
-      {index > -1 && (
+      {index > -1 && pdfFlag == 1 && (
         <div style={{ visibility: "hidden", height: 0, overflow: "hidden" }}>
           <div ref={myHtmlContainer}>
             <PdfHtml order={orderList[index]} index={index}></PdfHtml>
