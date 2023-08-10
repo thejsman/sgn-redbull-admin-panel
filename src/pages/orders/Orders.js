@@ -8,6 +8,7 @@ import {
   orderListByOrderId,
   updateOrderStatus,
 } from "../../services/ApiServices";
+import { getAppUserByCondition } from "../../services/ApiUsers";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import { resHandle } from "../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -52,6 +53,7 @@ const Orders = () => {
   const [isProcess, setIsProcess] = useState(false);
   const [dateArr, setDateArr] = useState([]);
   const [processArr, setProcessArr] = useState([]);
+  const [pdfFlag, setPdfFlag] = useState(0);
   const [pageState, setPageState] = useState([
     {
       page: 1,
@@ -235,74 +237,110 @@ const Orders = () => {
 
               // Headers for each column
               let headers = [
-                "Order Id,Item Id,Variant Id,Product Name,Occasion Title,Transaction Type,Transaction Status,Payment Method,Amount,Sender UserId,Transaction Date,Quantity, Receiver Name,Receiver DialCode,Receiver PhoneNo,Receiver userId",
+                "Order Id,Item Id,Variant Id,Product Name,Occasion Title,Transaction Type,Transaction Status,Payment Method,Amount,Sender UserId,Sender Name,Sender dialCode,Sender phoneno,Transaction Date,Quantity, Receiver Name,Receiver DialCode,Receiver PhoneNo,Receiver userId",
               ];
 
-              let modifyData = data.data.Items.reduce((acc, item) => {
-                console.log("acc", acc.length);
-                acc.push(
-                  [
-                    item.orderId,
-                    item.itemId,
-                    item.variantId,
-                    item.itemDetails.name,
-                    item.occasionTitle,
-                    item.transactionType,
-                    item.transactionStatus,
-                    item.paymentMethod,
-                    item.amount,
-                    item.userId,
-                    item.transactionDate,
-                    item.quantity,
-                    item.giftWith && item.giftWith.length
-                      ? item.giftWith[0].screenName
-                      : "",
-                    item.giftWith && item.giftWith.length
-                      ? item.giftWith[0].dialCode
-                      : "",
-                    item.giftWith && item.giftWith.length
-                      ? item.giftWith[0].phone
-                        ? item.giftWith[0].phone
-                        : item.giftWith[0].mobile
-                      : "",
-                    item.giftWith && item.giftWith.length
-                      ? item.giftWith[0].userId
-                      : "",
-                  ].join(",")
-                );
-                if (item.giftWith && item.giftWith.length > 1) {
-                  delete item.giftWith[0];
-                  item.giftWith.map((gift) => {
+              const uniqueUserIds = [
+                ...new Set(data.data.Items.map((item) => item.userId)),
+                ...new Set(
+                  data.data.Items.map((item) => {
+                    if (item.giftWith && item.giftWith[0].userId)
+                      return item.giftWith[0].userId;
+                    else return "";
+                  })
+                ),
+              ];
+
+              console.log("uniqueUserIds", uniqueUserIds);
+              const promises = uniqueUserIds.map((id) =>
+                getAppUserByCondition("userId=" + id)
+              );
+              Promise.all(promises)
+                .then((response) => {
+                  console.log("response", response);
+                  var usersObject = response.reduce(
+                    (obj, item) => (
+                      (obj[item.data.data.userId] = item.data.data), obj
+                    ),
+                    {}
+                  );
+                  console.log("users", usersObject);
+                  let modifyData = data.data.Items.reduce((acc, item) => {
                     acc.push(
                       [
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        gift.screenName,
-                        gift.dialCode,
-                        gift.phone,
-                        gift.userId,
+                        item.orderId,
+                        item.itemId,
+                        item.variantId,
+                        item.itemDetails.name,
+                        item.occasionTitle,
+                        item.transactionType,
+                        item.transactionStatus,
+                        item.paymentMethod,
+                        item.amount,
+                        item.userId,
+                        item.userId ? usersObject[item.userId].screenName : "",
+                        item.userId ? usersObject[item.userId].dialCode : "",
+                        item.userId ? usersObject[item.userId].phone : "",
+                        item.transactionDate,
+                        item.quantity,
+                        item.giftWith && item.giftWith.length
+                          ? usersObject[item.giftWith[0].userId]
+                            ? usersObject[item.giftWith[0].userId].screenName
+                            : item.giftWith[0].screenName
+                          : "",
+                        item.giftWith && item.giftWith.length
+                          ? usersObject[item.giftWith[0].userId]
+                            ? usersObject[item.giftWith[0].userId].dialCode
+                            : item.giftWith[0].dialCode
+                          : "",
+                        item.giftWith && item.giftWith.length
+                          ? usersObject[item.giftWith[0].userId]
+                            ? usersObject[item.giftWith[0].userId].phone
+                            : item.giftWith[0].phone
+                          : "",
+                        item.giftWith && item.giftWith.length
+                          ? item.giftWith[0].userId
+                          : "",
                       ].join(",")
                     );
-                  });
-                }
-                return acc;
-              }, []);
+                    if (item.giftWith && item.giftWith.length > 1) {
+                      delete item.giftWith[0];
+                      item.giftWith.map((gift) => {
+                        acc.push(
+                          [
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            gift.screenName,
+                            gift.dialCode,
+                            gift.phone,
+                            gift.userId,
+                          ].join(",")
+                        );
+                      });
+                    }
+                    return acc;
+                  }, []);
 
-              downloadFile({
-                data: [...headers, ...modifyData].join("\n"),
-                fileName: "order.csv",
-                fileType: "text/csv",
-              });
+                  downloadFile({
+                    data: [...headers, ...modifyData].join("\n"),
+                    fileName: "order.csv",
+                    fileType: "text/csv",
+                  });
+                })
+                .catch((err) => {});
             } else {
               setLoader(false);
               toast.error(
@@ -323,6 +361,7 @@ const Orders = () => {
       setBtnLoader(true);
       setTimeout(() => {
         htmlStringToPdf(document.getElementById("orderPdfHTML").innerHTML, ind);
+        setPdfFlag(0);
       }, 2000);
     }
   };
@@ -1229,7 +1268,9 @@ const Orders = () => {
                         <button
                           className="btn btn-primary btn-sm"
                           onClick={() => (
-                            setIndex(i), exportToExcelAndCSV("pdf", i)
+                            setIndex(i),
+                            setPdfFlag(1),
+                            exportToExcelAndCSV("pdf", i)
                           )}
                         >
                           <i className="fas fa-file-pdf"></i>
@@ -1266,7 +1307,7 @@ const Orders = () => {
         //   ""
         // )
       }
-      {index > -1 && (
+      {index > -1 && pdfFlag == 1 && (
         <div style={{ visibility: "hidden", height: 0, overflow: "hidden" }}>
           <div ref={myHtmlContainer}>
             <PdfHtml order={orderList[index]} index={index}></PdfHtml>

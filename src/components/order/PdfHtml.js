@@ -3,11 +3,17 @@ import { getAppUserByCondition } from "../../services/ApiUsers";
 import moment from "moment";
 const PdfHtml = (props) => {
   const [userList, setUserList] = useState([]);
+  let users = [];
   useEffect(() => {
-    let users = [
-      props.order.userId,
-      ...props.order.giftWith.map(({ userId }) => userId),
-    ];
+    if (props.order.giftWith && props.order.giftWith.length > 0) {
+      users = [
+        props.order.userId,
+        ...props.order.giftWith.map(({ userId }) => userId),
+      ];
+    } else {
+      users = [props.order.userId];
+    }
+
     console.log(props.order);
     const promises = users.map((id) =>
       getAppUserByCondition("userId=" + id).then((res) => res.data)
