@@ -61,6 +61,7 @@ const apiUrl = {
   GET_COUPONLIST_BY_PRODUCTNAME: siteSetting.api.BaseUrl + "/adminVoucher/get",
   GET_COUPONDETAIL_BY_COUPONID:
     siteSetting.api.BaseUrl + "/adminVoucher/getById",
+  GET_PRODUCT_DETAIL_BY_ITEM_ID:process.env.REACT_APP_API_GRAPHQL_URL+"shop-api?vendure-token=c1d643btfjhe0qcjmbe",
 
   // Card Occasion Section
   GET_CARD_OCCASION_LIST:
@@ -128,5 +129,11 @@ const apiUrl = {
 
   //Reward Service
   REWARD_SERVICE: siteSetting.api.BaseUrl + "/adminRewards/reward",
+
+  //Dashboard Stats
+  CELEBRATION_STATS: "https://07cl2u25fa.execute-api.ap-southeast-1.amazonaws.com/staging/celebration",
+  TRANSACTION_STATS: "https://07cl2u25fa.execute-api.ap-southeast-1.amazonaws.com/staging/transactions",
+
+  
 };
 export default apiUrl;
