@@ -169,7 +169,7 @@ const AddVoucher = () => {
       } else {
         setItemIdErr("");
         setIsShowLoader(true);
-        const response = await sendGraphQLRequest(` {
+        const ql = ` {
           product(id:${itemId}){
             id
             name
@@ -180,7 +180,8 @@ const AddVoucher = () => {
             }
           }
         }
-      `);
+      `;
+        const response = await sendGraphQLRequest(ql, country);
         if (response.product) {
           setProductName(response.product.variants[0].sku);
           setVariantId(response.product.variants[0].id);
