@@ -61,7 +61,7 @@ const apiUrl = {
   GET_COUPONLIST_BY_PRODUCTNAME: siteSetting.api.BaseUrl + "/adminVoucher/get",
   GET_COUPONDETAIL_BY_COUPONID:
     siteSetting.api.BaseUrl + "/adminVoucher/getById",
-  GET_PRODUCT_DETAIL_BY_ITEM_ID:process.env.REACT_APP_API_GRAPHQL_URL+"shop-api?vendure-token=c1d643btfjhe0qcjmbe",
+  GET_PRODUCT_DETAIL_BY_ITEM_ID:process.env.REACT_APP_API_GRAPHQL_URL+"shop-api?vendure-token=",
 
   // Card Occasion Section
   GET_CARD_OCCASION_LIST:
