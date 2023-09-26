@@ -8,6 +8,7 @@ let defaultSetting = {
         mode: 'cors',
         WebSocketUrl: process.env.REACT_APP_WEB_SOCKET_URL,
         redis_url: process.env.REACT_APP_API_BASE_URL + "/redis/deleteItem/",
+        BaseGraphQLUrl:process.env.REACT_APP_API_GRAPHQL_URL
     }
 
 }

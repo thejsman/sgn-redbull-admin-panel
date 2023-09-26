@@ -29,7 +29,9 @@ export {
   waitlistedExport,
   connectionStats,
   reportExport,
-  updateOrderStatus
+  updateOrderStatus,
+  transactionStats,
+  celebrationStats
 };
 
 
@@ -187,4 +189,17 @@ function updateOrderStatus(params) {
   });
 }
 
+function celebrationStats() {
+  return axios.get(
+    `${Api.CELEBRATION_STATS}`, {
+    headers: headersApplicationJson,
+  });
+}
+
+function transactionStats() {
+  return axios.get(
+    `${Api.TRANSACTION_STATS}`, {
+    headers: headersApplicationJson,
+  });
+}
 
