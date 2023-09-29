@@ -265,7 +265,6 @@ const Orders = () => {
                     {}
                   );
                   console.log("users", usersObject);
-                  debugger;
                   let modifyData = data.data.Items.reduce((acc, item) => {
                     acc.push(
                       [
@@ -309,7 +308,6 @@ const Orders = () => {
                           : "",
                       ].join(",")
                     );
-                    debugger;
                     console.log(
                       item.giftWith && item.giftWith.length
                         ? usersObject[item.giftWith[0].userId]
