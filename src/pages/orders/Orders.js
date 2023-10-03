@@ -284,28 +284,43 @@ const Orders = () => {
                         item.transactionDate,
                         item.quantity,
                         item.giftWith && item.giftWith.length
-                          ? usersObject[item.giftWith[0].userId]
+                          ? item.giftWith[0].userId &&
+                            usersObject[item.giftWith[0].userId]
                             ? usersObject[item.giftWith[0].userId].screenName
                             : item.giftWith[0].screenName
                           : "",
                         item.giftWith && item.giftWith.length
-                          ? usersObject[item.giftWith[0].userId]
+                          ? item.giftWith[0].userId &&
+                            usersObject[item.giftWith[0].userId]
                             ? usersObject[item.giftWith[0].userId].dialCode
                             : item.giftWith[0].dialCode
                           : "",
                         item.giftWith && item.giftWith.length
-                          ? usersObject[item.giftWith[0].userId]
+                          ? item.giftWith[0].userId &&
+                            usersObject[item.giftWith[0].userId]
                             ? usersObject[item.giftWith[0].userId].phone
                             : item.giftWith[0].phone
+                            ? item.giftWith[0].phone
+                            : item.giftWith[0].mobile
                           : "",
                         item.giftWith && item.giftWith.length
                           ? item.giftWith[0].userId
                           : "",
                       ].join(",")
                     );
+                    console.log(
+                      item.giftWith && item.giftWith.length
+                        ? usersObject[item.giftWith[0].userId]
+                          ? usersObject[item.giftWith[0].userId].dialCode
+                          : item.giftWith[0].dialCode
+                        : "",
+                      "sssssssssssss",
+                      item.giftWith && item.giftWith.length,
+                      item.giftWith
+                    );
                     if (item.giftWith && item.giftWith.length > 1) {
-                      delete item.giftWith[0];
-                      item.giftWith.map((gift) => {
+                      // delete item.giftWith[0];
+                      for (let i = 1; item.giftWith.length > i; i++) {
                         acc.push(
                           [
                             "",
@@ -323,13 +338,40 @@ const Orders = () => {
                             "",
                             "",
                             "",
-                            gift.screenName,
-                            gift.dialCode,
-                            gift.phone,
-                            gift.userId,
+                            item.giftWith[i].screenName,
+                            item.giftWith[i].dialCode,
+                            item.giftWith[i].phone
+                              ? item.giftWith[i].phone
+                              : item.giftWith[i].mobile,
+                            item.giftWith[i].userId,
                           ].join(",")
                         );
-                      });
+                      }
+                      // item.giftWith.map((gift) => {
+                      //   acc.push(
+                      //     [
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       "",
+                      //       gift.screenName,
+                      //       gift.dialCode,
+                      //       gift.phone ? gift.phone : gift.mobile,
+                      //       gift.userId,
+                      //     ].join(",")
+                      //   );
+                      // });
                     }
                     return acc;
                   }, []);
