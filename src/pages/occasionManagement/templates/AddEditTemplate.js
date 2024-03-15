@@ -52,7 +52,7 @@ const AddEditTemplate = () => {
     { link: "/occasion-management/templates", linkText: "Template Management" },
     {
       link: "",
-      linkText: isAddOccasionTemplate ? "Add Template1" : "Edit Template",
+      linkText: isAddOccasionTemplate ? "Add Template" : "Edit Template",
     },
   ];
 
@@ -79,31 +79,33 @@ const AddEditTemplate = () => {
     }
 
     if (!templateTitle.replace(/\s+/g, "")) {
-      setTemplateTitleErr("Template name is required");
+      setTemplateTitleErr("Template title is required");
+
       validate = false;
     } else {
       setTemplateTitleErr("");
     }
 
     if (!templateDescription.replace(/\s+/g, "")) {
-      setTemplateDescriptionErr("Template name is required");
+      setTemplateDescriptionErr("Template description is required");
       validate = false;
     } else {
       setTemplateDescriptionErr("");
     }
 
     if (!templateTextColor.replace(/\s+/g, "")) {
-      setTemplateTextColorErr("Template name is required");
+      setTemplateTextColorErr("Text color is required");
+
       validate = false;
     } else {
       setTemplateTextColorErr("");
     }
 
     if (!templateOrder) {
-      setTemplateOrderErr("template order is required");
+      setTemplateOrderErr("Template order is required");
       validate = false;
     } else if (!numberRegEx.test(templateOrder)) {
-      setTemplateOrderErr("template order should be numeric");
+      setTemplateOrderErr("Template order should be numeric");
       validate = false;
     } else {
       setTemplateOrderErr("");
@@ -210,6 +212,37 @@ const AddEditTemplate = () => {
   };
 
   const getOccasionList = () => {
+    setOccasionList([
+      {
+        occasionName: "birthday",
+        displayTitle: "Birthday",
+      },
+      {
+        occasionName: "anniversary",
+        displayTitle: "Anniversary",
+      },
+      {
+        occasionName: "reunion",
+        displayTitle: "Reunion",
+      },
+      {
+        occasionName: "engagement",
+        displayTitle: "Engagement",
+      },
+      {
+        occasionName: "newJob",
+        displayTitle: "NewJob",
+      },
+      {
+        occasionName: "businesslaunch",
+        displayTitle: "BusinessLaunch",
+      },
+      {
+        occasionName: "otheroccasion",
+        displayTitle: "OtherOccasion",
+      },
+    ]);
+    /*
     setLoader(true);
     let params = {
       limit: 200,
@@ -235,6 +268,7 @@ const AddEditTemplate = () => {
         setOccasionList([]);
         setLoader(false);
       });
+      */
   };
   useEffect(() => {
     if (window.location.pathname == "/template/create") {
@@ -382,7 +416,25 @@ const AddEditTemplate = () => {
           </div>
 
           <div className="form-group row">
-            <div className="col-12">
+            <div className="col-2">
+              <label>Text Color</label>
+              <input
+                type="text"
+                className="form-control"
+                value={templateTextColor}
+                name="textColor"
+                onChange={(e) => (
+                  setTemplateTextColor(e.target.value),
+                  setTemplateTextColorErr("")
+                )}
+              />
+              {templateTextColor ? (
+                <div className="inlineerror">{templateTextColorErr} </div>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="col-10">
               <label>Title</label>
               <input
                 type="text"
@@ -419,25 +471,8 @@ const AddEditTemplate = () => {
             </div>
           </div>
 
+          <div className="form-group row"></div>
           <div className="form-group row">
-            <div className="col">
-              <label>Text Color</label>
-              <input
-                type="text"
-                className="form-control"
-                value={templateTextColor}
-                name="textColor"
-                onChange={(e) => (
-                  setTemplateTextColor(e.target.value),
-                  setTemplateTextColorErr("")
-                )}
-              />
-              {templateTextColor ? (
-                <div className="inlineerror">{templateTextColorErr} </div>
-              ) : (
-                ""
-              )}
-            </div>
             <div className="col">
               <label>Icon</label>
               <input

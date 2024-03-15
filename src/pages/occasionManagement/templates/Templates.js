@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
 import Pagination from "react-js-pagination";
-import {
-  occasionList
-} from "../../../services/ApiServices";
+import { occasionList } from "../../../services/ApiServices";
 import Breadcrumb from "../../../components/common/Breadcrumb";
 import {
   deleteOccasionTemplate,
@@ -14,7 +12,6 @@ import { resHandle } from "../../../components/util/utils";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader } from "../../../components/common/loader";
 import { templateList } from "../../../services/ApiServices";
-
 
 const Templates = () => {
   const history = useHistory();
@@ -36,7 +33,6 @@ const Templates = () => {
   useEffect(() => {
     // getTemplateList();
     getOccasionList();
-
   }, []);
 
   const editPages = (occasionName, templateName) => {
@@ -46,73 +42,114 @@ const Templates = () => {
     console.log(`active page is ${pageNumber}`);
   };
   const getTemplateList = (occasionName) => {
-    setLoader(true)
+    setLoader(true);
     let params = {
       limit: 200,
       LastEvaluatedKey: "null",
-      occasionName: occasionName
+      occasionName: occasionName,
     };
-    OccasionTemplateListByOccasionName(params).then((res) => {
-      let { status, data } = resHandle(res);
-      if (status === 200) {
-        setLoader(false)
-        setTemplateList([...data.templateList]);
-      } else {
-        setLoader(false)
-        setTemplateList([])
-      }
-    }).catch((err) => {
-      setLoader(false)
-      setTemplateList([])
-    });
+
+    OccasionTemplateListByOccasionName(params)
+      .then((res) => {
+        let { status, data } = resHandle(res);
+        if (status === 200) {
+          setLoader(false);
+          setTemplateList([...data.templateList]);
+        } else {
+          setLoader(false);
+          setTemplateList([]);
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+        setTemplateList([]);
+      });
   };
 
   const handleDeleteTemplate = () => {
     let params = {
       occasionName,
-      templateName
+      templateName,
     };
     handleClose();
-    setLoader(true)
-    deleteOccasionTemplate(params).then((res) => {
-      let { status, data } = resHandle(res);
-      if (status === 200) {
-        setLoader(false)
-        toast.success(data.message)
-        getTemplateList(occasionName);
-      } else {
-        toast.error(data.message);
-      }
-    }).catch((err) => {
-      setLoader(false);
-      toast.error("Sorry, a technical error occurred! Please try again later")
-    });
+    setLoader(true);
+    deleteOccasionTemplate(params)
+      .then((res) => {
+        let { status, data } = resHandle(res);
+        if (status === 200) {
+          setLoader(false);
+          toast.success(data.message);
+          getTemplateList(occasionName);
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+        toast.error(
+          "Sorry, a technical error occurred! Please try again later"
+        );
+      });
   };
 
   const getOccasionList = () => {
-    setLoader(true)
+    setOccasionList([
+      {
+        occasionName: "birthday",
+        displayTitle: "Birthday",
+      },
+      {
+        occasionName: "anniversary",
+        displayTitle: "Anniversary",
+      },
+      {
+        occasionName: "reunion",
+        displayTitle: "Reunion",
+      },
+      {
+        occasionName: "engagement",
+        displayTitle: "Engagement",
+      },
+      {
+        occasionName: "newJob",
+        displayTitle: "NewJob",
+      },
+      {
+        occasionName: "businesslaunch",
+        displayTitle: "BusinessLaunch",
+      },
+      {
+        occasionName: "otheroccasion",
+        displayTitle: "OtherOccasion",
+      },
+    ]);
+    /*
+    setLoader(true);
     let params = {
       limit: 500,
       LastEvaluatedKey: "null",
     };
-    occasionList(params).then((res) => {
-      let { status, data } = resHandle(res);
-      if (status === 200) {
-        let occasionList = data.occasionList.sort((a, b) => {
-          return a.displayTitle.localeCompare(b.displayTitle)
-        });
-        setOccasionList(occasionList);
-        if (occasionList.length > 0) {
-          getTemplateList(occasionList[0].occasionName)
-          setOccasionSelectName(occasionList[0].occasionName);
-        }
+    occasionList(params)
+      .then((res) => {
+        let { status, data } = resHandle(res);
+        if (status === 200) {
+          let occasionList = data.occasionList.sort((a, b) => {
+            return a.displayTitle.localeCompare(b.displayTitle);
+          });
+          setOccasionList(occasionList);
+          if (occasionList.length > 0) {
+            getTemplateList(occasionList[0].occasionName);
+            setOccasionSelectName(occasionList[0].occasionName);
+          }
 
-        setLoader(false)
-      }
-    }).catch((err) => {
-      setOccasionList([]);
-      setLoader(false)
-    });
+          setLoader(false);
+        }
+      })
+      .catch((err) => {
+        setOccasionList([]);
+        setLoader(false);
+      });
+      */
   };
 
   const handleClose = () => {
@@ -181,19 +218,19 @@ const Templates = () => {
             {occasionArrList.map((item, index) => (
               <option key={"k" + index} value={item.occasionName}>
                 {item.displayTitle}
-
               </option>
             ))}
-
           </select>
         </div>
       </div>
       <div className="table-responsive cm_card p-0">
-
         {loader ? (
           <Loader />
         ) : (
-          <table className="table table-bordered user-table table-hover align-items-center table-fixed" style={{ "tableLayout": "fixed" }} >
+          <table
+            className="table table-bordered user-table table-hover align-items-center table-fixed"
+            style={{ tableLayout: "fixed" }}
+          >
             <thead>
               <tr>
                 <th>Occasion Name</th>
@@ -214,22 +251,25 @@ const Templates = () => {
                     <td>
                       <span className="">{item.templateName}</span>
                     </td>
-                    <td  >
+                    <td>
                       <img
                         src={item.templateImage}
                         alt="Avatar"
                         className="user-avatar high"
-                        style={{ width: '50px' }}
+                        style={{ width: "50px" }}
                       />
                     </td>
-
 
                     <td>{item.displayOrder}</td>
                     <td>{item.status ? "Activated" : "Deactivated"}</td>
 
                     <td>
                       <div className="action">
-                        <span onClick={() => editPages(item.occasionName, item.templateName)}>
+                        <span
+                          onClick={() =>
+                            editPages(item.occasionName, item.templateName)
+                          }
+                        >
                           <i className="fas fa-edit"></i>
                         </span>
 
@@ -260,23 +300,21 @@ const Templates = () => {
         )}
       </div>
 
-      {
-        templateList.length ? (
-          <div className="text-center">
-            <Pagination
-              activePage={page}
-              itemsCountPerPage={limit}
-              totalItemsCount={count}
-              onChange={(e) => handlePageChange(e)}
-            />
-          </div>
-        ) : (
-          ""
-        )
-      }
+      {templateList.length ? (
+        <div className="text-center">
+          <Pagination
+            activePage={page}
+            itemsCountPerPage={limit}
+            totalItemsCount={count}
+            onChange={(e) => handlePageChange(e)}
+          />
+        </div>
+      ) : (
+        ""
+      )}
 
       <ToastContainer />
-    </div >
+    </div>
   );
 };
 

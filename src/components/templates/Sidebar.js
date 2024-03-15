@@ -122,7 +122,7 @@ const Sidebar = () => {
                 >
                   <i className="fas fa-calendar-week"></i> Templates
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   to="/occasion-management/predefined-templates"
                   className={
                     location.pathname.includes(
@@ -133,7 +133,7 @@ const Sidebar = () => {
                   }
                 >
                   <i className="fas fa-calendar-week"></i> Predefined Templates
-                </NavLink>
+                </NavLink> */}
               </div>
             </div>
           </li>
