@@ -1,125 +1,134 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory, useParams, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import {
   createTemplate,
   getTemplateByName,
-  updateTemplate
-} from '../../services/ApiServices'
-import Breadcrumb from '../../components/common/Breadcrumb'
-import { resHandle } from '../../components/util/utils'
-import { ToastContainer, toast } from 'react-toastify'
-import { Loader } from '../../components/common/loader'
+  updateTemplate,
+} from "../../services/ApiServices";
+import Breadcrumb from "../../components/common/Breadcrumb";
+import { resHandle } from "../../components/util/utils";
+import { ToastContainer, toast } from "react-toastify";
+import { Loader } from "../../components/common/loader";
 
 const AddEditTemplate = () => {
-  const history = useHistory()
-  const { id } = useParams()
+  const history = useHistory();
+  const { id } = useParams();
   ///const location=useLocation();
   // console.log("location",location.pathname);
 
-  console.log('handleGetTopicByIdhandleGetTopicById', id)
-  const [notificationName, setNotificationName] = useState('')
-  const [notificationNameErr, setNotificationNameErr] = useState('')
-  const [title, setTitle] = useState('')
-  const [titleErr, setTitleErr] = useState('')
-  const [image, setImage] = useState('')
-  const [imageErr, setImageErr] = useState('')
-  const [message, setMessage] = useState('')
-  const [messageErr, setMessageErr] = useState('')
-  const [body, setBody] = useState('')
-  const [bodyErr, setBodyErr] = useState('')
-  const [composed, setComposed] = useState('')
-  const [composedErr, setComposedErr] = useState('')
-  const [badge, setBadge] = useState('')
-  const [badgeErr, setBadgeErr] = useState('')
-  const [priority, setPriority] = useState('')
-  const [priorityErr, setPriorityErr] = useState('')
-  const [sound, setSound] = useState('')
-  const [soundErr, setSoundErr] = useState('')
-  const [event, setEvent] = useState('')
-  const [eventErr, setEventErr] = useState('')
-  const [event_type, setEventType] = useState('')
-  const [event_typeErr, setEventTypeErr] = useState('')
-  const [accessToken, setAccessToken] = useState('')
-  const [topicId, setTopicId] = useState('')
-  const [isAddTopic, setIsAddTopic] = useState(false)
-  const [base64, setBase64] = useState('')
-  const [fileName, setFileName] = useState('')
-  const [loader, setLoader] = useState(false)
-  const [editCase, setEditCase] = useState(false)
-  const [editImage, setEditImage] = useState(false)
+  console.log("handleGetTopicByIdhandleGetTopicById", id);
+  const [notificationName, setNotificationName] = useState("");
+  const [notificationNameErr, setNotificationNameErr] = useState("");
+  const [title, setTitle] = useState("");
+  const [titleErr, setTitleErr] = useState("");
+  const [image, setImage] = useState("");
+  const [imageErr, setImageErr] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageErr, setMessageErr] = useState("");
+  const [body, setBody] = useState("");
+  const [bodyErr, setBodyErr] = useState("");
+  const [composed, setComposed] = useState("");
+  const [composedErr, setComposedErr] = useState("");
+  const [badge, setBadge] = useState("");
+  const [badgeErr, setBadgeErr] = useState("");
+  const [priority, setPriority] = useState("");
+  const [priorityErr, setPriorityErr] = useState("");
+  const [sound, setSound] = useState("");
+  const [soundErr, setSoundErr] = useState("");
+  const [event, setEvent] = useState("");
+  const [eventErr, setEventErr] = useState("");
+  const [event_type, setEventType] = useState("");
+  const [event_typeErr, setEventTypeErr] = useState("");
+  const [accessToken, setAccessToken] = useState("");
+  const [topicId, setTopicId] = useState("");
+  const [isAddTopic, setIsAddTopic] = useState(false);
+  const [base64, setBase64] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [editCase, setEditCase] = useState(false);
+  const [editImage, setEditImage] = useState(false);
   const [isPushToShow, setIsPushToShow] = useState(true);
+  const notificationTypeData = [
+    { label: "Push Notification", value: "PUSH" },
+    { label: "SMS", value: "SMS" },
+    { label: "Email", value: "EMAIL" },
+  ];
+  const [notificationType, setNotificationType] = useState([]);
 
   const breadcrumb = [
-    { link: '/notifications', linkText: 'Notifications' },
-    { link: '', linkText: isAddTopic ? 'Add Notification' : 'Edit Notification' }
-  ]
+    { link: "/notifications", linkText: "Notifications" },
+    {
+      link: "",
+      linkText: isAddTopic ? "Add Notification" : "Edit Notification",
+    },
+  ];
 
   const handleValidate = () => {
-    let validate = true
+    let validate = true;
     const albhaRegEx = /^[a-zA-z]+$/;
     const albhaNumericRegEx = /^[A-Za-z0-9]+$/;
-    if (!notificationName.replace(/\s+/g, '')) {
-      setNotificationNameErr('Notification name is required')
-      validate = false
+    if (!notificationName.replace(/\s+/g, "")) {
+      setNotificationNameErr("Notification name is required");
+      validate = false;
     } else if (!albhaNumericRegEx.test(notificationName)) {
-      setNotificationNameErr("Special characters and spaces are not allowed")
-      validate = false
+      setNotificationNameErr("Special characters and spaces are not allowed");
+      validate = false;
     } else {
-      setNotificationNameErr('')
+      setNotificationNameErr("");
     }
-    if (!title.replace(/\s+/g, '')) {
-      setTitleErr('Title is required')
-      validate = false
+    if (!title.replace(/\s+/g, "")) {
+      setTitleErr("Title is required");
+      validate = false;
     } else {
-      setTitleErr('')
+      setTitleErr("");
     }
-    if (!message.replace(/\s+/g, '')) {
-      setMessageErr('Message is required')
-      validate = false
+    if (!message.replace(/\s+/g, "")) {
+      setMessageErr("Message is required");
+      validate = false;
     } else {
-      setMessageErr('')
+      setMessageErr("");
     }
-    if (!body.replace(/\s+/g, '')) {
-      setBodyErr('Body  is required')
-      validate = false
+    if (!body.replace(/\s+/g, "")) {
+      setBodyErr("Body  is required");
+      validate = false;
     } else {
-      setBodyErr('')
+      setBodyErr("");
     }
-    if (!composed.replace(/\s+/g, '')) {
-      setComposedErr('Composed  is required')
-      validate = false
+    if (!composed.replace(/\s+/g, "")) {
+      setComposedErr("Composed  is required");
+      validate = false;
     } else {
-      setComposedErr('')
+      setComposedErr("");
     }
-    if (!sound.replace(/\s+/g, '')) {
-      setSoundErr('Sound  is required')
-      validate = false
+    if (!sound.replace(/\s+/g, "")) {
+      setSoundErr("Sound  is required");
+      validate = false;
     } else {
-      setSoundErr('')
+      setSoundErr("");
     }
-    if (!badge.replace(/\s+/g, '')) {
-      setBadgeErr('Badge  is required')
-      validate = false
+    if (!badge.replace(/\s+/g, "")) {
+      setBadgeErr("Badge  is required");
+      validate = false;
     } else {
-      setBadgeErr('')
+      setBadgeErr("");
     }
-    if (!event.replace(/\s+/g, '')) {
-      setEventErr('Event  is required')
-      validate = false
+    if (!event.replace(/\s+/g, "")) {
+      setEventErr("Event  is required");
+      validate = false;
     } else {
-      setEventErr('')
+      setEventErr("");
     }
-    if (!priority.replace(/\s+/g, '')) {
-      setPriorityErr('Priority  is required')
-      validate = false
+    if (!priority.replace(/\s+/g, "")) {
+      setPriorityErr("Priority  is required");
+      validate = false;
     } else {
-      setPriorityErr('')
+      setPriorityErr("");
     }
-    if (!event_type.replace(/\s+/g, '')) {
-      setEventTypeErr('Event type is required')
-      validate = false
+    if (!event_type.replace(/\s+/g, "")) {
+      setEventTypeErr("Event type is required");
+      validate = false;
     } else {
-      setEventTypeErr('')
+      setEventTypeErr("");
     }
     // if (!editCase && !base64) {
     //   setImageErr('Image is required')
@@ -128,44 +137,59 @@ const AddEditTemplate = () => {
     //   setImageErr('')
     // }
 
-    return validate
-  }
+    return validate;
+  };
 
-  const handleGetTopicById = id => {
-    console.log('topicId', id)
+  const onChangeCheckbox = (e, item) => {
+    let temp = notificationType;
+    if (e.target.checked === false) {
+      temp = temp.filter((v) => v.value !== item.value);
+    } else {
+      if (temp.findIndex((i) => i.value === item.value) === -1) {
+        temp.push(item);
+      }
+    }
+    setNotificationType([...temp]);
+  };
+
+  const handleGetTopicById = (id) => {
+    console.log("topicId", id);
     let params = {
       accessToken,
-      notificationName: id
-    }
-    getTemplateByName(params).then(res => {
-      let { status, data } = resHandle(res)
-      console.log(status, data, 'datadatadatadatadata')
-      if (status === 200) {
-        setLoader(false)
-        setNotificationName(data.data.notificationName)
-        setMessage(data.data.message)
-        setTitle(data.data.title)
-        setBody(data.data.body)
-        setComposed(data.data.composed)
-        setEvent(data.data.event)
-        setEventType(data.data.event_type)
-        setPriority(data.data.priority)
-        setSound(data.data.sound)
-        setBase64(data.data.image)
-        setBadge(data.data.badge)
-        setIsPushToShow(data.data.isPushToShow)
-
-      } else {
-      }
-    }).catch((err) => {
-      setLoader(false);
-      toast.error("Sorry, a technical error occurred! Please try again later")
-    });
-  }
-  const handleUpdateTemplate = e => {
-    e.preventDefault()
+      notificationName: id,
+    };
+    getTemplateByName(params)
+      .then((res) => {
+        let { status, data } = resHandle(res);
+        console.log(status, data, "datadatadatadatadata");
+        if (status === 200) {
+          setLoader(false);
+          setNotificationName(data.data.notificationName);
+          setMessage(data.data.message);
+          setTitle(data.data.title);
+          setBody(data.data.body);
+          setComposed(data.data.composed);
+          setEvent(data.data.event);
+          setEventType(data.data.event_type);
+          setPriority(data.data.priority);
+          setSound(data.data.sound);
+          setBase64(data.data.image);
+          setBadge(data.data.badge);
+          setIsPushToShow(data.data.isPushToShow);
+        } else {
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+        toast.error(
+          "Sorry, a technical error occurred! Please try again later"
+        );
+      });
+  };
+  const handleUpdateTemplate = (e) => {
+    e.preventDefault();
     if (handleValidate()) {
-      setLoader(true)
+      setLoader(true);
       let createTopicObj = {};
       if (!editImage) {
         createTopicObj = {
@@ -181,10 +205,10 @@ const AddEditTemplate = () => {
           event,
           event_type,
           fileName,
-          isPushToShow: (isPushToShow == "true" || isPushToShow == true ? true : false)
-        }
-      }
-      else {
+          isPushToShow:
+            isPushToShow == "true" || isPushToShow == true ? true : false,
+        };
+      } else {
         createTopicObj = {
           notificationName: notificationName,
           title,
@@ -198,43 +222,46 @@ const AddEditTemplate = () => {
           event,
           event_type,
           base64,
-          fileName
-        }
+          fileName,
+        };
       }
 
-
-      updateTemplate(createTopicObj).then(res => {
-        let { status, data } = resHandle(res)
-        if (status === 200) {
-          setLoader(false)
-          setEditCase(false)
-          toast.success(data.message)
-          history.push('/notifications')
-        } else {
-          toast.success(data.message)
-        }
-      }).catch((err) => {
-        setLoader(false);
-        toast.error("Sorry, a technical error occurred! Please try again later")
-      });
+      updateTemplate(createTopicObj)
+        .then((res) => {
+          let { status, data } = resHandle(res);
+          if (status === 200) {
+            setLoader(false);
+            setEditCase(false);
+            toast.success(data.message);
+            history.push("/notifications");
+          } else {
+            toast.success(data.message);
+          }
+        })
+        .catch((err) => {
+          setLoader(false);
+          toast.error(
+            "Sorry, a technical error occurred! Please try again later"
+          );
+        });
     }
-  }
+  };
   useEffect(() => {
-    console.log()
-    if (window.location.pathname == '/add-notification') {
-      setIsAddTopic(true)
+    console.log();
+    if (window.location.pathname == "/add-notification") {
+      setIsAddTopic(true);
     }
-    if (window.location.pathname !== '/add-notification') {
-      setLoader(true)
-      handleGetTopicById(id)
-      setEditCase(true)
+    if (window.location.pathname !== "/add-notification") {
+      setLoader(true);
+      handleGetTopicById(id);
+      setEditCase(true);
     }
-  }, [])
+  }, []);
 
-  const handleCreateTemplate = e => {
-    e.preventDefault()
+  const handleCreateTemplate = (e) => {
+    e.preventDefault();
     if (handleValidate()) {
-      setLoader(true)
+      setLoader(true);
       let createTopicObj = {
         notificationName: notificationName,
         title,
@@ -249,241 +276,281 @@ const AddEditTemplate = () => {
         event_type,
         base64,
         fileName,
-        isPushToShow: (isPushToShow == "true" || isPushToShow == true ? true : false)
-      }
-      createTemplate(createTopicObj).then(res => {
-        let { status, data } = resHandle(res)
-        // history.push('/notifications')
+        isPushToShow:
+          isPushToShow == "true" || isPushToShow == true ? true : false,
+        notificationType: notificationType.map(
+          (notification) => notification.value
+        ),
+      };
+      createTemplate(createTopicObj)
+        .then((res) => {
+          let { status, data } = resHandle(res);
+          // history.push('/notifications')
 
-        if (status == 200) {
-          setLoader(false)
-          toast.success(data.message)
-          history.push('/notifications')
-        } else {
-          toast.error(data.message)
-        }
-      }).catch((err) => {
-        setLoader(false);
-        toast.error("Sorry, a technical error occurred! Please try again later")
-      });
+          if (status == 200) {
+            setLoader(false);
+            toast.success(data.message);
+            history.push("/notifications");
+          } else {
+            toast.error(data.message);
+          }
+        })
+        .catch((err) => {
+          setLoader(false);
+          toast.error(
+            "Sorry, a technical error occurred! Please try again later"
+          );
+        });
     }
-  }
+  };
 
   // All function End
 
-  const handleFileChange = e => {
-    let reader = new FileReader()
-    let file = e.target.files[0]
-    console.log('filefile', file)
+  const handleFileChange = (e) => {
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    console.log("filefile", file);
     reader.addEventListener(
-      'load',
+      "load",
       () => {
-        setBase64(reader.result)
-        setFileName(file.name)
-        setEditImage(true)
+        setBase64(reader.result);
+        setFileName(file.name);
+        setEditImage(true);
       },
       false
-    )
+    );
     if (file) {
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   return (
-    <div className='page_wrapper'>
+    <div className="page_wrapper">
       <Breadcrumb breadcrumb={breadcrumb} />
-      <div className='twocol sb page_header'>
-        <h2>{isAddTopic ? 'Add Notification' : 'Edit Notification'} </h2>
+      <div className="twocol sb page_header">
+        <h2>{isAddTopic ? "Add Notification" : "Edit Notification"} </h2>
       </div>
 
       {loader ? (
         <Loader />
       ) : (
-        <form className='form-controller chosen'>
-          <div className='form-group row'>
-            <div className='col'>
+        <form className="form-controller chosen">
+          <div className="form-group row">
+            <div className="col">
               <label>Notification Name</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={notificationName}
-                name='notificationName'
+                name="notificationName"
                 disabled={editCase ? true : false}
-                onChange={e => (
+                onChange={(e) => (
                   setNotificationName(e.target.value),
-                  setNotificationNameErr('')
+                  setNotificationNameErr("")
                 )}
               />
               {notificationNameErr ? (
-                <div className='inlineerror'>{notificationNameErr} </div>
+                <div className="inlineerror">{notificationNameErr} </div>
               ) : (
-                ''
+                ""
               )}
             </div>
-            <div className='col'>
+            <div className="col">
               <label>Title</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={title}
-                name='title'
-                onChange={e => (setTitle(e.target.value), setTitleErr(''))}
+                name="title"
+                onChange={(e) => (setTitle(e.target.value), setTitleErr(""))}
               />
-              {titleErr && <div className='inlineerror'>{titleErr} </div>}
+              {titleErr && <div className="inlineerror">{titleErr} </div>}
             </div>
           </div>
-          <div className='form-group row'>
-            <div className='col'>
+          <div className="form-group row">
+            <div className="col">
               <label>Message</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={message}
-                name='message'
-                onChange={e => (setMessage(e.target.value), setMessageErr(''))}
+                name="message"
+                onChange={(e) => (
+                  setMessage(e.target.value), setMessageErr("")
+                )}
               />
-              {messageErr && <div className='inlineerror'>{messageErr} </div>}
+              {messageErr && <div className="inlineerror">{messageErr} </div>}
             </div>
-            <div className='col'>
+            <div className="col">
               <label>Body</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={body}
-                name='body'
-                onChange={e => (setBody(e.target.value), setBodyErr(''))}
+                name="body"
+                onChange={(e) => (setBody(e.target.value), setBodyErr(""))}
               />
-              {bodyErr && <div className='inlineerror'>{bodyErr} </div>}
+              {bodyErr && <div className="inlineerror">{bodyErr} </div>}
             </div>
           </div>
-          <div className='form-group row'>
-            <div className='col'>
+          <div className="form-group row">
+            <div className="col">
               <label>Composed</label>
               <input
-                type='number'
+                type="number"
                 name="composed"
-                className='form-control'
+                className="form-control"
                 value={composed}
-                onChange={e => (
-                  setComposed(e.target.value), setComposedErr('')
+                onChange={(e) => (
+                  setComposed(e.target.value), setComposedErr("")
                 )}
               />
-              {composedErr && <div className='inlineerror'>{composedErr} </div>}
+              {composedErr && <div className="inlineerror">{composedErr} </div>}
             </div>
-            <div className='col'>
+            <div className="col">
               <label>Badge</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={badge}
-                name='badge'
-                onChange={e => (setBadge(e.target.value), setBadgeErr(''))}
+                name="badge"
+                onChange={(e) => (setBadge(e.target.value), setBadgeErr(""))}
               />
-              {badgeErr && <div className='inlineerror'>{badgeErr} </div>}
+              {badgeErr && <div className="inlineerror">{badgeErr} </div>}
             </div>
           </div>
-          <div className='form-group row'>
-            <div className='col'>
+          <div className="form-group row">
+            <div className="col">
               <label>Priority</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={priority}
-                name='priority'
-                onChange={e => (
-                  setPriority(e.target.value), setPriorityErr('')
+                name="priority"
+                onChange={(e) => (
+                  setPriority(e.target.value), setPriorityErr("")
                 )}
               />
-              {priorityErr && <div className='inlineerror'>{priorityErr} </div>}
+              {priorityErr && <div className="inlineerror">{priorityErr} </div>}
             </div>
 
-            <div className='col'>
+            <div className="col">
               <label>Sound</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={sound}
-                name='sound'
-                onChange={e => (setSound(e.target.value), setSoundErr(''))}
+                name="sound"
+                onChange={(e) => (setSound(e.target.value), setSoundErr(""))}
               />
-              {soundErr && <div className='inlineerror'>{soundErr} </div>}
+              {soundErr && <div className="inlineerror">{soundErr} </div>}
             </div>
           </div>
 
-          <div className='form-group row'>
-            <div className='col'>
+          <div className="form-group row">
+            <div className="col">
               <label>Event</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={event}
-                name='event'
-                onChange={e => (setEvent(e.target.value), setEventErr(''))}
+                name="event"
+                onChange={(e) => (setEvent(e.target.value), setEventErr(""))}
               />
-              {eventErr && <div className='inlineerror'>{eventErr} </div>}
+              {eventErr && <div className="inlineerror">{eventErr} </div>}
             </div>
 
-            <div className='col'>
+            <div className="col">
               <label>Event Type</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 value={event_type}
-                name='eventType'
-                onChange={e => (setEventType(e.target.value), setEventTypeErr(''))}
+                name="eventType"
+                onChange={(e) => (
+                  setEventType(e.target.value), setEventTypeErr("")
+                )}
               />
               {event_typeErr && (
-                <div className='inlineerror'>{event_typeErr} </div>
+                <div className="inlineerror">{event_typeErr} </div>
               )}
             </div>
           </div>
 
-          <div className='form-group row'>
+          <div className="form-group row">
             <div className="col">
               <label>Is Push Notification Show </label>
               <select
                 className="form-control"
                 name="cars"
                 value={isPushToShow}
-                onChange={(e) => (
-                  setIsPushToShow(e.target.value)
-                )}
+                onChange={(e) => setIsPushToShow(e.target.value)}
               >
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </select>
-
             </div>
 
-            <div className='col'>
+            <div className="col">
               <label>Image</label>
               <input
-                type='file'
-                className='form-control'
-                value=''
+                type="file"
+                className="form-control"
+                value=""
                 onChange={handleFileChange}
               />
             </div>
-            {imageErr && (
-              <div className='inlineerror'>{imageErr} </div>
-            )}
+            {imageErr && <div className="inlineerror">{imageErr} </div>}
+          </div>
+          <div className="form-group row">
+            <div className="col">
+              <div className="rounded-sm pb-3">
+                <label className="pl-1 ">Notification Type</label>
+                <div className="form-group row">
+                  {notificationTypeData.map((item, index) => {
+                    return (
+                      <div className="col" key={index}>
+                        <div className="form-check">
+                          <input
+                            type="checkbox"
+                            id={`custom-checkbox-${index}`}
+                            className="form-check-input"
+                            checked={notificationType?.some(
+                              (d) => d.value === item.value
+                            )}
+                            value={notificationType}
+                            onChange={(e) => onChangeCheckbox(e, item)}
+                          />
+                          <label
+                            htmlFor={`custom-checkbox-${index}`}
+                            className="form-check-label"
+                          >
+                            {item.label}
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
 
-          {base64 ? <img className='img-fluid' src={base64} alt='icon' /> : ''}
+          {base64 ? <img className="img-fluid" src={base64} alt="icon" /> : ""}
 
-          <div className='button300'>
+          <div className="button300">
             {isAddTopic ? (
               <button
-                type='button'
-                className='btn btn-primary rounded-pill'
+                type="button"
+                className="btn btn-primary rounded-pill"
                 onClick={handleCreateTemplate}
               >
                 Create
               </button>
             ) : (
               <button
-                type='button'
-                className='btn btn-primary rounded-pill'
+                type="button"
+                className="btn btn-primary rounded-pill"
                 onClick={handleUpdateTemplate}
               >
                 Update
@@ -494,7 +561,7 @@ const AddEditTemplate = () => {
       )}
       <ToastContainer />
     </div>
-  )
-}
+  );
+};
 
-export default AddEditTemplate
+export default AddEditTemplate;
