@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Modal, Dropdown } from "react-bootstrap";
-import Pagination from "react-js-pagination";
-import { occasionList } from "../../../services/ApiServices";
-import Breadcrumb from "../../../components/common/Breadcrumb";
-import {
-  deleteOccasionTemplate,
-  OccasionTemplateListByOccasionName,
-} from "../../../services/ApiOccasionTemplate";
-import { resHandle } from "../../../components/util/utils";
-import { ToastContainer, toast } from "react-toastify";
-import { Loader } from "../../../components/common/loader";
-import { templateList } from "../../../services/ApiServices";
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Modal, Dropdown } from 'react-bootstrap';
+import Pagination from 'react-js-pagination';
+import { occasionList } from '../../../services/ApiServices';
+import Breadcrumb from '../../../components/common/Breadcrumb';
+import { deleteOccasionTemplate, OccasionTemplateListByOccasionName } from '../../../services/ApiOccasionTemplate';
+import { resHandle } from '../../../components/util/utils';
+import { ToastContainer, toast } from 'react-toastify';
+import { Loader } from '../../../components/common/loader';
+import { templateList } from '../../../services/ApiServices';
 
 const Templates = () => {
   const history = useHistory();
-  const breadcrumb = [{ link: "", linkText: "Templates" }];
+  const breadcrumb = [{ link: '', linkText: 'Templates' }];
 
   const [confirmModal, setConfirmModal] = useState(false);
   //const [confirmTopic, setConfirmTopic] = useState("");
-  const [occasionSelectName, setOccasionSelectName] = useState("");
+  const [occasionSelectName, setOccasionSelectName] = useState('');
   const [occasionName, setOccasionName] = useState([]);
   const [templateName, setTemplateName] = useState([]);
   const [tempalateList, setTemplateList] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [count, setCount] = useState(10);
   const [loader, setLoader] = useState(false);
   const [occasionArrList, setOccasionList] = useState([]);
@@ -36,7 +33,7 @@ const Templates = () => {
   }, []);
 
   const editPages = (occasionName, templateName) => {
-    history.push("/template/edit/" + occasionName + "/" + templateName);
+    history.push('/template/edit/' + occasionName + '/' + templateName);
   };
   const handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
@@ -45,7 +42,7 @@ const Templates = () => {
     setLoader(true);
     let params = {
       limit: 200,
-      LastEvaluatedKey: "null",
+      LastEvaluatedKey: 'null',
       occasionName: occasionName,
     };
 
@@ -86,41 +83,51 @@ const Templates = () => {
       })
       .catch((err) => {
         setLoader(false);
-        toast.error(
-          "Sorry, a technical error occurred! Please try again later"
-        );
+        toast.error('Sorry, a technical error occurred! Please try again later');
       });
   };
 
   const getOccasionList = () => {
     setOccasionList([
       {
-        occasionName: "birthday",
-        displayTitle: "Birthday",
+        occasionName: 'birthday',
+        displayTitle: 'Birthday',
       },
       {
-        occasionName: "anniversary",
-        displayTitle: "Anniversary",
+        occasionName: 'anniversary',
+        displayTitle: 'Anniversary',
       },
       {
-        occasionName: "reunion",
-        displayTitle: "Reunion",
+        occasionName: 'wedding',
+        displayTitle: 'Wedding',
       },
       {
-        occasionName: "engagement",
-        displayTitle: "Engagement",
+        occasionName: 'reunion',
+        displayTitle: 'Reunion',
       },
       {
-        occasionName: "newJob",
-        displayTitle: "NewJob",
+        occasionName: 'engagement',
+        displayTitle: 'Engagement',
       },
       {
-        occasionName: "businesslaunch",
-        displayTitle: "BusinessLaunch",
+        occasionName: 'ricefeeding',
+        displayTitle: 'Rice feeding',
       },
       {
-        occasionName: "otheroccasion",
-        displayTitle: "OtherOccasion",
+        occasionName: 'newbornbaby',
+        displayTitle: 'New born baby',
+      },
+      {
+        occasionName: 'newJob',
+        displayTitle: 'NewJob',
+      },
+      {
+        occasionName: 'businesslaunch',
+        displayTitle: 'BusinessLaunch',
+      },
+      {
+        occasionName: 'otheroccasion',
+        displayTitle: 'OtherOccasion',
       },
     ]);
     /*
@@ -165,20 +172,12 @@ const Templates = () => {
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="text-center">
-            Are you sure you want to delete this Template?
-          </p>
+          <p className="text-center">Are you sure you want to delete this Template?</p>
           <div className="d-flex justify-content-center pb-4">
-            <button
-              onClick={handleClose}
-              className="btn btn-dark btn-sm pl-5 pr-5"
-            >
+            <button onClick={handleClose} className="btn btn-dark btn-sm pl-5 pr-5">
               No
             </button>
-            <button
-              onClick={handleDeleteTemplate}
-              className="btn btn-danger btn-sm ml-3 pl-5 pr-5"
-            >
+            <button onClick={handleDeleteTemplate} className="btn btn-danger btn-sm ml-3 pl-5 pr-5">
               Yes
             </button>
           </div>
@@ -207,16 +206,13 @@ const Templates = () => {
             className="form-control"
             name="language"
             value={occasionSelectName}
-            onChange={(e) => (
-              setOccasionSelectName(e.target.value),
-              getTemplateList(e.target.value)
-            )}
+            onChange={(e) => (setOccasionSelectName(e.target.value), getTemplateList(e.target.value))}
           >
             <option key="k_1" value="">
               Select Occasion Name
             </option>
             {occasionArrList.map((item, index) => (
-              <option key={"k" + index} value={item.occasionName}>
+              <option key={'k' + index} value={item.occasionName}>
                 {item.displayTitle}
               </option>
             ))}
@@ -229,7 +225,7 @@ const Templates = () => {
         ) : (
           <table
             className="table table-bordered user-table table-hover align-items-center table-fixed"
-            style={{ tableLayout: "fixed" }}
+            style={{ tableLayout: 'fixed' }}
           >
             <thead>
               <tr>
@@ -256,20 +252,16 @@ const Templates = () => {
                         src={item.templateImage}
                         alt="Avatar"
                         className="user-avatar high"
-                        style={{ width: "50px" }}
+                        style={{ width: '50px' }}
                       />
                     </td>
 
                     <td>{item.displayOrder}</td>
-                    <td>{item.status ? "Activated" : "Deactivated"}</td>
+                    <td>{item.status ? 'Activated' : 'Deactivated'}</td>
 
                     <td>
                       <div className="action">
-                        <span
-                          onClick={() =>
-                            editPages(item.occasionName, item.templateName)
-                          }
-                        >
+                        <span onClick={() => editPages(item.occasionName, item.templateName)}>
                           <i className="fas fa-edit"></i>
                         </span>
 
@@ -310,7 +302,7 @@ const Templates = () => {
           />
         </div>
       ) : (
-        ""
+        ''
       )}
 
       <ToastContainer />
