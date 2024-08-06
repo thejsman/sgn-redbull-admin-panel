@@ -32,7 +32,10 @@ const AddEditTemplate = () => {
   const [templateDescriptionErr, setTemplateDescriptionErr] = useState('');
 
   const [templateTextColor, setTemplateTextColor] = useState('');
+  const [templateBgColor, setTemplateBgColor] = useState('');
+
   const [templateTextColorErr, setTemplateTextColorErr] = useState('');
+  const [templateBgColorErr, setTemplateBgColorErr] = useState('');
 
   const [templateStatus, setTemplateStatus] = useState(true);
   const [templateStatusErr, setTemplateStatusErr] = useState('');
@@ -100,6 +103,13 @@ const AddEditTemplate = () => {
     } else {
       setTemplateTextColorErr('');
     }
+    if (!templateBgColor.replace(/\s+/g, '')) {
+      setTemplateBgColorErr('Text color is required');
+
+      validate = false;
+    } else {
+      setTemplateBgColorErr('');
+    }
 
     if (!templateOrder) {
       setTemplateOrderErr('Template order is required');
@@ -136,6 +146,7 @@ const AddEditTemplate = () => {
           setTemplateTitle(data.content.titleText);
           setTemplateDescription(data.content.descriptionText);
           setTemplateTextColor(data.content.textColor);
+          setTemplateBgColor(data.content.bgColor);
           setBase64(data.templateImage);
           setTemplateStatus(data.status);
           setTemplateOrder(data.displayOrder);
@@ -158,6 +169,7 @@ const AddEditTemplate = () => {
         templateTitle: templateTitle,
         templateDescription: templateDescription,
         templateTextColor: templateTextColor,
+        templateBgColor: templateBgColor,
         data: {
           displayOrder: parseInt(templateOrder),
           status: templateStatus == true || templateStatus == 'true' ? true : false,
@@ -299,6 +311,7 @@ const AddEditTemplate = () => {
         templateTitle: templateTitle,
         templateDescription: templateDescription,
         templateTextColor: templateTextColor,
+        templateBgColor: templateBgColor,
         data: {
           templateImage: base64,
           fileName: fileName,
@@ -412,7 +425,18 @@ const AddEditTemplate = () => {
               />
               {templateTextColor ? <div className="inlineerror">{templateTextColorErr} </div> : ''}
             </div>
-            <div className="col-10">
+            <div className="col-2">
+              <label>Background Color</label>
+              <input
+                type="text"
+                className="form-control"
+                value={templateBgColor}
+                name="textColor"
+                onChange={(e) => (setTemplateBgColor(e.target.value), setTemplateBgColorErr(''))}
+              />
+              {templateBgColor ? <div className="inlineerror">{templateBgColorErr} </div> : ''}
+            </div>
+            <div className="col-8">
               <label>Title</label>
               <input
                 type="text"

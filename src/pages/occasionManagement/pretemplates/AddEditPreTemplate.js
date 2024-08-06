@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 
 import {
   createOccasionTemplate,
   updateOccasionTemplate,
   getOccasionTemplateByName,
-} from "../../../services/ApiOccasionTemplate";
-import { occasionList } from "../../../services/ApiServices";
-import Breadcrumb from "../../../components/common/Breadcrumb";
-import { resHandle } from "../../../components/util/utils";
-import { ToastContainer, toast } from "react-toastify";
-import { Spinner } from "react-bootstrap";
-import { Loader } from "../../../components/common/loader";
+} from '../../../services/ApiOccasionTemplate';
+import { occasionList } from '../../../services/ApiServices';
+import Breadcrumb from '../../../components/common/Breadcrumb';
+import { resHandle } from '../../../components/util/utils';
+import { ToastContainer, toast } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
+import { Loader } from '../../../components/common/loader';
 
 const AddEditPreTemplate = () => {
   const history = useHistory();
@@ -19,35 +19,33 @@ const AddEditPreTemplate = () => {
   ///const location=useLocation();
   // console.log("location",location.pathname);
 
-  console.log("handleGetTopicByIdhandleGetTopicById", oname, tname);
-  const [occasionName, setOccasionName] = useState("");
-  const [occasionNameErr, setOccasionNameErr] = useState("");
-  const [templateName, setTemplateName] = useState("");
-  const [templateNameErr, setTemplateNameErr] = useState("");
+  console.log('handleGetTopicByIdhandleGetTopicById', oname, tname);
+  const [occasionName, setOccasionName] = useState('');
+  const [occasionNameErr, setOccasionNameErr] = useState('');
+  const [templateName, setTemplateName] = useState('');
+  const [templateNameErr, setTemplateNameErr] = useState('');
   const [templateStatus, setTemplateStatus] = useState(true);
-  const [templateStatusErr, setTemplateStatusErr] = useState("");
-  const [templateOrder, setTemplateOrder] = useState("");
-  const [templateOrderErr, setTemplateOrderErr] = useState("");
-  const [accessToken, setAccessToken] = useState("");
+  const [templateStatusErr, setTemplateStatusErr] = useState('');
+  const [templateOrder, setTemplateOrder] = useState('');
+  const [templateOrderErr, setTemplateOrderErr] = useState('');
+  const [accessToken, setAccessToken] = useState('');
   const [occasionArrList, setOccasionList] = useState([]);
   const [isAddOccasionTemplate, setIsAddOccasionTemplate] = useState(false);
-  const [base64, setBase64] = useState("");
-  const [fileName, setFileName] = useState("");
+  const [base64, setBase64] = useState('');
+  const [fileName, setFileName] = useState('');
   const [editImage, setEditImage] = useState(false);
-  const [imageErr, setImageErr] = useState("");
+  const [imageErr, setImageErr] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
   const [loader, setLoader] = useState(false);
 
   const breadcrumb = [
     {
-      link: "/occasion-management/predefined-templates",
-      linkText: "Predefined Template Management",
+      link: '/occasion-management/predefined-templates',
+      linkText: 'Predefined Template Management',
     },
     {
-      link: "",
-      linkText: isAddOccasionTemplate
-        ? "Add Predefined Template"
-        : "Edit Predefined Template",
+      link: '',
+      linkText: isAddOccasionTemplate ? 'Add Predefined Template' : 'Edit Predefined Template',
     },
   ];
 
@@ -56,36 +54,36 @@ const AddEditPreTemplate = () => {
   const handleValidate = () => {
     let validate = true;
 
-    if (!occasionName.replace(/\s+/g, "")) {
-      setOccasionNameErr("Occasion name is required");
+    if (!occasionName.replace(/\s+/g, '')) {
+      setOccasionNameErr('Occasion name is required');
       validate = false;
     } else {
-      setOccasionNameErr("");
+      setOccasionNameErr('');
     }
 
-    if (!templateName.replace(/\s+/g, "")) {
-      setTemplateNameErr("Template name is required");
+    if (!templateName.replace(/\s+/g, '')) {
+      setTemplateNameErr('Template name is required');
       validate = false;
     } else if (!albhaNumericRegEx.test(templateName)) {
-      setTemplateNameErr("Special characters and spaces are not allowed");
+      setTemplateNameErr('Special characters and spaces are not allowed');
       validate = false;
     } else {
-      setTemplateNameErr("");
+      setTemplateNameErr('');
     }
     if (!templateOrder) {
-      setTemplateOrderErr("template order is required");
+      setTemplateOrderErr('template order is required');
       validate = false;
     } else if (!numberRegEx.test(templateOrder)) {
-      setTemplateOrderErr("template order should be numeric");
+      setTemplateOrderErr('template order should be numeric');
       validate = false;
     } else {
-      setTemplateOrderErr("");
+      setTemplateOrderErr('');
     }
     if (isAddOccasionTemplate && !base64) {
-      setImageErr("Image is required");
+      setImageErr('Image is required');
       validate = false;
     } else {
-      setImageErr("");
+      setImageErr('');
     }
     return validate;
   };
@@ -99,10 +97,10 @@ const AddEditPreTemplate = () => {
     getOccasionTemplateByName(params)
       .then((res) => {
         let { status, data } = resHandle(res);
-        console.log(status, data, "datadatadatadatadata");
+        console.log(status, data, 'datadatadatadatadata');
         setLoader(false);
         if (status === 200) {
-          setOccasionName(data.occasionName.replace("pre_", ""));
+          setOccasionName(data.occasionName.replace('pre_', ''));
           setTemplateName(data.templateName);
           setBase64(data.templateImage);
           setTemplateStatus(data.status);
@@ -112,9 +110,7 @@ const AddEditPreTemplate = () => {
       })
       .catch((err) => {
         setLoader(false);
-        toast.error(
-          "Sorry, a technical error occurred! Please try again later"
-        );
+        toast.error('Sorry, a technical error occurred! Please try again later');
       });
   };
   const handleUpdateTemplate = (e) => {
@@ -122,38 +118,35 @@ const AddEditPreTemplate = () => {
     if (handleValidate()) {
       setIsSubmit(true);
       let obj = {
-        templateIdentifier: "occasionTemplate",
-        occasionName: "pre_" + occasionName,
+        templateIdentifier: 'occasionTemplate',
+        occasionName: 'pre_' + occasionName,
         templateName: templateName,
         data: {
           displayOrder: parseInt(templateOrder),
-          status:
-            templateStatus == true || templateStatus == "true" ? true : false,
+          status: templateStatus == true || templateStatus == 'true' ? true : false,
           templateImage: base64,
           fileName: fileName,
         },
       };
       if (editImage) {
-        obj["data"]["templateImage"] = base64;
-        obj["data"]["fileName"] = fileName;
+        obj['data']['templateImage'] = base64;
+        obj['data']['fileName'] = fileName;
       }
-      console.log("obj---", obj);
+      console.log('obj---', obj);
       updateOccasionTemplate(obj)
         .then((res) => {
           let { status, data } = resHandle(res);
           setIsSubmit(false);
           if (status === 200) {
             toast.success(data.message);
-            history.push("/occasion-management/predefined-templates");
+            history.push('/occasion-management/predefined-templates');
           } else {
             toast.success(data.message);
           }
         })
         .catch((err) => {
           setIsSubmit(false);
-          toast.error(
-            "Sorry, a technical error occurred! Please try again later"
-          );
+          toast.error('Sorry, a technical error occurred! Please try again later');
         });
     }
   };
@@ -161,9 +154,9 @@ const AddEditPreTemplate = () => {
   const handleFileChange = (e) => {
     let reader = new FileReader();
     let file = e.target.files[0];
-    console.log("filefile", file);
+    console.log('filefile', file);
     reader.addEventListener(
-      "load",
+      'load',
       () => {
         setBase64(reader.result);
         setFileName(file.name);
@@ -180,7 +173,7 @@ const AddEditPreTemplate = () => {
     setLoader(true);
     let params = {
       limit: 200,
-      LastEvaluatedKey: "null",
+      LastEvaluatedKey: 'null',
     };
     occasionList(params)
       .then((res) => {
@@ -204,10 +197,10 @@ const AddEditPreTemplate = () => {
       });
   };
   useEffect(() => {
-    if (window.location.pathname == "/predefined-templates/create") {
+    if (window.location.pathname == '/predefined-templates/create') {
       setIsAddOccasionTemplate(true);
     }
-    if (window.location.pathname !== "/predefined-templates/create") {
+    if (window.location.pathname !== '/predefined-templates/create') {
       handleGetTemplateById(oname, tname);
     }
     getOccasionList();
@@ -218,34 +211,31 @@ const AddEditPreTemplate = () => {
     if (handleValidate()) {
       setIsSubmit(true);
       let obj = {
-        templateIdentifier: "occasionTemplate",
-        occasionName: "pre_" + occasionName,
+        templateIdentifier: 'occasionTemplate',
+        occasionName: 'pre_' + occasionName,
         templateName: templateName,
         data: {
           templateImage: base64,
           fileName: fileName,
           displayOrder: parseInt(templateOrder),
-          status:
-            templateStatus == true || templateStatus == "true" ? true : false,
+          status: templateStatus == true || templateStatus == 'true' ? true : false,
         },
       };
-      console.log("obj---", obj);
+      console.log('obj---', obj);
       createOccasionTemplate(obj)
         .then((res) => {
           let { status, data } = resHandle(res);
           setIsSubmit(false);
           if (status === 200) {
             toast.success(data.message);
-            history.push("/occasion-management/predefined-templates");
+            history.push('/occasion-management/predefined-templates');
           } else {
             toast.success(data.message);
           }
         })
         .catch((err) => {
           setIsSubmit(false);
-          toast.error(
-            "Sorry, a technical error occurred! Please try again later"
-          );
+          toast.error('Sorry, a technical error occurred! Please try again later');
         });
     }
   };
@@ -256,7 +246,7 @@ const AddEditPreTemplate = () => {
     <div className="page_wrapper">
       <Breadcrumb breadcrumb={breadcrumb} />
       <div className="twocol sb page_header">
-        <h2>{isAddOccasionTemplate ? "Add Template" : "Edit Template"} </h2>
+        <h2>{isAddOccasionTemplate ? 'Add Template' : 'Edit Template'} </h2>
       </div>
       {loader ? (
         <Loader />
@@ -269,44 +259,32 @@ const AddEditPreTemplate = () => {
                 className="form-control"
                 name="language"
                 value={occasionName}
-                disabled={isAddOccasionTemplate ? "" : "disabled"}
-                onChange={(e) => (
-                  setOccasionName(e.target.value), setOccasionNameErr("")
-                )}
+                disabled={isAddOccasionTemplate ? '' : 'disabled'}
+                onChange={(e) => (setOccasionName(e.target.value), setOccasionNameErr(''))}
               >
-                <option key={"kotion"} value="">
+                <option key={'kotion'} value="">
                   Select Occasion
                 </option>
                 {occasionArrList.map((item, index) => (
-                  <option key={"k" + index} value={item.occasionName}>
+                  <option key={'k' + index} value={item.occasionName}>
                     {item.displayTitle}
                   </option>
                 ))}
               </select>
 
-              {occasionNameErr ? (
-                <div className="inlineerror">{occasionNameErr} </div>
-              ) : (
-                ""
-              )}
+              {occasionNameErr ? <div className="inlineerror">{occasionNameErr} </div> : ''}
             </div>
             <div className="col">
               <label>Template Name</label>
               <input
-                readOnly={isAddOccasionTemplate ? "" : "readonly"}
+                readOnly={isAddOccasionTemplate ? '' : 'readonly'}
                 type="text"
                 className="form-control"
                 value={templateName}
                 name="templateName"
-                onChange={(e) => (
-                  setTemplateName(e.target.value), setTemplateNameErr("")
-                )}
+                onChange={(e) => (setTemplateName(e.target.value), setTemplateNameErr(''))}
               />
-              {templateNameErr ? (
-                <div className="inlineerror">{templateNameErr} </div>
-              ) : (
-                ""
-              )}
+              {templateNameErr ? <div className="inlineerror">{templateNameErr} </div> : ''}
             </div>
           </div>
           <div className="form-group row">
@@ -318,13 +296,9 @@ const AddEditPreTemplate = () => {
                 keyboardType="phone-pad"
                 value={templateOrder}
                 name="templateOrder"
-                onChange={(e) => (
-                  setTemplateOrder(e.target.value), setTemplateOrderErr("")
-                )}
+                onChange={(e) => (setTemplateOrder(e.target.value), setTemplateOrderErr(''))}
               />
-              {templateOrderErr && (
-                <div className="inlineerror">{templateOrderErr} </div>
-              )}
+              {templateOrderErr && <div className="inlineerror">{templateOrderErr} </div>}
             </div>
             <div className="col">
               <label>Status</label>
@@ -332,33 +306,24 @@ const AddEditPreTemplate = () => {
                 className="form-control"
                 name="cars"
                 value={templateStatus}
-                onChange={(e) => (
-                  setTemplateStatus(e.target.value), setTemplateStatusErr("")
-                )}
+                onChange={(e) => (setTemplateStatus(e.target.value), setTemplateStatusErr(''))}
               >
                 <option value="true">Activate</option>
                 <option value="false">De-Activate</option>
               </select>
-              {templateStatus && (
-                <div className="inlineerror">{templateStatusErr} </div>
-              )}
+              {templateStatus && <div className="inlineerror">{templateStatusErr} </div>}
             </div>
           </div>
 
           <div className="form-group row">
             <div className="col">
               <label>Icon</label>
-              <input
-                type="file"
-                className="form-control"
-                value=""
-                onChange={handleFileChange}
-              />
+              <input type="file" className="form-control" value="" onChange={handleFileChange} />
               {imageErr && <div className="inlineerror">{imageErr} </div>}
             </div>
           </div>
 
-          {base64 ? <img className="iconImg" src={base64} alt="icon" /> : ""}
+          {base64 ? <img className="iconImg" src={base64} alt="icon" /> : ''}
 
           <div className="button300">
             {isAddOccasionTemplate ? (
@@ -366,40 +331,20 @@ const AddEditPreTemplate = () => {
                 type="button"
                 className="btn btn-primary rounded-pill"
                 onClick={handleCreateTemplate}
-                disabled={isSubmit ? "disabled" : ""}
+                disabled={isSubmit ? 'disabled' : ''}
               >
-                {isSubmit ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  ""
-                )}
-                {isSubmit ? " Submitting.." : "Create"}
+                {isSubmit ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ''}
+                {isSubmit ? ' Submitting..' : 'Create'}
               </button>
             ) : (
               <button
                 type="button"
                 className="btn btn-primary rounded-pill"
                 onClick={handleUpdateTemplate}
-                disabled={isSubmit ? "disabled" : ""}
+                disabled={isSubmit ? 'disabled' : ''}
               >
-                {isSubmit ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  ""
-                )}
-                {isSubmit ? " Submitting.." : "Update"}
+                {isSubmit ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ''}
+                {isSubmit ? ' Submitting..' : 'Update'}
               </button>
             )}
           </div>
